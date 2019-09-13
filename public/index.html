@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 2</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://www.gstatic.com/firebasejs/6.6.0/firebase-app.js"></script>
+    <script src="js/scripts.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <nav>
+      <h1>Horoscope Generator</h1>
+      <ul>
+        <li><button onclick="displayNewForm()">Add New</button></li>
+        <li><button onclick="displayModForm()">Modify Existing</button></li>
+        <li><button onclick="displayData()">View Data</button></li>
+        <li><button onclick="generateHoroscope()">Generate Horoscope</button></li>
+      </ul>
+    </nav>
+    <div id="newForm" style="display: none">
+      <form action="" class="NEW" id="NEW">
+        <legend>Add New Entry</legend>
+        <label for="fName">First Name</label>
+        <input type="text" class="fName" value="your name here"><br>
+        <label for="lName">Last Name</label>
+        <input type="text" class="lName" value="your name here"><br>
+        <label for="month">Month of Birth</label>
+        <select name="month" class="month">
+          <option value="January">January</option>
+          <option value="February">February</option>
+          <option value="March">March</option>
+          <option value="April">April</option>
+          <option value="May">May</option>
+          <option value="June">June</option>
+          <option value="July">July</option>
+          <option value="August">August</option>
+          <option value="September">September</option>
+          <option value="October">October</option>
+          <option value="November">November</option>
+          <option value="December">December</option>
+        </select>
+        <br>
+        <label for="days">Day of Birth</label>
+        <select name="days" class="days">  
+        </select>
+        <br>
+        <button id="subButton">SUBMIT</button>
+      </form>
+    </div>
+    <div id="modForm" style="display: none">
+      <form action="">
+        <legend>MODIFY AN EXISTING ENTRY</legend>
+        <label for="modList">Select a line to modify</label>
+        <select name="modList" class="modList">
+        </select>
+        <br>
+        <div class="Buttons">
+        </div>
+    </form>
+    </div>
+    <div id="horo" style="display: none">
+      <form action="">
+        <legend>Select a user</legend>
+        <label for="horoList">Select a user</label>
+        <select name="horoList" class="horoList">
+        </select>
+        <p id="horoResult"> </p>
+        <button id="GenerateHoro">Generate!</button>
+    </form>
+    </div>
+    <div id="Container"></div>
+    <div id="Wrapper">
+      <div id="ZodiacCarousel" class="carousel slide" data-rise="carousel">
+      <!--Indicators-->
+      <ol class="carousel-indicators" style="display:none;">
+        <li data-target="#ZodiacCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#ZodiacCarousel" data-slide-to="1"></li>
+        <li data-target="#ZodiacCarousel" data-slide-to="2"></li>
+        <li data-target="#ZodiacCarousel" data-slide-to="3"></li>
+        <li data-target="#ZodiacCarousel" data-slide-to="4"></li>
+        <li data-target="#ZodiacCarousel" data-slide-to="5"></li>
+        <li data-target="#ZodiacCarousel" data-slide-to="6"></li>
+        <li data-target="#ZodiacCarousel" data-slide-to="7"></li>
+        <li data-target="#ZodiacCarousel" data-slide-to="8"></li>
+        <li data-target="#ZodiacCarousel" data-slide-to="9"></li>
+        <li data-target="#ZodiacCarousel" data-slide-to="10"></li>
+        <li data-target="#ZodiacCarousel" data-slide-to="11"></li>
+      </ol>
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner">
+        <div class="item active">
+          <img src="https://cdn.glitch.com/de12d0f3-3352-44ef-b62c-3acd45afc445%2FAries.svg?v=1567965712892" alt="Aries" style="width: 35%; margin-left:auto; margin-right:auto;">
+          <div class="carousel-caption">
+            <h3 style="-webkit-text-stroke-width: 1px;   -webkit-text-stroke-color: black;">Aries</h3>
+            <p style="-webkit-text-stroke-width: .5px;   -webkit-text-stroke-color: black;">The Ram</p>
+          </div>
+        </div>
+        <div class="item">
+          <img src="https://cdn.glitch.com/de12d0f3-3352-44ef-b62c-3acd45afc445%2FTaurus.svg?v=1567965713442" alt="Taurus" style="width:35%; margin-left:auto; margin-right:auto;">
+          <div class="carousel-caption">
+            <h3 style="-webkit-text-stroke-width: 1px;   -webkit-text-stroke-color: black; align-self:flex-end">Taurus</h3>
+            <p style="-webkit-text-stroke-width: .5px;   -webkit-text-stroke-color: black; align-self:flex-end">The Bull</p>
+          </div>
+        </div>
+        <div class="item">
+         <img src="https://cdn.glitch.com/de12d0f3-3352-44ef-b62c-3acd45afc445%2FGemini.svg?v=1567965712921" alt="Gemini" style="width:35%; margin-left:auto; margin-right:auto;">
+          <div class="carousel-caption">
+            <h3 style="-webkit-text-stroke-width: 1px;   -webkit-text-stroke-color: black; align-self:flex-end">Gemini</h3>
+            <p style="-webkit-text-stroke-width: .5px;   -webkit-text-stroke-color: black; align-self:flex-end">The Twins</p>
+          </div>
+        </div>
+        <div class="item">
+         <img src="https://cdn.glitch.com/de12d0f3-3352-44ef-b62c-3acd45afc445%2FCancer.svg?v=1567965712850" alt="Cancer" style="width:35%; margin-left:auto; margin-right:auto;">
+          <div class="carousel-caption">
+            <h3 style="-webkit-text-stroke-width: 1px;   -webkit-text-stroke-color: black; align-self:flex-end">Cancer</h3>
+            <p style="-webkit-text-stroke-width: .5px;   -webkit-text-stroke-color: black; align-self:flex-end">The Crab</p>
+          </div>
+        </div>
+        <div class="item">
+         <img src="https://cdn.glitch.com/de12d0f3-3352-44ef-b62c-3acd45afc445%2FLeo.svg?v=1567965713061" alt="Leo" style="width:35%; margin-left:auto; margin-right:auto;">
+          <div class="carousel-caption">
+            <h3 style="-webkit-text-stroke-width: 1px;   -webkit-text-stroke-color: black; align-self:flex-end">Leo</h3>
+            <p style="-webkit-text-stroke-width: .5px;   -webkit-text-stroke-color: black; align-self:flex-end">The Lion</p>
+          </div>
+        </div>
+        <div class="item">
+         <img src="https://cdn.glitch.com/de12d0f3-3352-44ef-b62c-3acd45afc445%2FVirgo.svg?v=1567965713478" alt="Virgo" style="width:35%; margin-left:auto; margin-right:auto;">
+          <div class="carousel-caption">
+            <h3 style="-webkit-text-stroke-width: 1px;   -webkit-text-stroke-color: black; align-self:flex-end">Virgo</h3>
+            <p style="-webkit-text-stroke-width: .5px;   -webkit-text-stroke-color: black; align-self:flex-end">The Maiden</p>
+          </div>
+        </div>
+        <div class="item">
+         <img src="https://cdn.glitch.com/de12d0f3-3352-44ef-b62c-3acd45afc445%2FLibra.svg?v=1567965713150" alt="Libra" style="width:35%; margin-left:auto; margin-right:auto;">
+          <div class="carousel-caption">
+            <h3 style="-webkit-text-stroke-width: 1px;   -webkit-text-stroke-color: black; align-self:flex-end">Libra</h3>
+            <p style="-webkit-text-stroke-width: .5px;   -webkit-text-stroke-color: black; align-self:flex-end">The Scales</p>
+          </div>
+        </div>
+        <div class="item">
+         <img src="https://cdn.glitch.com/de12d0f3-3352-44ef-b62c-3acd45afc445%2FScorpio.svg?v=1567965713399" alt="Scorpio" style="width:35%; margin-left:auto; margin-right:auto;">
+          <div class="carousel-caption">
+            <h3 style="-webkit-text-stroke-width: 1px;   -webkit-text-stroke-color: black; align-self:flex-end">Scorpio</h3>
+            <p style="-webkit-text-stroke-width: .5px;   -webkit-text-stroke-color: black; align-self:flex-end">The Scorpion</p>
+          </div>
+        </div>
+        <div class="item">
+         <img src="https://cdn.glitch.com/de12d0f3-3352-44ef-b62c-3acd45afc445%2FSagittarius.svg?v=1567965713247" alt="Sagittarius" style="width:35%; margin-left:auto; margin-right:auto;">
+          <div class="carousel-caption">
+            <h3 style="-webkit-text-stroke-width: 1px;   -webkit-text-stroke-color: black; align-self:flex-end">Sagittarius</h3>
+            <p style="-webkit-text-stroke-width: .5px;   -webkit-text-stroke-color: black; align-self:flex-end">The Archer</p>
+          </div>
+        </div>
+        <div class="item">
+         <img src="https://cdn.glitch.com/de12d0f3-3352-44ef-b62c-3acd45afc445%2FCapricorn.svg?v=1567965712954" alt="Capricorn" style="width:35%; margin-left:auto; margin-right:auto;">
+          <div class="carousel-caption">
+            <h3 style="-webkit-text-stroke-width: 1px;   -webkit-text-stroke-color: black; align-self:flex-end">Capricorn</h3>
+            <p style="-webkit-text-stroke-width: .5px;   -webkit-text-stroke-color: black; align-self:flex-end">The Goat-Fish Hybrid</p>
+          </div>
+        </div>
+        <div class="item">
+         <img src="https://cdn.glitch.com/de12d0f3-3352-44ef-b62c-3acd45afc445%2FAquarius.svg?v=1567965713506" alt="Aquarius" style="width:35%; margin-left:auto; margin-right:auto;">
+          <div class="carousel-caption">
+            <h3 style="-webkit-text-stroke-width: 1px;   -webkit-text-stroke-color: black; align-self:flex-end">Aquarius</h3>
+            <p style="-webkit-text-stroke-width: .5px;   -webkit-text-stroke-color: black; align-self:flex-end">The Water-Bearer</p>
+          </div>
+        </div>
+        <div class="item">
+         <img src="https://cdn.glitch.com/de12d0f3-3352-44ef-b62c-3acd45afc445%2FPisces.svg?v=1567965713107" alt="Pisces" style="width:35%; margin-left:auto; margin-right:auto;">
+          <div class="carousel-caption">
+            <h4 style="-webkit-text-stroke-width: 1px;   -webkit-text-stroke-color: black; align-self:flex-end">Pisces</h4>
+            <p style="-webkit-text-stroke-width: .5px;   -webkit-text-stroke-color: black; align-self:flex-end">The Fishes</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Left and right controls -->
+      <a class="left carousel-control" href="#ZodiacCarousel" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#ZodiacCarousel" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+    </div>
+    
+  </body>
+  <script>
+    const submit = function( e ) {
+    // prevent default form action from being carried out
+      e.preventDefault()
+      let valInput = []
+      valInput.push(document.querySelector( '.fName' ).value)
+      valInput.push(document.querySelector( '.lName' ).value)
+      valInput.push(document.querySelector( '.month' ).value)
+      valInput.push(document.querySelector( '.days' ).value)
+      const json = { fName: valInput[0], lName: valInput[1], month: valInput[2], day: valInput[3] },
+            body = JSON.stringify( json )
+
+      fetch( '/submit', {
+        method:'POST',
+        body
+      })
+      .then( function( response) {
+      // do something with the reponse
+      //display horoscope on screen
+         response.text()
+        .then(function(message){
+         console.log(message)
+         displayNewForm()
+     })
+      
+    })
+    return false
+  }
+  
+  //Changes information in database to given
+  const submitChanges = function(e){
+    e.preventDefault()
+    let originalData = document.getElementById('modHolder').innerHTML
+    originalData = JSON.parse(originalData)
+    let newInput = []
+    newInput.push(document.querySelector( '.fNameE' ).value)
+    newInput.push(document.querySelector( '.lNameE' ).value)
+    newInput.push(document.querySelector( '.monthE' ).value)
+    newInput.push(document.querySelector( '.daysE' ).value)
+    let originalArr = []
+    originalArr.push(originalData.fName)
+    originalArr.push(originalData.lName)
+    originalArr.push(originalData.month)
+    originalArr.push(originalData.day)
+    let body = {originalArr, newInput}
+    body = JSON.stringify(body)
+    console.log(body)
+    fetch( '/modify', {
+      method:'POST',
+      body
+    }) 
+    .then( function( response) {
+      // do something with the reponse
+      //display horoscope on screen
+     response.text()
+      .then(function(message){
+       console.log(message)
+       displayModForm()
+     })
+      
+    })
+    
+  }
+
+  //Deletes value from database
+  const remove = function(e){
+    e.preventDefault()
+    let originalData = document.getElementById('modHolder').innerHTML
+    originalData = JSON.parse(originalData)
+    const body = JSON.stringify(originalData)
+    fetch( '/delete', {
+      method:'POST',
+      body
+    })
+    .then( function( response) {
+      // do something with the reponse
+      //display horoscope on screen
+     response.text()
+      .then(function(message){
+       console.log(message)
+       displayModForm()
+     })
+      
+    })
+    return false
+  }
+  
+  const doGenerate = function(e){
+  e.preventDefault()
+console.log("ADD")
+  fetch( '/getHoro', {
+    method:'GET'
+  })
+  .then( function( response ) {
+    console.log(response)
+    response.text()
+    .then(function(message){
+      let allData = JSON.parse(message)
+      console.log(allData)
+      var randHoro = Math.floor(Math.random() * (Object.keys(allData).length))
+      console.log(randHoro)
+      document.getElementById("horoResult").innerHTML = allData[randHoro].horoscope
+    })
+  })
+  return false
+}
+  
+    //Assign Button Functions On Load
+    window.onload = function() {
+      const subButton = document.querySelector( '#subButton' )
+      subButton.onclick = submit
+      const genButton = document.querySelector('#GenerateHoro')
+      genButton.onclick = doGenerate
+    }  
+  </script>
+</html>

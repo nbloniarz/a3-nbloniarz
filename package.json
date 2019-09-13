@@ -1,0 +1,17 @@
+{
+  "name": "",
+  "version": "",
+  "description": "",
+  "author": "",
+  "scripts": {
+    "start": "node server.improved.js"
+  },
+  "dependencies": {
+    "mime": "^2.4.4",
+    "jquery": "^3.4.1",
+    "firebase": "^6.1.0"
+  },
+  "engines": {
+    "node": "^12.10.0"
+  }
+}
