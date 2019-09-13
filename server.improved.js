@@ -2,6 +2,7 @@ const http = require( 'http' ),
       fs   = require( 'fs' ),
       mime = require( 'mime' ),
       firebase = require('firebase'),
+      express = require('express'),
       dir  = 'public/',
       port = 3000
 
