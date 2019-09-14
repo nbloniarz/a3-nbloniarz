@@ -55,7 +55,7 @@ app.use(cookieSession({ //Creates a cookie for the session
 }))
 app.use(cookieParser('Sauce'))//Parses the cookie for the session
 //app.use(passport.initialize())
-app.use('/', router)
+//app.use('/', router)
 
 //WORK ON COOKIE INTEGRATION
 
@@ -77,10 +77,10 @@ app.get('/getData', function(request, response){
   })
 })
 
-app.get('/loadLoginPage', function(request, response){
+app.use('/loadLoginPage', function(request, response, next){
   console.log("IN LOGIN")
-  
-  response.sendFile('./login.html')
+  response.redirect(__dirname + "/public/login.html")
+  next()
 })
 
 

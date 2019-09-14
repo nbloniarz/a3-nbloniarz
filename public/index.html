@@ -307,8 +307,8 @@ console.log("ADD")
   function loadLogin(){
     fetch( '/loadLoginPage', {
         method:'GET',
-        headers: {'Content-Type': 'application/json'}
-      })
+      }).then(function(response){
+    })
   }
   
     //Assign Button Functions On Load
