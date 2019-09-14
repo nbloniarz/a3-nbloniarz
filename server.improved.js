@@ -3,6 +3,8 @@ const http = require( 'http' ),
       mime = require( 'mime' ),
       firebase = require('firebase'),
       express = require('express'),
+      passport = require('passport'),
+      local = require('passport-local').Strategy,
       dir  = 'public/',
       port = 3000,
       app = express(),
@@ -24,12 +26,11 @@ const http = require( 'http' ),
       }
 
     
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 var db = firebase.database()
 
-
+//LOCAL DATA TO BE REMOVED
 var appdata = [
   { 'fName': 'Bob', 'lName': 'Smith', 'month':'August', 'day': 23, 'sign':"Leo"},
   { 'fName': 'Suzy', 'lName': 'Ng', 'month':'September','day': 30 , 'sign':"Libra"},
@@ -51,6 +52,8 @@ app.use(cookieSession({ //Creates a cookie for the session
   secret: 'Sauce'
 }))
 app.use(cookieParser('Sauce'))//Parses the cookie for the session
+//app.use(passport.initialize())
+
 
 //WORK ON COOKIE INTEGRATION
 
@@ -70,6 +73,10 @@ app.get('/getData', function(request, response){
     response.writeHead(200, "OK", mimeExp)
     response.end(JSON.stringify(temp))
   })
+})
+
+app.get('/loadLoginPage', function(request, response){
+  response.sendFile(__dirname + '/views/login,html')
 })
 
 
@@ -93,34 +100,19 @@ app.post('/delete', bodyparser.json(), function(request, response){
   response.end(JSON.stringify(appdata))
 })
 
+
+
 app.listen( process.env.PORT || port )
 
 
 /* NO EXPRESS OLD ASSIGNMENT 2
 
-const server = http.createServer( function( request,response ) {
-  if( request.method === 'GET' ) {
-    handleGet( request, response )    
-  }else if( request.method === 'POST' ){
-    handlePost( request, response ) 
-  }
-})
 
 const handleGet = function( request, response ) {
-  const filename = dir + request.url.slice( 1 ) 
-  if( request.url === '/' ) {
-    sendFile( response, 'public/index.html' )
-  }
-  else if (request.url == '/getData'){
-    sendData(response)
-  }
   else if(request.url === '/getHoro'){
     response.writeHeader(200, "OK", {'Content-Type': 'plain/text'})
     response.write(JSON.stringify(horoscopes))
     response.end()
-  }
-  else{
-    sendFile( response, filename )
   }
 }
 

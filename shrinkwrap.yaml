@@ -6,6 +6,8 @@ dependencies:
   firebase: 6.6.0
   jquery: 3.4.1
   mime: 2.4.4
+  passport: 0.4.0
+  passport-local: 1.0.0
 packages:
   /@firebase/app-types/0.4.3:
     dev: false
@@ -866,6 +868,29 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==
+  /passport-local/1.0.0:
+    dependencies:
+      passport-strategy: 1.0.0
+    dev: false
+    engines:
+      node: '>= 0.4.0'
+    resolution:
+      integrity: sha1-H+YyaMkudWBmJkN+O5BmYsFbpu4=
+  /passport-strategy/1.0.0:
+    dev: false
+    engines:
+      node: '>= 0.4.0'
+    resolution:
+      integrity: sha1-tVOaqPwiWj0a0XlHbd8ja0QPUuQ=
+  /passport/0.4.0:
+    dependencies:
+      passport-strategy: 1.0.0
+      pause: 0.0.1
+    dev: false
+    engines:
+      node: '>= 0.4.0'
+    resolution:
+      integrity: sha1-xQlWkTR71a07XhgCOMORTRbwWBE=
   /path-is-absolute/1.0.1:
     dev: false
     engines:
@@ -876,6 +901,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-32BBeABfUi8V60SQ5yR6G/qmf4w=
+  /pause/0.0.1:
+    dev: false
+    resolution:
+      integrity: sha1-HUCLP9t2kjuVQ9lvtMnf1TXZy10=
   /promise-polyfill/8.1.3:
     dev: false
     resolution:
@@ -1129,3 +1158,5 @@ specifiers:
   firebase: ^6.1.0
   jquery: ^3.4.1
   mime: ^2.4.4
+  passport: ^0.4.0
+  passport-local: ^1.0.0
