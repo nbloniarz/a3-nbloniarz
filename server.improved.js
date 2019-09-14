@@ -32,7 +32,11 @@ const http = require( 'http' ),
       }
 
   
-db.defaults({ users:[] }).write()
+db.defaults({ users:[
+  {username: "a", password:'a'},
+  {username: "b", password:'b'},
+  {username: "c", password:'c'}
+] }).write()
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -99,9 +103,7 @@ app.post('/submit', bodyparser.json(), function(request, response){
   var temp = []
   temp.push(request.body)
   response.writeHead(200, "OK", mimeExp)
-  response.end(JSON.stringify(temp))
-  
-  
+  response.end(JSON.stringify(temp))  
 })
 
 app.post('/modify', bodyparser.json(), function(request, response){
@@ -114,7 +116,16 @@ app.post('/delete', bodyparser.json(), function(request, response){
   response.end(JSON.stringify(appdata))
 })
 
-
+app.post('/addUser', bodyparser.json(), function(request, response){
+ console.log("preAdd")
+  db.get('users').value().forEach(function(user){
+    console.log(user.username +  ' ' + user.password)
+  })
+ // db.get('users').push({username: request.body.username, password: request.body.password}).write()
+  console.log("postAdd")
+  db.get('users').value().forEach(function(user){
+    console.log(user.username +  ' ' + user.password)
+  })})
 
 app.listen( process.env.PORT || port )
 

@@ -26,12 +26,21 @@
   </body>
   <script>
     const login = function(e){
-      fetch( '/doLogin', {
+      const body = JSON.stringify({username: 'test', password:'test'})
+      fetch( '/addUser', {
+        method:'POST',
+        headers: {'Content-Type': 'application/json'},
+        body
+      }).then(function(response){
+      console.log(response)
+    })
+      
+      /*fetch( '/doLogin', {
         method:'GET',
       }).then(function(response){
       console.log(response)
       window.location = response.url
-    })
+    })*/
     }
     
       window.onload = function(){
