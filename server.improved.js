@@ -81,17 +81,14 @@ app.get('/getData', function(request, response){
 })
 
 app.get('/loadLoginPage', function(request, response){
-  console.log("IN LOGIN")
-  response.send({
-    retStatus : "Success",
-    redirectTo: '/login',
-    msg : 'Just go there please' // this should help
-  })
-  //response.render("login")
-  //response.set(mimeMes)
-  //response.redirect("/login")
+  response.redirect("/login")
 })
 
+app.get('/doLogin', function(request, response){
+  //do pass auth
+  console.log(firebase.firesotre)
+  //load admin page
+})
 
 //POST REQUESTS
 app.post('/submit', bodyparser.json(), function(request, response){

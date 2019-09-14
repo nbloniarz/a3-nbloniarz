@@ -18,13 +18,25 @@
         <label for="user">Username</label>
         <input type="text" class="user" value="your username here"><br>
         <label for="password">Last Name</label>
-        <input type="text" class="password" value="password"><br>
+        <input type="password" class="password" value="password"><br>
         <button id="loginButton">Go</button>
       </form>
     </div>
     
   </body>
   <script>
-      
+    const login = function(e){
+      fetch( '/doLogin', {
+        method:'GET',
+      }).then(function(response){
+      console.log(response)
+      window.location = response.url
+    })
+    }
+    
+      window.onload = function(){
+      const subButton = document.querySelector( '#loginButton' )
+      subButton.onclick = login
+      }
   </script>
 </html>
