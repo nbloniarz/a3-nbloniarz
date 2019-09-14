@@ -82,9 +82,14 @@ app.get('/getData', function(request, response){
 
 app.get('/loadLoginPage', function(request, response){
   console.log("IN LOGIN")
+  response.send({
+    retStatus : "Success",
+    redirectTo: '/login',
+    msg : 'Just go there please' // this should help
+  })
   //response.render("login")
   //response.set(mimeMes)
-  response.redirect(301, "/login")
+  //response.redirect("/login")
 })
 
 

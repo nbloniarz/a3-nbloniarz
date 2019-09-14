@@ -307,7 +307,10 @@ console.log("ADD")
   function loadLogin(){
     fetch( '/loadLoginPage', {
         method:'GET',
-      })
+      }).then(function(response){
+      console.log(response)
+      window.location = response.url
+    })
   }
   
     //Assign Button Functions On Load
