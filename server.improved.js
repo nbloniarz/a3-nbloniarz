@@ -61,10 +61,15 @@ app.get('/', function(request, response){
 })
 
 app.get('/getData', function(request, response){
-  console.log("ahhh")
-  response.writeHead(200, "OK", mimeMes)
-  response.end("NOOOOOOOO")
-  //response.sendFile(__dirname + '/views/index.html')
+  var temp = []
+  db.ref('/').once('value', function(snapShot){
+    snapShot.forEach(function(child){
+      temp.push(child.val())
+    })  
+  }).then(function(){
+    response.writeHead(200, "OK", mimeExp)
+    response.end(JSON.stringify(temp))
+  })
 })
 
 

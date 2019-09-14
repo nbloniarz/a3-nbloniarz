@@ -11,12 +11,8 @@ Baseline Requirements
 
 Your application is required to implement the following functionalities:
 
-- a `Server`, created using Express (no alternatives will be accepted for this assignment)
-- a `Results` functionality which shows the entire dataset residing in the server's memory
-- a `Form/Entry` functionality which allows users to add, modify, and delete data items (must be all three!) associated with their user name / account.
 - Use of at least five [Express middleware packages](https://expressjs.com/en/resources/middleware.html). Explore! 
 - Basic authentication using the [Passport middleware](http://www.passportjs.org) for Express (this counts as one of your five middleware packages). We encourage using the Local strategy, but OAuth (Open Authentication) can also be used for additional technical achievement. The course staff cannot help you with the various flavors of OAuth strategies. YOU MUST PROVIDE US WITH ACCOUNT CREDENTIALS TO LOGIN TO YOUR APPLICATION IF YOU USE OAUTH. The course staff cannot be expected to have credentials for any particular OAuth service.
-- Persistent data storage in between server sessions. [lowdb](https://github.com/typicode/lowdb) is a suitable database package for this assignment and will be discussed in class.
 - Use of a [CSS framework or template](https://github.com/troxler/awesome-css-frameworks). This should do the bulk of your styling/CSS for you and be appropriate to your application. For example, don't use [NES.css](https://nostalgic-css.github.io/NES.css/) (which is awesome!) unless you're creating a game or some type of retro 80s site.
 
 Your application is required to demonstrate the use of the following concepts:
@@ -67,6 +63,8 @@ Include a very brief summary of your project here. Images are encouraged, along 
 ## Technical Achievements
 - **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
 - **Tech Achievement 2**: I used over ten Express middleware packages, enabling me to create a server that...
+- **Google Firebase Integration**: All data is stored remotely on google firebase allowing for persistance
+
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: I tested my application using screen reading software, and found that...
