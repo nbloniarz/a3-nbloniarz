@@ -54,6 +54,9 @@ app.use(cookieSession({ //Creates a cookie for the session
   secret: 'Sauce'
 }))
 app.use(cookieParser('Sauce'))//Parses the cookie for the session
+app.engine('html', require('ejs').renderFile);
+
+
 //app.use(passport.initialize())
 //app.use('/', router)
 
@@ -79,8 +82,8 @@ app.get('/getData', function(request, response){
 
 app.get('/loadLoginPage', function(request, response){
   console.log("IN LOGIN")
-  response.redirect("/login.html")
-  return
+  response.set(mimeMes)
+  response.render("/pubic/login.html")
 })
 
 
