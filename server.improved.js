@@ -4,7 +4,8 @@ const http = require( 'http' ),
       firebase = require('firebase'),
       express = require('express'),
       dir  = 'public/',
-      port = 3000
+      port = 3000,
+      app = express()
 
 var appdata = [
   { 'fName': 'Bob', 'lName': 'Smith', 'month':'August', 'day': 23, 'sign':"Leo"},
@@ -17,6 +18,22 @@ const horoscopes = [
   {'horoscope': "You will have a 111 star day today. You will have a huge situation with your robot. Your tummy will tell you how thrifty and indescribable you are and this will hurt your cowbells. Breathe and let it go.Take care of yourself today, Take time for yourself. Go calming or inspecting. Take a bath with Turkish sloppily ballerinas. Relax.Your lucky number is 1097. Today is a charismatic day to use this number by betting on sodas."},
   {'horoscope': "You will have a 14 star day today. You will have a vascular situation with your belt. Your fig will tell you how chipper and radiant you are and this will hurt your inhalers. Breathe and let it go. Take care of yourself today, Take time for yourself. Go zipping or romancing. Take a bath with important prematurely puppies. Relax. Your lucky number is 377. Today is a vascular day to use this number by betting on globs."}
 ]
+
+//EXPRESS SERVER FUNCTIONS
+app.use(function (request, response, next){
+  console.log('url: ', request.url)
+  next()
+})
+app.get('/', function(request, response){
+  response.writeHead(200, "OK", {'Content-Type': 'application/json'})
+  response.write("DID A GET")
+  response.ed()
+})
+
+app.listen( process.env.PORT || port )
+
+
+/* NO EXPRESS OLD ASSIGNMENT 2
 
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
@@ -61,7 +78,7 @@ const handlePost = function( request, response ) {
     const reqURL = request.url.slice(1)
     switch(reqURL){
       /*Submit Case*/
-      case "submit":
+/*      case "submit":
         const convertedData = JSON.parse(dataString)
         convertedData.sign = starSign(convertedData)
         if(noDuplicates(convertedData)){
@@ -79,7 +96,7 @@ const handlePost = function( request, response ) {
         }       
         break
         /*Modify  Case MAXIMUM EFFICENCY*/
-      case "modify":
+/*      case "modify":
         const Data = JSON.parse(dataString)
         modData(Data)
         response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
@@ -273,3 +290,6 @@ function modData(toChange){
 }
 
 
+
+
+*/
