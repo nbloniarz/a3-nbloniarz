@@ -45,7 +45,7 @@ const horoscopes = [
 //CONFIGURATION FOR EXPRESS MIDDLEWARE (1-5)
 app.use(express.static('public')) //Serves static pages
 app.use(bodyparser.json())//Parses HTTP request body into JSON
-app.use(downcase)//Forces downcasing of entire url after /
+//app.use(downcase)//Forces downcasing of entire url after /
 app.use(cookieSession({ //Creates a cookie for the session
   name: 'session',
   secret: 'Sauce'
@@ -55,21 +55,32 @@ app.use(cookieParser('Sauce'))//Parses the cookie for the session
 //WORK ON COOKIE INTEGRATION
 
 //EXPRESS SERVER FUNCTIONS
+//GET REQUESTS
 app.get('/', function(request, response){
   response.sendFile(__dirname + '/views/index.html')
 })
 
+app.get('/getData', function(request, response){
+  console.log("ahhh")
+  response.writeHead(200, "OK", mimeMes)
+  response.end("NOOOOOOOO")
+  //response.sendFile(__dirname + '/views/index.html')
+})
+
+
+//POST REQUESTS
 app.post('/submit', bodyparser.json(), function(request, response){
-  
   var temp = []
   temp.push(request.body)
   response.writeHead(200, "OK", mimeExp)
   response.end(JSON.stringify(temp))
+  
+  
 })
 
 app.post('/modify', bodyparser.json(), function(request, response){
   response.writeHead(200, "OK", mimeExp)
-  response.end(JSON.stringify(appdata))
+  response.end(JSON.stringify(db.ref()))
 })
 
 app.post('/delete', bodyparser.json(), function(request, response){
