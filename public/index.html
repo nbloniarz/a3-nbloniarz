@@ -304,6 +304,13 @@ console.log("ADD")
   return false
 }
   
+  function loadLogin(){
+    fetch( '/loadLoginPage', {
+        method:'GET',
+        headers: {'Content-Type': 'application/json'}
+      })
+  }
+  
     //Assign Button Functions On Load
     window.onload = function() {
       const subButton = document.querySelector( '#subButton' )

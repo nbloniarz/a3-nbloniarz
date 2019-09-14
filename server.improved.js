@@ -5,6 +5,8 @@ const http = require( 'http' ),
       express = require('express'),
       passport = require('passport'),
       local = require('passport-local').Strategy,
+      path = require('path'),
+      router = express.Router(),
       dir  = 'public/',
       port = 3000,
       app = express(),
@@ -53,14 +55,14 @@ app.use(cookieSession({ //Creates a cookie for the session
 }))
 app.use(cookieParser('Sauce'))//Parses the cookie for the session
 //app.use(passport.initialize())
-
+app.use('/', router)
 
 //WORK ON COOKIE INTEGRATION
 
 //EXPRESS SERVER FUNCTIONS
 //GET REQUESTS
 app.get('/', function(request, response){
-  response.sendFile(__dirname + '/views/index.html')
+  response.sendFile(path.join(__dirname + '/index.html'))
 })
 
 app.get('/getData', function(request, response){
@@ -76,7 +78,9 @@ app.get('/getData', function(request, response){
 })
 
 app.get('/loadLoginPage', function(request, response){
-  response.sendFile(__dirname + '/views/login,html')
+  console.log("IN LOGIN")
+  
+  response.sendFile('./login.html')
 })
 
 
