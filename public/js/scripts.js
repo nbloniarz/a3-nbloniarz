@@ -239,6 +239,8 @@ function populateFromDatabase(){
   }
   fetch( '/getData', {
     method:'GET',
+    headers: {'Content-Type': 'application/json'},
+
   })
   .then( function( response ) {
     console.log(response)

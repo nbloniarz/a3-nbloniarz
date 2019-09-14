@@ -265,8 +265,7 @@
     const body = JSON.stringify(originalData)
     fetch( '/delete', {
       method:'POST',
-        headers: {'Content-Type': 'application/json'},
-      
+      headers: {'Content-Type': 'application/json'},     
       body
     })
     .then( function( response) {
@@ -286,7 +285,9 @@
   e.preventDefault()
 console.log("ADD")
   fetch( '/getHoro', {
-    method:'GET'
+    method:'GET',
+    headers: {'Content-Type': 'application/json'},
+
   })
   .then( function( response ) {
     console.log(response)

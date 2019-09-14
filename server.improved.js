@@ -7,6 +7,8 @@ const http = require( 'http' ),
       port = 3000,
       app = express(),
       bodyparser = require('body-parser'),
+      downcase = require('express-uncapitalize'),
+      cookieSession = require('cookie-session'),
       mimeExp = {'Content-Type': 'application/json'},
       mimeMes = {'Content-Type': 'text/plain'}
 
@@ -22,12 +24,22 @@ const horoscopes = [
   {'horoscope': "You will have a 14 star day today. You will have a vascular situation with your belt. Your fig will tell you how chipper and radiant you are and this will hurt your inhalers. Breathe and let it go. Take care of yourself today, Take time for yourself. Go zipping or romancing. Take a bath with important prematurely puppies. Relax. Your lucky number is 377. Today is a vascular day to use this number by betting on globs."}
 ]
 
+//CONFIGURATION FOR EXPRESS MIDDLEWARE
+app.configure(function(){
+  app.use(downcase)//Middleware 1, forces downcasing of entire url
+  app.use(express.static('public')) //Middleware 2, serves static pages
+  app.use(bodyparser.json())//Middleware 3, parses request body
+  app.use(cookieSession({
+          name: 'session',
+          secret: 'Sauce'
+          }))
+})
+
+
+
 //EXPRESS SERVER FUNCTIONS
-app.use(express.static('public')) //Middleware 1
-
-app.use(bodyparser.json())//Middleware 2
-
 app.get('/', function(request, response){
+  console.log(request.session)
   response.sendFile(__dirname + '/views/index.html')
 })
 
