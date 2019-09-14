@@ -34,16 +34,19 @@ const http = require( 'http' ),
   
 passport.use(new local(function(username, password, cb) {
   console.log("IN AUTHENTICATION")  
-  //db.get('users').push({username: username, password: password}).write()
   console.log(db.get('users').value())
-  if((db.get('users').find({username: username}).value())
-  
-  /*function(err, user) {
-      if (err) { return cb(err); }
-      if (!user) { return cb(null, false); }
-      if (user.password != password) { return cb(null, false); }
-      return cb(null, user);
-    });*/
+  var user = db.get('users').find({username: username}).value()
+  if(user !== undefined){
+    if(user.password === password){
+      console.log("LOG EM IN")
+    }
+    else{
+      console.log("INCORRECT PASSWORD")
+    }
+  }
+  else{
+    console.log("USER NOT FOUND")
+  }
 }))
 
 // Configure Passport authenticated session persistence.
