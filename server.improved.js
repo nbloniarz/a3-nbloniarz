@@ -5,7 +5,10 @@ const http = require( 'http' ),
       express = require('express'),
       dir  = 'public/',
       port = 3000,
-      app = express()
+      app = express(),
+      bodyparser = require('body-parser'),
+      mimeExp = {'Content-Type': 'application/json'},
+      mimeMes = {'Content-Type': 'text/plain'}
 
 var appdata = [
   { 'fName': 'Bob', 'lName': 'Smith', 'month':'August', 'day': 23, 'sign':"Leo"},
@@ -20,14 +23,29 @@ const horoscopes = [
 ]
 
 //EXPRESS SERVER FUNCTIONS
-app.use(function (request, response, next){
-  console.log('url: ', request.url)
-  next()
-})
+app.use(express.static('public')) //Middleware 1
+
+app.use(bodyparser.json())//Middleware 2
+
 app.get('/', function(request, response){
-  response.writeHead(200, "OK", {'Content-Type': 'application/json'})
-  response.write("DID A GET")
-  response.ed()
+  response.sendFile(__dirname + '/views/index.html')
+})
+
+app.post('/submit', bodyparser.json(), function(request, response){
+  var temp = []
+  temp.push(request.body)
+  response.writeHead(200, "OK", mimeExp)
+  response.end(JSON.stringify(temp))
+})
+
+app.post('/modify', bodyparser.json(), function(request, response){
+  response.writeHead(200, "OK", mimeExp)
+  response.end(JSON.stringify(appdata))
+})
+
+app.post('/delete', bodyparser.json(), function(request, response){
+  response.writeHead(200, "OK", mimeExp)
+  response.end(JSON.stringify(appdata))
 })
 
 app.listen( process.env.PORT || port )

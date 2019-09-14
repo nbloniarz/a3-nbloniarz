@@ -205,6 +205,7 @@
 
       fetch( '/submit', {
         method:'POST',
+        headers: {'Content-Type': 'application/json'},
         body
       })
       .then( function( response) {
@@ -240,6 +241,7 @@
     console.log(body)
     fetch( '/modify', {
       method:'POST',
+      headers: {'Content-Type': 'application/json'},
       body
     }) 
     .then( function( response) {
@@ -263,6 +265,8 @@
     const body = JSON.stringify(originalData)
     fetch( '/delete', {
       method:'POST',
+        headers: {'Content-Type': 'application/json'},
+      
       body
     })
     .then( function( response) {
