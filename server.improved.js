@@ -11,20 +11,23 @@ const http = require( 'http' ),
       cookieSession = require('cookie-session'),
       cookieParser = require('cookie-parser'),
       mimeExp = {'Content-Type': 'application/json'},
-      mimeMes = {'Content-Type': 'text/plain'}
+      mimeMes = {'Content-Type': 'text/plain'},
+      //FIREBASE CONFIG
+      firebaseConfig = {
+        apiKey: "AIzaSyAuOGEGSNJLe2fxv0iHQwigSY8nIj2pb30",
+        authDomain: "a2-nbloniarz.firebaseapp.com",
+        databaseURL: "https://a2-nbloniarz.firebaseio.com",
+        projectId: "a2-nbloniarz",
+        storageBucket: "a2-nbloniarz.appspot.com",
+        messagingSenderId: "337634055490",
+        appId: "1:337634055490:web:821a136e7f93eff009e4db"
+      }
 
-//FIREBASE CONFIG
-var firebaseConfig = {
-    apiKey: "AIzaSyAuOGEGSNJLe2fxv0iHQwigSY8nIj2pb30",
-    authDomain: "a2-nbloniarz.firebaseapp.com",
-    databaseURL: "https://a2-nbloniarz.firebaseio.com",
-    projectId: "a2-nbloniarz",
-    storageBucket: "a2-nbloniarz.appspot.com",
-    messagingSenderId: "337634055490",
-    appId: "1:337634055490:web:821a136e7f93eff009e4db"
-  };
+    
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
+
+var db = firebase.database()
 
 
 var appdata = [
@@ -53,11 +56,11 @@ app.use(cookieParser('Sauce'))//Parses the cookie for the session
 
 //EXPRESS SERVER FUNCTIONS
 app.get('/', function(request, response){
-  console.log(firebase.database().req())
   response.sendFile(__dirname + '/views/index.html')
 })
 
 app.post('/submit', bodyparser.json(), function(request, response){
+  
   var temp = []
   temp.push(request.body)
   response.writeHead(200, "OK", mimeExp)
