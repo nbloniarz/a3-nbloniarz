@@ -77,10 +77,10 @@ app.get('/getData', function(request, response){
   })
 })
 
-app.use('/loadLoginPage', function(request, response, next){
+app.get('/loadLoginPage', function(request, response){
   console.log("IN LOGIN")
-  response.redirect(__dirname + "/public/login.html")
-  next()
+  response.redirect("/login.html")
+  return
 })
 
 
