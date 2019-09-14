@@ -82,8 +82,9 @@ app.get('/getData', function(request, response){
 
 app.get('/loadLoginPage', function(request, response){
   console.log("IN LOGIN")
-  response.set(mimeMes)
-  response.render("/pubic/login.html")
+  //response.render("login")
+  //response.set(mimeMes)
+  response.redirect(301, "/login")
 })
 
 
