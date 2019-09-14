@@ -26,21 +26,23 @@
   </body>
   <script>
     const login = function(e){
-      const body = JSON.stringify({username: 'test', password:'test'})
+     /* const body = JSON.stringify({username: 'new', password:'new'})
       fetch( '/addUser', {
         method:'POST',
         headers: {'Content-Type': 'application/json'},
         body
       }).then(function(response){
       console.log(response)
-    })
-      
-      /*fetch( '/doLogin', {
-        method:'GET',
-      }).then(function(response){
-      console.log(response)
-      window.location = response.url
     })*/
+    const body = JSON.stringify({username: document.querySelector( '.user' ).value, password: document.querySelector( '.password' ).value}) 
+    fetch( '/doLogin', {
+        method:'POST',
+        headers: {'Content-Type': 'application/json'},
+        body
+      })
+      .then(function(response){
+      
+      })
     }
     
       window.onload = function(){

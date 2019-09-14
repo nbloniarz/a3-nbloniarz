@@ -32,6 +32,15 @@ const http = require( 'http' ),
       }
 
   
+passport.use(new LocalStrategy(function(username, password, done){
+  User.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) { return done(null, false); }
+      if (!user.verifyPassword(password)) { return done(null, false); }
+      return done(null, user);
+    });
+}))
+
 db.defaults({ users:[
   {username: "a", password:'a'},
   {username: "b", password:'b'},
@@ -94,10 +103,6 @@ app.get('/loadLoginPage', function(request, response){
   response.redirect("/login")
 })
 
-app.get('/doLogin', function(request, response){
-   
-})
-
 //POST REQUESTS
 app.post('/submit', bodyparser.json(), function(request, response){
   var temp = []
@@ -117,15 +122,12 @@ app.post('/delete', bodyparser.json(), function(request, response){
 })
 
 app.post('/addUser', bodyparser.json(), function(request, response){
- console.log("preAdd")
-  db.get('users').value().forEach(function(user){
-    console.log(user.username +  ' ' + user.password)
-  })
- // db.get('users').push({username: request.body.username, password: request.body.password}).write()
-  console.log("postAdd")
-  db.get('users').value().forEach(function(user){
-    console.log(user.username +  ' ' + user.password)
-  })})
+  db.get('users').push({username: request.body.username, password: request.body.password}).write()
+})
+
+app.post('/doLogin', bodyparser.json(), function(request, response){
+  console.log(request.body)
+})
 
 app.listen( process.env.PORT || port )
 
