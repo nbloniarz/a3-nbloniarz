@@ -85,9 +85,13 @@ app.get('/loadLoginPage', function(request, response){
 })
 
 app.get('/doLogin', function(request, response){
-  //do pass auth
-  console.log(firebase.firesotre)
-  //load admin page
+   db.collection('users').get()
+  .then((snapshot) =>
+       {
+     snapshot.forEach((doc) =>{
+       console.log(doc.id, '=>', doc.data())
+                      })
+   })
 })
 
 //POST REQUESTS
