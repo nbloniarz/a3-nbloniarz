@@ -34,7 +34,9 @@ const http = require( 'http' ),
   
 passport.use(new local(function(username, password, cb) {
   console.log("IN AUTHENTICATION")  
-  console.log(db.get('users').find({username: username,}).value())
+  //db.get('users').push({username: username, password: password}).write()
+  console.log(db.get('users').value())
+  if((db.get('users').find({username: username}).value())
   
   /*function(err, user) {
       if (err) { return cb(err); }
@@ -97,7 +99,7 @@ app.use(cookieSession({ //Creates a cookie for the session
 }))
 app.use(cookieParser('Sauce'))//Parses the cookie for the session
 app.use(passport.initialize())
-app.use(passport)
+app.use(passport.session())
 //app.use('/', router)
 
 //WORK ON COOKIE INTEGRATION
@@ -146,9 +148,8 @@ app.post('/addUser', bodyparser.json(), function(request, response){
   db.get('users').push({username: request.body.username, password: request.body.password}).write()
 })
 
-app.post('/doLogin', bodyparser.json(), function(request, response){
-  console.log("IN DOLOGIN" + request.body)
-  passport.authenticate('local')
+app.post('/doLogin', passport.authenticate('local'), bodyparser.json(), function(request, response){
+  
 })
 
 app.listen( process.env.PORT || port )
