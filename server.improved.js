@@ -116,12 +116,6 @@ const handleGet = function( request, response ) {
   }
 }
 
-const sendData = function(res){
-  res.writeHeader(200, "OK", {'Content-Type': 'plain/text'})
-  res.write(JSON.stringify(appdata))
-  res.end()
-}
-
 const handlePost = function( request, response ) {
   let dataString = ''
 

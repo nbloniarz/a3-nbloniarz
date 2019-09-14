@@ -157,7 +157,7 @@ function displayData(){
         let allData = JSON.parse(message)
         console.log(message)
         var html = "<table id=\"resultsTable\" class=\"resultsTable\"><tr><th colspan=\"6\">Existing Data</th></tr>"
-        html += "<tr><td>Index</td><td>First Name</td><td>Last Name</td><td>Day of Birth</td><td>Month of Birth</td><td>Sign</td></tr>"
+        html += "<tr><td>Index</td><td>First Name</td><td>Last Name</td><td>Day of Birth</td><td>Month of Birth</td><td>Sign</td><td>Created By</td></tr>"
         for(let i = 0; i< Object.keys(allData).length; i++){
           html += "<tr>" 
           html += "<td>" + i + "</td>"
@@ -166,6 +166,7 @@ function displayData(){
           html += "<td>" + allData[i].day + "</td>"
           html += "<td>" + allData[i].month + "</td>"
           html += "<td>" + allData[i].sign + "</td>"
+          html += "<td>" + allData[i].user + "</td>"
           html +="</tr>"
         }
         html += "</table>"
