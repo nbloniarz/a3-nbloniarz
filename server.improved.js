@@ -2,6 +2,10 @@ const http = require( 'http' ),
       fs   = require( 'fs' ),
       mime = require( 'mime' ),
       firebase = require('firebase'),
+      low = require('lowdb'),
+      FileSync = require('lowdb/adapters/FileSync'),
+      adapter = new FileSync('db.json'),
+      db = low(adapter),
       express = require('express'),
       passport = require('passport'),
       local = require('passport-local').Strategy,
@@ -27,10 +31,13 @@ const http = require( 'http' ),
         appId: "1:337634055490:web:821a136e7f93eff009e4db"
       }
 
-    
+  
+db.defaults({ users:[] }).write()
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-var db = firebase.database()
+var adb = firebase.database()
+
 
 //LOCAL DATA TO BE REMOVED
 var appdata = [
@@ -54,7 +61,6 @@ app.use(cookieSession({ //Creates a cookie for the session
   secret: 'Sauce'
 }))
 app.use(cookieParser('Sauce'))//Parses the cookie for the session
-app.engine('html', require('ejs').renderFile);
 
 
 //app.use(passport.initialize())
@@ -70,7 +76,7 @@ app.get('/', function(request, response){
 
 app.get('/getData', function(request, response){
   var temp = []
-  db.ref('/').once('value', function(snapShot){
+  adb.ref('/').once('value', function(snapShot){
     snapShot.forEach(function(child){
       temp.push(child.val())
     })  
@@ -85,13 +91,7 @@ app.get('/loadLoginPage', function(request, response){
 })
 
 app.get('/doLogin', function(request, response){
-   db.collection('users').get()
-  .then((snapshot) =>
-       {
-     snapshot.forEach((doc) =>{
-       console.log(doc.id, '=>', doc.data())
-                      })
-   })
+   
 })
 
 //POST REQUESTS
