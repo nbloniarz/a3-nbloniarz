@@ -1,3 +1,29 @@
+
+passport.use(new local(function(username, password, done) {
+  console.log("IN AUTHENTICATION") 
+  var user = db.get('users').find({username: username}).value()
+  if(!user){
+    console.log("NOT A USER")
+    return done(null, false, {message: "INVALID USERNAME & PASSWORD"})
+  }
+  else{
+    if(user.password === password){
+      console.log("VALID")
+      return done(null, user)
+    }
+    else{
+      console.log("INVALID")
+      return done(null, false, {message: "INVALID USERNAME & PASSWORD"})
+    }
+  }
+  
+  
+}))
+
+.///////////////////////
+///////////////////////
+//////////////
+
 server.improved.json
 const http = require( 'http' ),
       fs   = require( 'fs' ),
