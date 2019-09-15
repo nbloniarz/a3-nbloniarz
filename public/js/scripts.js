@@ -32,11 +32,17 @@ function doLogin(){
   body = JSON.stringify(body)
   fetch('/login', {
     method: 'POST',
-    body,
-    headers: {'Content-Type': 'application/json'}
+    headers: {'Content-Type': 'application/json'},
+    body
   })
-  .then(res => res.json())
-  .then(console.log)
+  .then(function(res){
+    if(res.status === 200){
+      console.log("HERE")
+    }
+    console.log(res.text())
+  })
+  //.then(res => res.json())
+  //.then(console.log)
   //.then(testCookies())
 }
 

@@ -91,8 +91,9 @@ app.get('/userData', function(req, res){
 app.post('/login',
          passport.authenticate('local'),
          function(req, res){
-           console.log('user: ' +  req.username)
+           //console.log('user: ' +  req.username)
            res.json({status: true})
+           //res.end("AHHHHH")
 })
 
 app.post('/test', function(req, res){
