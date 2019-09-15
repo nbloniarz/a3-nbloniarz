@@ -65,7 +65,13 @@ function getAllData(){
   })
 }
 
-function showVerified
+function showVerifiedUserData(){
+  //Create all of the space to do the function
+}
+
+function modifyInformation(){
+  
+}
 
 
 
