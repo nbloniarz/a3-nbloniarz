@@ -62,14 +62,16 @@ const myStrategy = function(username, password, done, other){
     })
     let user = users.find(__user => __user.username === username)
     if(user === undefined){
-      //not in database
+      console.log("NOT IN DB")//not in database
       return done(null, false, {message: 'user not found'})
     }
     else if(user.password === password){
       //found and correct
+      console.log("CORRECT")
       return done(null, {username, password}) 
     }
     else{
+      console.log("!PASSwORD")
       return done(null, false, {message: 'incorrect password'})
     }
   })    
@@ -125,9 +127,10 @@ app.get('/admin', function(req, res){
 })
 
 
-app.post('/login', passport.authenticate( 'local'),
+app.post('/login', passport.authenticate( 'local', {failureRedirect: '/'}),
          function(req, res){
-            res.json({status: true})  
+              res.end("DONE!!!!!")
+            //res.redirect('/admin')
 })
 
 app.post('/test', function(req, res){
