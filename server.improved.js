@@ -8,6 +8,8 @@ const http = require( 'http' ),
       express = require('express'),
       passport = require('passport'),
       local = require('passport-local').Strategy,
+      cookieParser = require('cookie-parser'),
+      session = require('express-session'),
       path = require('path'),
       dir  = 'public/',
       port = 3000,
@@ -17,7 +19,21 @@ const http = require( 'http' ),
       mimeMes = {'Content-Type': 'text/plain'}
     
 
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  var user = db.get('users').find({id: id}).value() 
+  if(!user){
+    done({message: "INVALID CREDENTIALS"}, null)
+  }
+  else{
+    done(null, {id: user.id, username: user.username})
+  }
   
+})  
+
 passport.use(new local(function(username, password, done) {
   console.log("IN AUTHENTICATION") 
   var user = db.get('users').find({username: username}).value()
@@ -38,29 +54,6 @@ passport.use(new local(function(username, password, done) {
   
   
 }))
-
-passport.serializeUser(function(user, cb) {
-  cb(null, user.username);
-});
-
-passport.deserializeUser(function(id, cb) {
-  var user = db.get('users').find({username: id}).value() 
-  if(!user){
-    cb({message: "INVALID CREDENTIALS"}, null)
-  }
-  else{
-    cb(null, {username: user.username})
-  }
-  
-})
-
-
-db.defaults({ users:[
-  {username: "a", password:'a'},
-  {username: "b", password:'b'},
-  {username: "c", password:'c'}
-] }).write()
-
 
 
 //LOCAL DATA TO BE REMOVED
@@ -102,7 +95,7 @@ app.get('/admin', function(request, response){
 
 //POST REQUESTS
 
-app.post('/doLogin', passport.authenticate('local', {successRedirect: '/admin', failureRedirect: "/login", failureFlash: true}), function(req, res){
+app.post('/doLogin', passport.authenticate('local', {successRedirect: '/admin', failureRedirect: "/index"}), function(req, res){
   console.log("SUCCESS?")
   res.end("SUCCESS")
 })
