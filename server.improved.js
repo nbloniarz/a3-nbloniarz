@@ -32,22 +32,36 @@ const http = require( 'http' ),
       }
 
   
-passport.use(new local(function(username, password, cb) {
-  console.log("IN AUTHENTICATION")  
+passport.use(new local(function(username, password, done) {
+  User.findOne({username: username, function(err, user){
+     if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+  }
+}              )
+  /*console.log("IN AUTHENTICATION")  
   console.log(db.get('users').value())
   var user = db.get('users').find({username: username}).value()
   if(user !== undefined){
     if(user.password === password){
       console.log("LOG EM IN")
+      return done(null, user)
+      
     }
     else{
       console.log("INCORRECT PASSWORD")
-      cb.failureRedirect
+      return done(null, false, {message: 'INCORRECT PASSWORD'})
     }
   }
   else{
     console.log("USER NOT FOUND")
-  }
+    return done(undefined)
+  }*/
 }))
 
 // Configure Passport authenticated session persistence.
