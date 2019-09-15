@@ -33,35 +33,21 @@ const http = require( 'http' ),
 
   
 passport.use(new local(function(username, password, done) {
-  User.findOne({username: username, function(err, user){
-     if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (!user.validPassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
-  }
-}              )
-  /*console.log("IN AUTHENTICATION")  
-  console.log(db.get('users').value())
+  console.log("IN AUTHENTICATION") 
   var user = db.get('users').find({username: username}).value()
-  if(user !== undefined){
-    if(user.password === password){
-      console.log("LOG EM IN")
-      return done(null, user)
-      
-    }
-    else{
-      console.log("INCORRECT PASSWORD")
-      return done(null, false, {message: 'INCORRECT PASSWORD'})
-    }
+  if(!user){
+    return done(null, false, {message: "INVALID USERNAME & PASSWORD"})
   }
   else{
-    console.log("USER NOT FOUND")
-    return done(undefined)
-  }*/
+    if(user.password === password){
+      return done(null, user)
+    }
+    else{
+      return done(null, false, {message: "INVALID USERNAME & PASSWORD"})
+    }
+  }
+  
+  
 }))
 
 // Configure Passport authenticated session persistence.
@@ -72,15 +58,19 @@ passport.use(new local(function(username, password, done) {
 // serializing, and querying the user record by ID from the database when
 // deserializing.
 passport.serializeUser(function(user, cb) {
-  cb(null, user.id);
+  cb(null, user.username);
 });
 
 passport.deserializeUser(function(id, cb) {
-  db.users.findById(id, function (err, user) {
-    if (err) { return cb(err); }
-    cb(null, user);
-  });
-});
+  var user = db.users.find({username: id}).value() 
+  if(!user){
+    cb({message: "INVALID CREDENTIALS"}, null)
+  }
+  else{
+    cb(null, {username: user.username})
+  }
+  
+})
 
 
 db.defaults({ users:[
@@ -144,6 +134,9 @@ app.get('/loadLoginPage', function(request, response){
   response.redirect("/login")
 })
 
+app.get('/admin', function(request, response){
+  response.redirect('/admin')
+})
 
 //POST REQUESTS
 app.post('/submit', bodyparser.json(), function(request, response){
@@ -167,19 +160,8 @@ app.post('/addUser', bodyparser.json(), function(request, response){
   db.get('users').push({username: request.body.username, password: request.body.password}).write()
 })
 
-app.post('/doLogin', function(req, res, next){
-  passport.authenticate('local', function(err, user, info){
-    if(err){
-      return next(err)
-    }
-    if(!user){
-      return res.redirect('/')
-    }
-    req.logIn(user, function(err){
-      return res.redirect('/admin')
-    })
-  })(req, res, next)
-           
+app.post('/doLogin', passport.authenticate('local', {failureRedirect: '/'}), function(req, res){
+  res.redirect('/admin')
 })
 
 app.listen( process.env.PORT || port )
