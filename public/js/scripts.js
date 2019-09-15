@@ -31,8 +31,7 @@ function logOut(){
     headers: {'Content-Type': 'application/json'},
   })
   .then(function(res){
-    console.log("LOGOUT: " + res.json())
-    window.location = 
+    window.location = res.url
   })
 }
 
@@ -61,19 +60,22 @@ function doLogin(){
   })
 }
 
-function testCookies(){
-  fetch('/test', {
-    method: 'POST',
-    credentials: 'include'
-  })
-  .then(console.log)
-  .catch(err => console.error)
-}
-
 function getAllData(){
   fetch('/allData', {
     method: 'GET',
     headers: {'Content-Type': 'application/json'},
+  }).then(function(res){
+    return res.json()
+  }).then(function(fin){
+    console.log(fin)
+  })
+}
+
+function getDataForUser(){
+  fetch('/allDataForUser', {
+    method: 'GET',
+    headers: {'Content-Type': 'application/json'},
+    credentials: 'include'
   }).then(function(res){
     return res.json()
   }).then(function(fin){

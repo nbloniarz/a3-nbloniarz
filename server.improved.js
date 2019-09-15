@@ -68,7 +68,6 @@ const myStrategy = function(username, password, done, other){
     }
     else if(user.password === password){
       //found and correct
-      console.log("CORRECT")
       return done(null, {username, password}) 
     }
     else{
@@ -118,12 +117,13 @@ app.get('/allData', function(req, res){
   })
 })
 
-app.get('/userData', function(req, res){
-  
+app.get('/allDataForUser', function(req, res){
+  console.log("IN DATA FOR USER")
+  console.log(req.credentials)
+  res.json({TEST: "TEST"})
 })
 
 app.get('/admin', function(req, res){
-  console.log("GET ADMIN")
   res.redirect('/admin')
 })
 
