@@ -118,9 +118,19 @@ app.get('/allData', function(req, res){
 })
 
 app.get('/allDataForUser', function(req, res){
-  console.log("IN DATA FOR USER")
-  console.log(req.credentials)
-  res.json({TEST: "TEST"})
+  db.ref('/data/').once('value')
+  .then(function(snapshot){
+    const data = []
+    snapshot.forEach(function(child){
+      if(child.val().user === req.cookies.TestCookie){
+        data.push(child.val())
+      }
+    })
+    res.json(data)
+  })
+  /*console.log("IN DATA FOR USER")
+  console.log(req.cookies.TestCookie)
+  res.json({TEST: "TEST"})*/
 })
 
 app.get('/admin', function(req, res){
@@ -129,7 +139,7 @@ app.get('/admin', function(req, res){
 
 app.get('/logout', function(req, res){
   req.logOut()
-  res.status(200).clearCookie('TEST COOKIE', {
+  res.status(200).clearCookie('TestCookie', {
     path: '/'
   })
   req.session.destroy(function(err){
@@ -140,7 +150,7 @@ app.get('/logout', function(req, res){
 
 app.post('/login', passport.authenticate( 'local'),
          function(req, res){
-          res.cookie("TEST COOKIE", req.body.username)
+          res.cookie("TestCookie", req.body.username)
           res.redirect('/admin.html')
            
 })
