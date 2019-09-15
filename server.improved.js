@@ -42,6 +42,7 @@ passport.use(new local(function(username, password, cb) {
     }
     else{
       console.log("INCORRECT PASSWORD")
+      cb.failureRedirect
     }
   }
   else{
@@ -129,6 +130,7 @@ app.get('/loadLoginPage', function(request, response){
   response.redirect("/login")
 })
 
+
 //POST REQUESTS
 app.post('/submit', bodyparser.json(), function(request, response){
   var temp = []
@@ -151,8 +153,19 @@ app.post('/addUser', bodyparser.json(), function(request, response){
   db.get('users').push({username: request.body.username, password: request.body.password}).write()
 })
 
-app.post('/doLogin', passport.authenticate('local'), bodyparser.json(), function(request, response){
-  
+app.post('/doLogin', function(req, res, next){
+  passport.authenticate('local', function(err, user, info){
+    if(err){
+      return next(err)
+    }
+    if(!user){
+      return res.redirect('/')
+    }
+    req.logIn(user, function(err){
+      return res.redirect('/admin')
+    })
+  })(req, res, next)
+           
 })
 
 app.listen( process.env.PORT || port )
