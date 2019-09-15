@@ -5,7 +5,8 @@ const mime = require( 'mime' ),
       downcase = require('express-uncapitalize'),
       cookieParser = require('cookie-parser'),
       session = require('express-session'),
-      flash = require()
+      flash = require('connect-flash'),
+      compression = require('compression'),
       router = express.Router(),
       passport = require('passport'),
       LocalStrategy = require('passport-local').Strategy,
@@ -43,7 +44,9 @@ let db = firebase.database()
 app.use(express.static(dir)) //Serves static pages
 app.use(cookieParser())//needed to read cookies for auth
 app.use(bodyparser.json())//can use json to parse req
-//app.use(downcase())//forces http requests to downcase
+app.use(downcase())//forces http requests to downcase
+app.use(flash())//Allows passport to flash messages to the user
+app.use(compression()) //Minimizes headers
 app.use(session({secret: 'kittens', saveUninitialized: false, resave: false}))//sets session secret
 //////////////////////////////////////////////////////////////////
 ////////////     PASSPORT     /////////////////////////////////
@@ -115,7 +118,7 @@ app.get('/userData', function(req, res){
   
 })
 
-app.post('/login', passport.authenticate( 'local', {successRedirect: '/admin', failureRedirect: '/'}),
+app.post('/login', passport.authenticate( 'local', {successRedirect: '/admin', failureRedirect: '/', failureFlash: true}),
          function(req, res){
          res.json({status: true})
   })
