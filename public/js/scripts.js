@@ -1,4 +1,70 @@
-// Add some Javascript code here, to run on the front end.
+function toggleLogin(){
+  var loginForm = document.getElementById('loginForm')
+  if(loginForm !== null){
+    if(loginForm.style.display === 'none'){
+      loginForm.style.display === 'inline'
+    }
+    else{
+      loginForm.style.display === 'none'
+    }
+  }
+  else{
+    createLoginForm()
+  }
+}
+
+function createLoginForm(){
+  <form action="" class="NEW" id="NEW">
+        <legend>Add New Entry</legend>
+        <label for="fName">First Name</label>
+        <input type="text" class="fName" value="your name here"><br>
+        <label for="lName">Last Name</label>
+        <input type="text" class="lName" value="your name here"><br>
+        
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //******** HIDE-SHOW *******//
 //Controls ADD NEW FORM
