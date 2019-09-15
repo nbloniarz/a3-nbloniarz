@@ -32,12 +32,11 @@ function doLogin(){
   body = JSON.stringify(body)
   fetch('/login', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body
+    body,
+    headers: {'Content-Type': 'application/json'}
   })
-  .then(function(response){
-    console.log(response)
-  })
+  .then(res => res.json())
+  .then(console.log)
 }
 
 

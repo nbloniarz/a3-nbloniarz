@@ -40,17 +40,11 @@ app.use(cookieParser())//needed to read cookies for auth
 app.use(bodyparser.json())//can use json to parse req
 app.use(downcase())//forces http requests to downcase
 app.use(session({secret: 'kittens', saveUninitialized: true, resave: true}))//sets session secret
-app.use(passport.initialize())//required for passport
-app.use(passport.session())//persistant login session
 //////////////////////////////////////////////////////////////////
 ////////////     PASSPORT     /////////////////////////////////
 ///////////////////////////////////////////////////////////////
-passport.use(new LocalStrategy({
-  usernameField: 'user',
-  passwordField: 'pass'
-  }, 
-  function(username, password, done){
-    const user = db.get('users').__find(__user => __user.username === username)
+const myStrategy = function(username, password, done){
+    const user = db.get('users').value().find(__user => __user.username === username)
     if(user === undefined){
       //not in database
       return(null, false, {message: 'user not found'})
@@ -62,16 +56,20 @@ passport.use(new LocalStrategy({
     else{
       return done(null, false, {message: 'incorrect password'})
     }
-  } 
-))
+  }
 
-passport.serializeUser(function(user, done){
+passport.use(new LocalStrategy(myStrategy))
+
+app.use(passport.initialize())//required for passport
+//app.use(passport.session())//persistant login session
+
+/*passport.serializeUser(function(user, done){
   done(null, user)
 })
 
 passport.deserializeUser(function(user, done){
   done(null, user)
-})
+})*/
 
 ///////////////////////////////////////////////////////////////
 ////////     GET/POST     /////////////////////////////////////
@@ -84,8 +82,11 @@ app.get('/userData', function(req, res){
   
 })
 
-app.post('/login', function(req, res){
-
+app.post('/login',
+         passport.authenticate('local'),
+         function(req, res){
+           console.log('user: ' +  req.username)
+           res.json({status: true})
 })
 
 app.post('/addUser', function(req, res){
