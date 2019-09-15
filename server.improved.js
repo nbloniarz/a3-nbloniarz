@@ -39,7 +39,7 @@ app.use(express.static('public')) //Serves static pages
 app.use(cookieParser())//needed to read cookies for auth
 app.use(bodyparser.json())//can use json to parse req
 app.use(downcase())//forces http requests to downcase
-app.use(session({secret: 'kittens', saveUnitialized: true, resave: true}))//sets session secret
+app.use(session({secret: 'kittens', saveUninitialized: true, resave: true}))//sets session secret
 app.use(passport.initialize())//required for passport
 app.use(passport.session())//persistant login session
 //////////////////////////////////////////////////////////////////
@@ -50,14 +50,19 @@ passport.use(new LocalStrategy({
   passwordField: 'pass'
   }, 
   function(username, password, done){
-    var user = {username: username, password: password}
-    if(user.username === 'foo' && user.password === 'bar'){
-      done(null, user)
+    const user = db.get('users').__find(__user => __user.username === username)
+    if(user === undefined){
+      //not in database
+      return(null, false, {message: 'user not found'})
+    }
+    else if(user.password === password){
+      //found and correct
+      return(null, {username, password}) 
     }
     else{
-      done(null, false)
+      return done(null, false, {message: 'incorrect password'})
     }
-} 
+  } 
 ))
 
 passport.serializeUser(function(user, done){
@@ -71,13 +76,28 @@ passport.deserializeUser(function(user, done){
 ///////////////////////////////////////////////////////////////
 ////////     GET/POST     /////////////////////////////////////
 ////////////////////////////////////////////////////////////////
+app.get('/allData', function(req, res){
+  
+})
+
+app.get('/userData', function(req, res){
+  
+})
+
 app.post('/login', function(req, res){
-  let userObj = req.body
-  console.log(userObj)
+
 })
 
 app.post('/addUser', function(req, res){
-  
+  //NO PASSPOR NEEDED ALL LOWDB
+})
+
+app.post('/removeUser', function(req, res){
+    //NO PASSPOR NEEDED ALL LOWDB
+})
+
+app.post('/modifyUser', function(req, res){
+    //NO PASSPOR NEEDED ALL LOWDB
 })
 
 
