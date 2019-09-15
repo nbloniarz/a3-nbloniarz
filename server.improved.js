@@ -73,9 +73,11 @@ const horoscopes = [
 app.use(express.static('public')) //Serves static pages
 app.use(bodyparser.json())//Parses HTTP request body into JSON
 //app.use(downcase)//Forces downcasing of entire url after /
+app.use(cookieParser())
+
+
 app.use(passport.initialize())
 app.use(passport.session())
-//app.use('/', router)
 
 //WORK ON COOKIE INTEGRATION
 
@@ -95,9 +97,8 @@ app.get('/admin', function(request, response){
 
 //POST REQUESTS
 
-app.post('/doLogin', passport.authenticate('local', {successRedirect: '/admin', failureRedirect: "/index"}), function(req, res){
-  console.log("SUCCESS?")
-  res.end("SUCCESS")
+app.post('/doLogin', passport.authenticate('local', { failureRedirect: "/index"}), function(req, res){
+  res.redirect('/admin')
 })
 
 app.listen( process.env.PORT || port )
