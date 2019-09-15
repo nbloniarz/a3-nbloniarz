@@ -26,10 +26,10 @@ function createLoginForm(){
 }
 
 function doLogin(){
-  let username = document.getElementById("uName").value
-  let password = document.getElementById("pass").value
-  let body = JSON.stringify({username: username, password: password})
-  
+  let uName = document.getElementById("uName").value
+  let pass = document.getElementById("pass").value
+  let body = {username: uName, password: pass}
+  body = JSON.stringify(body)
   fetch('/login', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},

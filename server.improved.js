@@ -19,12 +19,11 @@ const http = require( 'http' ),
 //////////////////////////////////////////////////////////////////
 app.use(express.static('public')) //Serves static pages
 app.use(bodyparser.json())//can use json to parse req
-app.use(downcase)
+app.use(downcase())
 //////////////////////////////////////////////////////////////////
-app.post('/login', function(req, res){
+
+app.post('/login', bodyparser.json(), function(req, res){
   console.log(req.body)
-  //let temp = req.body
-  //res.send(JSON.stringify(temp))
 })
 
 
