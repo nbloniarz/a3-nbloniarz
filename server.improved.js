@@ -1,6 +1,4 @@
-const http = require( 'http' ),
-      fs   = require( 'fs' ),
-      mime = require( 'mime' ),
+const mime = require( 'mime' ),
       ///LOWDB consts
       low = require('lowdb'),
       FileSync = require('lowdb/adapters/FileSync'),
@@ -27,7 +25,17 @@ const http = require( 'http' ),
 ////////////     LowDB     /////////////////////////////////
 ///////////////////////////////////////////////////////////////
 
+const appdata = [
+  {horoscope: "Leo", user: "admin"},
+  {horoscope: "Capricorn", user: "test"}
+]
 
+const users = [
+  {username: 'admin', password: 'admin'},
+  {username: 'test', password: 'test'}
+]
+
+db.defaults({post: appdata, users: users}).write()
 
 
 
@@ -35,16 +43,16 @@ const http = require( 'http' ),
 ////////////     APP CONFIG     /////////////////////////////////
 ///////////////////////////////////////////////////////////////
 
-app.use(express.static('public')) //Serves static pages
+app.use(express.static(dir)) //Serves static pages
 app.use(cookieParser())//needed to read cookies for auth
 app.use(bodyparser.json())//can use json to parse req
-app.use(downcase())//forces http requests to downcase
+//app.use(downcase())//forces http requests to downcase
 app.use(session({secret: 'kittens', saveUninitialized: false, resave: false}))//sets session secret
 //////////////////////////////////////////////////////////////////
 ////////////     PASSPORT     /////////////////////////////////
 ///////////////////////////////////////////////////////////////
 const myStrategy = function(username, password, done){
-    let user = db.get('users').value().find(__user => __user.username === username)
+    const user = db.get('users').value().find(__user => __user.username === username)
     if(user === undefined){
       //not in database
       return(null, false, {message: 'user not found'})
@@ -66,7 +74,7 @@ app.use(passport.session())//persistant login session
 passport.serializeUser( (user, done) => done(null, user.username))
 
 passport.deserializeUser((username, done) => {
-  let user = db.get('users').value().find(u => u.username === username)
+  const user = db.get('users').value().find(u => u.username === username)
   console.log('deserializing: ', name)
   if(user !== undefined){
     done(null, user)
@@ -88,13 +96,10 @@ app.get('/userData', function(req, res){
   
 })
 
-app.post('/login',
-         passport.authenticate('local'),
+app.post('/login', passport.authenticate( 'local'),
          function(req, res){
-           //console.log('user: ' +  req.username)
-           res.json({status: true})
-           //res.end("AHHHHH")
-})
+        res.json({status: true})
+  })
 
 app.post('/test', function(req, res){
   console.log('auth with cookie', req.user)
