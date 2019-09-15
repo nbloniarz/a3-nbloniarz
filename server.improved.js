@@ -44,6 +44,7 @@ let db = firebase.database()
 app.use(express.static(dir)) //Serves static pages
 app.use(cookieParser())//needed to read cookies for auth
 app.use(bodyparser.json())//can use json to parse req
+app.use(bodyparser.urlencoded({ extended: false }));
 app.use(downcase())//forces http requests to downcase
 app.use(flash())//Allows passport to flash messages to the user
 app.use(compression()) //Minimizes headers
@@ -118,9 +119,15 @@ app.get('/userData', function(req, res){
   
 })
 
+app.get('/admin', function(req, res){
+  console.log("GET ADMIN")
+  res.redirect('/admin')
+})
+
 app.post('/login', passport.authenticate( 'local', {successRedirect: '/admin', failureRedirect: '/', failureFlash: true}),
          function(req, res){
-         res.json({status: true})
+          res.redirect('/admin')
+         //res.json({status: true})
   })
 
 app.post('/test', function(req, res){

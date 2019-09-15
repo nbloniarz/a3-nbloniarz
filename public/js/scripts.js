@@ -38,6 +38,8 @@ function doLogin(){
   .then(function(res){
     if(res.status === 200){
       console.log("HERE")
+      console.log(res)
+      //window.location = res.successRedirect
     }
     else{
       console.log("WRONG")
