@@ -11,8 +11,9 @@ const http = require( 'http' ),
       downcase = require('express-uncapitalize'),
       cookieParser = require('cookie-parser'),
       session = require('express-session'),
+      router = express.Router(),
       passport = require('passport'),
-      local = require('passport-local').Strategy,
+      LocalStrategy = require('passport-local').Strategy,
       app = express(),
       bodyparser = require('body-parser'),
       path = require('path'),
@@ -21,18 +22,62 @@ const http = require( 'http' ),
       port = 3000,
       mimeExp = {'Content-Type': 'application/json'},
       mimeMes = {'Content-Type': 'text/plain'}
+
 //////////////////////////////////////////////////////////////////
+////////////     LowDB     /////////////////////////////////
+///////////////////////////////////////////////////////////////
+
+
+
+
+
+//////////////////////////////////////////////////////////////////
+////////////     APP CONFIG     /////////////////////////////////
+///////////////////////////////////////////////////////////////
+
 app.use(express.static('public')) //Serves static pages
 app.use(cookieParser())//needed to read cookies for auth
 app.use(bodyparser.json())//can use json to parse req
 app.use(downcase())//forces http requests to downcase
-app.use(session({secret: 'kittens'}))//sets session secret
+app.use(session({secret: 'kittens', saveUnitialized: true, resave: true}))//sets session secret
 app.use(passport.initialize())//required for passport
 app.use(passport.session())//persistant login session
 //////////////////////////////////////////////////////////////////
+////////////     PASSPORT     /////////////////////////////////
+///////////////////////////////////////////////////////////////
+passport.use(new LocalStrategy({
+  usernameField: 'user',
+  passwordField: 'pass'
+  }, 
+  function(username, password, done){
+    var user = {username: username, password: password}
+    if(user.username === 'foo' && user.password === 'bar'){
+      done(null, user)
+    }
+    else{
+      done(null, false)
+    }
+} 
+))
 
-app.post('/login', bodyparser.json(), function(req, res){
+passport.serializeUser(function(user, done){
+  done(null, user)
+})
+
+passport.deserializeUser(function(user, done){
+  done(null, user)
+})
+
+///////////////////////////////////////////////////////////////
+////////     GET/POST     /////////////////////////////////////
+////////////////////////////////////////////////////////////////
+app.post('/login', function(req, res){
   let userObj = req.body
+  console.log(userObj)
+})
+
+app.post('/addUser', function(req, res){
+  
 })
 
 
