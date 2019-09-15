@@ -37,6 +37,16 @@ function doLogin(){
   })
   .then(res => res.json())
   .then(console.log)
+  //.then(testCookies())
+}
+
+function testCookies(){
+  fetch('/test', {
+    method: 'POST',
+    credentials: 'include'
+  })
+  .then(console.log)
+  .catch(err => console.error)
 }
 
 

@@ -39,12 +39,12 @@ app.use(express.static('public')) //Serves static pages
 app.use(cookieParser())//needed to read cookies for auth
 app.use(bodyparser.json())//can use json to parse req
 app.use(downcase())//forces http requests to downcase
-app.use(session({secret: 'kittens', saveUninitialized: true, resave: true}))//sets session secret
+app.use(session({secret: 'kittens', saveUninitialized: false, resave: false}))//sets session secret
 //////////////////////////////////////////////////////////////////
 ////////////     PASSPORT     /////////////////////////////////
 ///////////////////////////////////////////////////////////////
 const myStrategy = function(username, password, done){
-    const user = db.get('users').value().find(__user => __user.username === username)
+    let user = db.get('users').value().find(__user => __user.username === username)
     if(user === undefined){
       //not in database
       return(null, false, {message: 'user not found'})
@@ -61,15 +61,21 @@ const myStrategy = function(username, password, done){
 passport.use(new LocalStrategy(myStrategy))
 
 app.use(passport.initialize())//required for passport
-//app.use(passport.session())//persistant login session
+app.use(passport.session())//persistant login session
 
-/*passport.serializeUser(function(user, done){
-  done(null, user)
+passport.serializeUser( (user, done) => done(null, user.username))
+
+passport.deserializeUser((username, done) => {
+  let user = db.get('users').value().find(u => u.username === username)
+  console.log('deserializing: ', name)
+  if(user !== undefined){
+    done(null, user)
+  }
+  else{
+    done(null, false, {message: 'user not found; session not restored'})
+  }
 })
 
-passport.deserializeUser(function(user, done){
-  done(null, user)
-})*/
 
 ///////////////////////////////////////////////////////////////
 ////////     GET/POST     /////////////////////////////////////
@@ -87,6 +93,11 @@ app.post('/login',
          function(req, res){
            console.log('user: ' +  req.username)
            res.json({status: true})
+})
+
+app.post('/test', function(req, res){
+  console.log('auth with cookie', req.user)
+  res.json({status:'success'})
 })
 
 app.post('/addUser', function(req, res){
