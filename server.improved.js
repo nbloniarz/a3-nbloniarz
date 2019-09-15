@@ -1,9 +1,5 @@
 const mime = require( 'mime' ),
-      ///LOWDB consts
-      low = require('lowdb'),
-      FileSync = require('lowdb/adapters/FileSync'),
-      adapter = new FileSync('db.json'),
-      db = low(adapter),
+      firebase = require('firebase'),
       //EXPRESS consts
       express = require('express'),      
       downcase = require('express-uncapitalize'),
@@ -14,7 +10,6 @@ const mime = require( 'mime' ),
       LocalStrategy = require('passport-local').Strategy,
       app = express(),
       bodyparser = require('body-parser'),
-      path = require('path'),
       //GENERAL consts
       dir  = 'public/',
       port = 3000,
@@ -22,21 +17,16 @@ const mime = require( 'mime' ),
       mimeMes = {'Content-Type': 'text/plain'}
 
 //////////////////////////////////////////////////////////////////
-////////////     LowDB     /////////////////////////////////
+////////////     FIREBASE     /////////////////////////////////
 ///////////////////////////////////////////////////////////////
 
-const appdata = [
-  {horoscope: "Leo", user: "admin"},
-  {horoscope: "Capricorn", user: "test"}
-]
 
-const users = [
-  {username: 'admin', password: 'admin'},
-  {username: 'test', password: 'test'}
-]
+const firebaseConfig = {
+  
+}
 
-db.defaults({post: appdata, users: users}).write()
-
+firebase.initializeApp(firebaseConfig);
+var adb = firebase.database()
 
 
 //////////////////////////////////////////////////////////////////
