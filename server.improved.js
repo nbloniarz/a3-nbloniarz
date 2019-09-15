@@ -83,16 +83,16 @@ passport.deserializeUser((username, done) => {
     snapshot.forEach(function(child){
       users.push(child.val())
     })
-      const user = db.get('users').value().find(u => u.username === username)
-
+    const user = users.find(u => u.username === username)
+    console.log('deserializing: ', username)
+    if(user !== undefined){
+      done(null, user)
+    }
+    else{
+      done(null, false, {message: 'user not found; session not restored'})
+    }
   })
-  console.log('deserializing: ', username)
-  if(user !== undefined){
-    done(null, user)
-  }
-  else{
-    done(null, false, {message: 'user not found; session not restored'})
-  }
+  
 })
 
 
@@ -100,8 +100,14 @@ passport.deserializeUser((username, done) => {
 ////////     GET/POST     /////////////////////////////////////
 ////////////////////////////////////////////////////////////////
 app.get('/allData', function(req, res){
-  let data = db.get('users').value()
-  res.json(data)
+  db.ref('/data/').once('value')
+  .then(function(snapshot){
+    const data = []
+    snapshot.forEach(function(child){
+      data.push(child.val())
+    })
+    res.json(data)
+  })
 })
 
 app.get('/userData', function(req, res){

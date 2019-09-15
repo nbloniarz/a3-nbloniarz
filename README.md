@@ -61,9 +61,7 @@ Include a very brief summary of your project here. Images are encouraged, along 
 - the five Express middleware packages you used and a short (one sentence) summary of what each one does.
 
 ## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
-- **Tech Achievement 2**: I used over ten Express middleware packages, enabling me to create a server that...
-- **Google Firebase Integration**: All data is stored remotely on google firebase allowing for persistance
+- **Google Firebase Integration**: All data is stored remotely on google firebase allowing for persistance and multiple read/writes at once
 
 
 ### Design/Evaluation Achievements

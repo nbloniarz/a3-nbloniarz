@@ -26,20 +26,10 @@ function createLoginForm(){
 }
 
 function doLogin(){
-  //e.preventDefault()
   let uName = document.getElementById("uName").value
   let pass = document.getElementById("pass").value
   let body = {username: uName, password: pass}
   body = JSON.stringify(body)
-  console.log(body)
-  /*fetch('/allData', {
-    method: 'GET',
-    headers: {'Content-Type': 'application/json'},
-  }).then(function(res){
-    return res.json()
-  }).then(function(fin){
-    console.log(fin)
-  })*/
   fetch('/login', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -64,7 +54,18 @@ function testCookies(){
   .catch(err => console.error)
 }
 
+function getAllData(){
+  fetch('/allData', {
+    method: 'GET',
+    headers: {'Content-Type': 'application/json'},
+  }).then(function(res){
+    return res.json()
+  }).then(function(fin){
+    console.log(fin)
+  })
+}
 
+function showVerified
 
 
 
