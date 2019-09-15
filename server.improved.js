@@ -5,7 +5,8 @@ const http = require( 'http' ),
       FileSync = require('lowdb/adapters/FileSync'),
       adapter = new FileSync('db.json'),
       db = low(adapter),
-      express = require('express'),
+      express = require('express'),      
+      downcase = require('express-uncapitalize'),
       passport = require('passport'),
       local = require('passport-local').Strategy,
       path = require('path'),
@@ -18,7 +19,13 @@ const http = require( 'http' ),
 //////////////////////////////////////////////////////////////////
 app.use(express.static('public')) //Serves static pages
 app.use(bodyparser.json())//can use json to parse req
-
+app.use(downcase)
+//////////////////////////////////////////////////////////////////
+app.post('/login', function(req, res){
+  console.log(req.body)
+  //let temp = req.body
+  //res.send(JSON.stringify(temp))
+})
 
 
 app.listen( process.env.PORT || port )

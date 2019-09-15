@@ -17,12 +17,27 @@ function createLoginForm(){
   var html =  "<form action=\"\" class=\"loginForm\" id=\"loginForm\" style=\"display : inline\">"
       html += "<legend>Login</legend>"
       html += " <label for=\"username\">username</label>"
-      html += "<input type=\"text\" class=\"uName\" value=\"username\"><br>"
+      html += "<input type=\"text\" id=\"uName\" value=\"username\"><br>"
       html += "<label for=\"pass\">password</label>"
-      html += "<input type=\"password\" class=\"pass\" value=\"password\"><br>"
-      html += "<button id=\"loginUser\">Log In</button></form>"
+      html += "<input type=\"password\" id=\"pass\" value=\"password\"><br>"
+      html += "<button type=\"button\" onclick=\"doLogin()\"id=\"loginUser\">Log In</button></form>"
   document.getElementById("Container").innerHTML = ""
   document.getElementById("Container").innerHTML = html
+}
+
+function doLogin(){
+  let username = document.getElementById("uName").value
+  let password = document.getElementById("pass").value
+  let body = JSON.stringify({username: username, password: password})
+  
+  fetch('/login', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body
+  })
+  .then(function(response){
+    console.log(response)
+  })
 }
 
 
