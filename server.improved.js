@@ -130,8 +130,9 @@ app.get('/admin', function(req, res){
 
 app.post('/login', passport.authenticate( 'local'),
          function(req, res){
-          res.json({status: true, userName: req.body.username})
-           res.redirect('/admin.html')
+          res.cookie("TEST COOKIE", req.username)
+          res.redirect('/admin.html')
+           
 })
 
 app.post('/test', function(req, res){

@@ -37,8 +37,10 @@ function doLogin(){
   })
   .then(function(res){
     if(res.status === 200){
-      console.log(res.user)
+      //console.log(res.json().userName)
       console.log("HERE")
+      console.log(res)
+      //console.log(res.json().url)
       window.location = res.url
     }
     else{
