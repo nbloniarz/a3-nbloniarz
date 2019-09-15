@@ -5,6 +5,7 @@ const mime = require( 'mime' ),
       downcase = require('express-uncapitalize'),
       cookieParser = require('cookie-parser'),
       session = require('express-session'),
+      flash = require()
       router = express.Router(),
       passport = require('passport'),
       LocalStrategy = require('passport-local').Strategy,
@@ -114,7 +115,7 @@ app.get('/userData', function(req, res){
   
 })
 
-app.post('/login', passport.authenticate( 'local'),
+app.post('/login', passport.authenticate( 'local', {successRedirect: '/admin', failureRedirect: '/'}),
          function(req, res){
          res.json({status: true})
   })
