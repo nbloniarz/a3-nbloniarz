@@ -5,7 +5,7 @@ const mime = require( 'mime' ),
       downcase = require('express-uncapitalize'),
       cookieParser = require('cookie-parser'),
       session = require('express-session'),
-      flash = require('connect-flash'),
+      flash = require('express-flash'),
       compression = require('compression'),
       router = express.Router(),
       passport = require('passport'),
@@ -124,10 +124,14 @@ app.get('/admin', function(req, res){
   res.redirect('/admin')
 })
 
-app.post('/login', passport.authenticate( 'local', {successRedirect: '/admin', failureFlash: true}),
+app.post('/login', function(req, res, next){
+  passport.authenticate('local')
+})
+
+/*app.post('/login', passport.authenticate( 'local', {successFlash: 'Welcome!'}),
          function(req, res, next){
          res.json({status: true})
-  })
+  })*/
 
 app.post('/test', function(req, res){
   console.log('auth with cookie', req.user)
