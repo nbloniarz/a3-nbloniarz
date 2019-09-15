@@ -124,14 +124,11 @@ app.get('/admin', function(req, res){
   res.redirect('/admin')
 })
 
-app.post('/login', function(req, res, next){
-  passport.authenticate('local')
-})
 
-/*app.post('/login', passport.authenticate( 'local', {successFlash: 'Welcome!'}),
-         function(req, res, next){
-         res.json({status: true})
-  })*/
+app.post('/login', passport.authenticate( 'local'),
+         function(req, res){
+            res.json({status: true})  
+})
 
 app.post('/test', function(req, res){
   console.log('auth with cookie', req.user)

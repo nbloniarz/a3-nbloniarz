@@ -38,11 +38,11 @@ function doLogin(){
   .then(function(res){
     if(res.status === 200){
       console.log("HERE")
-      console.log(res.url)
-      //window.location = res.url
+      console.log(res.json())
+      //window.location = "https://nbloniarz-a3-nbloniarz.glitch.me/admin"
     }
     else{
-      console.log("WRONG")
+      //window.location = "https://nbloniarz-a3-nbloniarz.glitch.me/"
     }
   })
 }
