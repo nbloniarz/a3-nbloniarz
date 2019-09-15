@@ -11,20 +11,15 @@
   </head>
   <body>
     <nav>
-      <h1>Horoscope Generator</h1>
       <ul>
-        <li><button onclick="loadLogin()">Login</button></li>
+        <li><button onclick="toggleLogin()">Login</button></li>
       </ul>
     </nav>
+    <div id="Container">
+      
+    </div>
   </body>
   <script>
-  function loadLogin(){
-    fetch( '/loadLoginPage', {
-        method:'GET',
-      }).then(function(response){
-      console.log(response)
-      window.location = response.url
-    })
-  }
+  
   </script>
 </html>

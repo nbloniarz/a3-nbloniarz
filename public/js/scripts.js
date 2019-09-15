@@ -2,10 +2,10 @@ function toggleLogin(){
   var loginForm = document.getElementById('loginForm')
   if(loginForm !== null){
     if(loginForm.style.display === 'none'){
-      loginForm.style.display === 'inline'
+      loginForm.style.display = 'inline'
     }
     else{
-      loginForm.style.display === 'none'
+      loginForm.style.display = 'none'
     }
   }
   else{
@@ -14,13 +14,15 @@ function toggleLogin(){
 }
 
 function createLoginForm(){
-  <form action="" class="NEW" id="NEW">
-        <legend>Add New Entry</legend>
-        <label for="fName">First Name</label>
-        <input type="text" class="fName" value="your name here"><br>
-        <label for="lName">Last Name</label>
-        <input type="text" class="lName" value="your name here"><br>
-        
+  var html =  "<form action=\"\" class=\"loginForm\" id=\"loginForm\" style=\"display : inline\">"
+      html += "<legend>Login</legend>"
+      html += " <label for=\"username\">username</label>"
+      html += "<input type=\"text\" class=\"uName\" value=\"username\"><br>"
+      html += "<label for=\"pass\">password</label>"
+      html += "<input type=\"password\" class=\"pass\" value=\"password\"><br>"
+      html += "<button id=\"loginUser\">Log In</button></form>"
+  document.getElementById("Container").innerHTML = ""
+  document.getElementById("Container").innerHTML = html
 }
 
 
