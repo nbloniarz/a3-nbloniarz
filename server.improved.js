@@ -22,11 +22,17 @@ const mime = require( 'mime' ),
 
 
 const firebaseConfig = {
-  
+   apiKey: "AIzaSyAuOGEGSNJLe2fxv0iHQwigSY8nIj2pb30",
+   authDomain: "a2-nbloniarz.firebaseapp.com",
+   databaseURL: "https://a2-nbloniarz.firebaseio.com",
+   projectId: "a2-nbloniarz",
+   storageBucket: "a2-nbloniarz.appspot.com",
+   messagingSenderId: "337634055490",
+   appId: "1:337634055490:web:821a136e7f93eff009e4db"
 }
 
 firebase.initializeApp(firebaseConfig);
-var adb = firebase.database()
+let db = firebase.database()
 
 
 //////////////////////////////////////////////////////////////////
@@ -42,7 +48,13 @@ app.use(session({secret: 'kittens', saveUninitialized: false, resave: false}))//
 ////////////     PASSPORT     /////////////////////////////////
 ///////////////////////////////////////////////////////////////
 const myStrategy = function(username, password, done){
-    const user = db.get('users').value().find(__user => __user.username === username)
+  db.ref('/users/').once('value')
+  .then(function(snapshot){
+    const users = []
+    snapshot.forEach(function(child){
+      users.push(child.val())
+    })
+    let user = users.find(__user => __user.username === username)
     if(user === undefined){
       //not in database
       return done(null, false, {message: 'user not found'})
@@ -54,7 +66,8 @@ const myStrategy = function(username, password, done){
     else{
       return done(null, false, {message: 'incorrect password'})
     }
-  }
+  })    
+}
 
 passport.use(new LocalStrategy(myStrategy))
 
@@ -64,7 +77,15 @@ app.use(passport.session())//persistant login session
 passport.serializeUser( (user, done) => done(null, user.username))
 
 passport.deserializeUser((username, done) => {
-  const user = db.get('users').value().find(u => u.username === username)
+  db.ref('/users/').once('value')
+  .then(function(snapshot){
+    const users = []
+    snapshot.forEach(function(child){
+      users.push(child.val())
+    })
+      const user = db.get('users').value().find(u => u.username === username)
+
+  })
   console.log('deserializing: ', username)
   if(user !== undefined){
     done(null, user)
