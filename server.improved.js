@@ -137,9 +137,9 @@ app.get('/loadLoginPage', function(request, response){
   response.redirect("/login")
 })
 
-/*app.get('/admin', function(request, response){
+app.get('/admin', function(request, response){
   response.redirect('/admin')
-})*/
+})
 
 //POST REQUESTS
 app.post('/submit', bodyparser.json(), function(request, response){
@@ -163,11 +163,9 @@ app.post('/addUser', bodyparser.json(), function(request, response){
   db.get('users').push({username: request.body.username, password: request.body.password}).write()
 })
 
-app.post('/doLogin', passport.authenticate('local', {failureRedirect: '/'}), function(req, res){
+app.post('/doLogin', passport.authenticate('local', {failureRedirect: "/"}), function(req, res){
   console.log("SUCCESS?")
-  res.end("AHHHHH")
-  res.redirect("/index")
-  console.log(res)
+  res.end("SUCCESS")
 })
 
 app.listen( process.env.PORT || port )

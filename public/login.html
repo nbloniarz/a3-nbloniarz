@@ -41,9 +41,16 @@
         body
       })
       .then(function(response){
-      console.log("RESPONDED")
-          console.log(response)
+      console.log(response.text())
+      if(response.text()){
+        fetch( '/admin', {
+          method:'GET',
+          headers: {'Content-Type': 'application/json'},
+      }).then(function( res){
           window.location = response.url
+              })
+      }
+          //window.location = response.url
       })
     }
     
