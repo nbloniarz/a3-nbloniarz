@@ -127,10 +127,19 @@ app.get('/admin', function(req, res){
   res.redirect('/admin')
 })
 
+app.get('/logout', function(req, res){
+  req.logOut()
+  res.status(200).clearCookie('TEST COOKIE', {
+    path: '/'
+  })
+  req.session.destroy(function(err){
+    res.redirect('/')
+  })
+})
 
 app.post('/login', passport.authenticate( 'local'),
          function(req, res){
-          res.cookie("TEST COOKIE", req.username)
+          res.cookie("TEST COOKIE", req.body.username)
           res.redirect('/admin.html')
            
 })

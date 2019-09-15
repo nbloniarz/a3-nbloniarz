@@ -25,6 +25,17 @@ function createLoginForm(){
   document.getElementById("Container").innerHTML = html
 }
 
+function logOut(){
+  fetch('/logout', {
+    method:'GET',
+    headers: {'Content-Type': 'application/json'},
+  })
+  .then(function(res){
+    console.log("LOGOUT: " + res)
+    
+  })
+}
+
 function doLogin(){
   let uName = document.getElementById("uName").value
   let pass = document.getElementById("pass").value
