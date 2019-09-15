@@ -1,5 +1,18 @@
 {
   "users": [
-    {username: "username', password: 'password'}
+    {
+      "username": "username",
+      "password": "password"
+    }
+  ],
+  "post": [
+    {
+      "horoscope": "Leo",
+      "user": "admin"
+    },
+    {
+      "horoscope": "Capricorn",
+      "user": "test"
+    }
   ]
 }

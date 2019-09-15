@@ -89,7 +89,9 @@ passport.deserializeUser((username, done) => {
 ////////     GET/POST     /////////////////////////////////////
 ////////////////////////////////////////////////////////////////
 app.get('/allData', function(req, res){
-  
+  let data = db.get('users').value()
+  res.body = data
+  res.end()
 })
 
 app.get('/userData', function(req, res){
@@ -98,7 +100,7 @@ app.get('/userData', function(req, res){
 
 app.post('/login', passport.authenticate( 'local'),
          function(req, res){
-        res.json({status: true})
+         res.json({status: true})
   })
 
 app.post('/test', function(req, res){
