@@ -32,13 +32,15 @@ function doLogin(){
   let body = {username: uName, password: pass}
   body = JSON.stringify(body)
   console.log(body)
-  fetch('/allData', {
+  /*fetch('/allData', {
     method: 'GET',
     headers: {'Content-Type': 'application/json'},
   }).then(function(res){
-     console.log(res.text())
-  })
-  /*fetch('/login', {
+    return res.json()
+  }).then(function(fin){
+    console.log(fin)
+  })*/
+  fetch('/login', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body
@@ -47,11 +49,10 @@ function doLogin(){
     if(res.status === 200){
       console.log("HERE")
     }
-    console.log(res.text())
-  })*/
-  //.then(res => res.json())
-  //.then(console.log)
-  //.then(testCookies())
+    else{
+      console.log("WRONG")
+    }
+  })
 }
 
 function testCookies(){

@@ -55,11 +55,11 @@ const myStrategy = function(username, password, done){
     const user = db.get('users').value().find(__user => __user.username === username)
     if(user === undefined){
       //not in database
-      return(null, false, {message: 'user not found'})
+      return done(null, false, {message: 'user not found'})
     }
     else if(user.password === password){
       //found and correct
-      return(null, {username, password}) 
+      return done(null, {username, password}) 
     }
     else{
       return done(null, false, {message: 'incorrect password'})
@@ -75,7 +75,7 @@ passport.serializeUser( (user, done) => done(null, user.username))
 
 passport.deserializeUser((username, done) => {
   const user = db.get('users').value().find(u => u.username === username)
-  console.log('deserializing: ', name)
+  console.log('deserializing: ', username)
   if(user !== undefined){
     done(null, user)
   }
@@ -90,8 +90,7 @@ passport.deserializeUser((username, done) => {
 ////////////////////////////////////////////////////////////////
 app.get('/allData', function(req, res){
   let data = db.get('users').value()
-  res.body = data
-  res.end()
+  res.json(data)
 })
 
 app.get('/userData', function(req, res){
