@@ -3,6 +3,7 @@ const mime = require( 'mime' ),
       //EXPRESS consts
       express = require('express'),  
       connect = require('connect'),
+      favicon = require('serve-favicon'),
       downcase = require('express-uncapitalize'),
       cookieParser = require('cookie-parser'),
       session = require('express-session'),
@@ -25,7 +26,6 @@ const mime = require( 'mime' ),
 
 
 const firebaseConfig = {
-   apiKey: "AIzaSyAuOGEGSNJLe2fxv0iHQwigSY8nIj2pb30",
    authDomain: "a2-nbloniarz.firebaseapp.com",
    databaseURL: "https://a2-nbloniarz.firebaseio.com",
    projectId: "a2-nbloniarz",
@@ -50,6 +50,7 @@ app.use(connect())
 app.use(downcase())//forces http requests to downcase
 app.use(flash())//Allows passport to flash messages to the user
 app.use(compression()) //Minimizes headers
+//app.use(favicon("https://cdn.glitch.com/90f14b63-c596-4afc-a1c6-42de4c2f57fe%2Ffavicon.png?v=1568586350329"))
 app.use(session({secret: 'kittens', saveUninitialized: false, resave: false}))//sets session secret
 //////////////////////////////////////////////////////////////////
 ////////////     PASSPORT     /////////////////////////////////

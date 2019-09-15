@@ -23,7 +23,9 @@
     "express-validator": "^6.2.0",
     "compression": "^1.7.4",
     "express-flash": "^0.0.2",
-    "connect": "^3.7.0"
+    "connect": "^3.7.0",
+    "express-favicon": "^2.0.1",
+    "serve-favicon": "^2.5.0"
   },
   "engines": {
     "node": "^12.10.0"
