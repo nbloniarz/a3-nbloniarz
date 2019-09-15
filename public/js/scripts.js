@@ -31,8 +31,8 @@ function logOut(){
     headers: {'Content-Type': 'application/json'},
   })
   .then(function(res){
-    console.log("LOGOUT: " + res)
-    
+    console.log("LOGOUT: " + res.json())
+    window.location = 
   })
 }
 

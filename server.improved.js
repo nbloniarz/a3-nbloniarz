@@ -135,6 +135,7 @@ app.get('/logout', function(req, res){
   req.session.destroy(function(err){
     res.redirect('/')
   })
+  
 })
 
 app.post('/login', passport.authenticate( 'local'),
