@@ -36,13 +36,16 @@ passport.use(new local(function(username, password, done) {
   console.log("IN AUTHENTICATION") 
   var user = db.get('users').find({username: username}).value()
   if(!user){
+    console.log("NOT A USER")
     return done(null, false, {message: "INVALID USERNAME & PASSWORD"})
   }
   else{
     if(user.password === password){
+      console.log("VALID")
       return done(null, user)
     }
     else{
+      console.log("INVALID")
       return done(null, false, {message: "INVALID USERNAME & PASSWORD"})
     }
   }
@@ -62,7 +65,7 @@ passport.serializeUser(function(user, cb) {
 });
 
 passport.deserializeUser(function(id, cb) {
-  var user = db.users.find({username: id}).value() 
+  var user = db.get('users').find({username: id}).value() 
   if(!user){
     cb({message: "INVALID CREDENTIALS"}, null)
   }
@@ -134,9 +137,9 @@ app.get('/loadLoginPage', function(request, response){
   response.redirect("/login")
 })
 
-app.get('/admin', function(request, response){
+/*app.get('/admin', function(request, response){
   response.redirect('/admin')
-})
+})*/
 
 //POST REQUESTS
 app.post('/submit', bodyparser.json(), function(request, response){
@@ -161,7 +164,10 @@ app.post('/addUser', bodyparser.json(), function(request, response){
 })
 
 app.post('/doLogin', passport.authenticate('local', {failureRedirect: '/'}), function(req, res){
-  res.redirect('/admin')
+  console.log("SUCCESS?")
+  res.end("AHHHHH")
+  res.redirect("/index")
+  console.log(res)
 })
 
 app.listen( process.env.PORT || port )
