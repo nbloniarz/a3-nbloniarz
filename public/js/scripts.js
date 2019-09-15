@@ -36,14 +36,15 @@ function doLogin(){
     body
   })
   .then(function(res){
-    if(res.status === 200){
+    return res.json()
+    /*if(res.status === 200){
       console.log("HERE")
-      console.log(res)
+      window.location = res.url
     }
     else{
       console.log("FAILURE")
       console.log(res)
-    }
+    }*/
   })
 }
 
