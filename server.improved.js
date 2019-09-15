@@ -52,7 +52,8 @@ app.use(session({secret: 'kittens', saveUninitialized: false, resave: false}))//
 //////////////////////////////////////////////////////////////////
 ////////////     PASSPORT     /////////////////////////////////
 ///////////////////////////////////////////////////////////////
-const myStrategy = function(username, password, done){
+const myStrategy = function(username, password, done, other){
+  console.log(other)
   db.ref('/users/').once('value')
   .then(function(snapshot){
     const users = []
@@ -75,7 +76,6 @@ const myStrategy = function(username, password, done){
 }
 
 passport.use(new LocalStrategy(myStrategy))
-
 app.use(passport.initialize())//required for passport
 app.use(passport.session())//persistant login session
 
@@ -124,10 +124,9 @@ app.get('/admin', function(req, res){
   res.redirect('/admin')
 })
 
-app.post('/login', passport.authenticate( 'local', {successRedirect: '/admin', failureRedirect: '/', failureFlash: true}),
-         function(req, res){
-          res.redirect('/admin')
-         //res.json({status: true})
+app.post('/login', passport.authenticate( 'local', {successRedirect: '/admin', failureFlash: true}),
+         function(req, res, next){
+         res.json({status: true})
   })
 
 app.post('/test', function(req, res){
