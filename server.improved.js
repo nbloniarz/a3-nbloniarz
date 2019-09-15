@@ -7,9 +7,7 @@ const mime = require( 'mime' ),
       downcase = require('express-uncapitalize'),
       cookieParser = require('cookie-parser'),
       session = require('express-session'),
-      flash = require('express-flash'),
       compression = require('compression'),
-      router = express.Router(),
       passport = require('passport'),
       LocalStrategy = require('passport-local').Strategy,
       app = express(),
@@ -26,6 +24,7 @@ const mime = require( 'mime' ),
 
 
 const firebaseConfig = {
+   apiKey: "AIzaSyAuOGEGSNJLe2fxv0iHQwigSY8nIj2pb30",
    authDomain: "a2-nbloniarz.firebaseapp.com",
    databaseURL: "https://a2-nbloniarz.firebaseio.com",
    projectId: "a2-nbloniarz",
@@ -48,9 +47,8 @@ app.use(bodyparser.json())//can use json to parse req
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(connect())
 app.use(downcase())//forces http requests to downcase
-app.use(flash())//Allows passport to flash messages to the user
 app.use(compression()) //Minimizes headers
-//app.use(favicon("https://cdn.glitch.com/90f14b63-c596-4afc-a1c6-42de4c2f57fe%2Ffavicon.png?v=1568586350329"))
+app.use(favicon("public/favicon.png"))
 app.use(session({secret: 'kittens', saveUninitialized: false, resave: false}))//sets session secret
 //////////////////////////////////////////////////////////////////
 ////////////     PASSPORT     /////////////////////////////////

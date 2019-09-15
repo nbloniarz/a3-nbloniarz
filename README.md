@@ -53,15 +53,25 @@ your glitch link e.g. http://a3-charlieroberts.glitch.me
 
 Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
 
-- the goal of the application
-- challenges you faced in realizing the application
-- what authentication strategy / database you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
-- what CSS framework you used and why.
-  - include any modifications to the CSS framework you made via custom CSS you authored.
-- the five Express middleware packages you used and a short (one sentence) summary of what each one does.
+ * the goal of the application
+ * challenges you faced in realizing the application
+ * what authentication strategy / database you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
+ * what CSS framework you used and why.
+ * include any modifications to the CSS framework you made via custom CSS you authored.
+ * the five Express middleware packages you used and a short (one sentence) summary of what each one does.
+ 
+ 
+Express middleware packages used:
+ - Passport: Required for the project
+ - Static: Serves static pages
+ - Favicon: Serves a favicon image to the client
+ - Session: Stores session data for cookies
+ - Compression: Minimizes headers
+ - Body
 
 ## Technical Achievements
 - **Google Firebase Integration**: All data is stored remotely on google firebase allowing for persistance and multiple read/writes at once
+
 
 
 ### Design/Evaluation Achievements
