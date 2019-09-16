@@ -166,6 +166,18 @@ app.post('/modifyUser', function(req, res){
   console.log(req.json().new)
 })
 
+app.post('/modifyData', function(req, res){
+  db.ref('/data/').once('value')
+  .then(function(snapshot){
+    const data = []
+    snapshot.forEach(function(child){
+      if(child.val().user === req.cookies.TestCookie){
+        data.push(child.val())
+      }
+    })
+  })
+})
+
 
 //////////////////////////////////////////////////////////////////
 //////////////         UTILITY       ////////////////////////////

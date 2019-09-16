@@ -263,9 +263,9 @@ function createDataDBMenuEdit(){
   let dataDBMenuInfo = JSON.parse(document.getElementById(document.getElementById("dataDBMenuDropdown").value).innerHTML)
   var html = "<form id=\"editData\">"
   html += "<label for=\"fName\">First Name</label>"
-  html += "<input type=\"text\" value=\"" + dataDBMenuInfo.fName + "\"></input>"
+  html += "<input id=\"fName\" type=\"text\" value=\"" + dataDBMenuInfo.fName + "\"></input>"
   html += "<label for=\"lName\">Last Name</label>"
-  html += "<input type=\"text\" value=\"" + dataDBMenuInfo.lName + "\"></input>"
+  html += "<input id=\"lName\" type=\"text\" value=\"" + dataDBMenuInfo.lName + "\"></input>"
   html += "<label for=\"month\">Month</label>"
   html += monthToHTML(dataDBMenuInfo.month)
   html += daysToHTML(dataDBMenuInfo.month, dataDBMenuInfo.day)
@@ -282,8 +282,22 @@ function createDataDBMenuEdit(){
 function sendModify(){
   let original = JSON.parse(document.getElementById("originalData").innerHTML)
   let newData = {
-    
+    fName: document.getElementById("fName").value,
+    lName: document.getElementById("lName").value, 
+    month: document.getElementById("monthDropdown").value,
+    day: document.getElementById("dayDropdown").value,
+    user: original.user
   }
+  let body = JSON.stringify({original: original, new: newData})
+  fetch('/modifyData', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body
+  })
+  .then(function(response){
+    hideAllBut("")
+    window.alert("INFORMATION MODIFIED")
+  })
 }
 
 //Removes all options from given select element
