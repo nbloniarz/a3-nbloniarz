@@ -285,7 +285,7 @@ function sendDelete(){
   })
   .then(function(fin){
     console.log(fin)
-    document.getElementById("editData").parentNode.remove()
+    document.getElementById("dataDBMenu").parentNode.remove()
     hideAllBut("")
     getDataForUser()
   })
