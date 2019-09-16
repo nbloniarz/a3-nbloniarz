@@ -170,11 +170,15 @@ app.post('/modifyData', function(req, res){
   db.ref('/data/').once('value')
   .then(function(snapshot){
     const data = []
+    const keys = []
     snapshot.forEach(function(child){
       if(child.val().user === req.cookies.TestCookie){
+        data.push(child.key())
         data.push(child.val())
       }
     })
+    let original = findEqual(data, req.body.original)
+    db.ref('data/' + )
   })
 })
 
@@ -285,6 +289,16 @@ function starSign(personalInfo){
     default:
       return "Error"
   }
+}
+
+function findEqual(dataArray, original){
+  dataArray.forEach(function(item, i){
+    if(item.fName === original.fName && item.lName === original.lName
+       && item.month === original.month && item.day === original.day
+      && item.sign === original.sign && item.user === original.user){
+      return {original: dataArray[i], index: i}
+    }
+  })
 }
 
 /*

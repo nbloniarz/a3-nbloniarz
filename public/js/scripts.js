@@ -295,8 +295,8 @@ function sendModify(){
     body
   })
   .then(function(response){
-    hideAllBut("")
-    window.alert("INFORMATION MODIFIED")
+    //hideAllBut("")
+    //window.alert("INFORMATION MODIFIED")
   })
 }
 
