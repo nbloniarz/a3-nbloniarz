@@ -235,8 +235,11 @@ function createDataDBMenu(dataArray){
     html += single.month + " "
     html += single.day + " "
     html += "</option>"
+    html += "<p id=\"\">"
+    html += "</p>"
   })
   html += "</select>"
+  
   html += "<div id=\"buttonDiv\"><button onclick=\"toggleDataDBMenuEdit()\"type=\"button\"id=\"modifyEntry\">Modify Entry</button>"
   html += "<button onclick=\"deleteEntry()\"type=\"button\"id=\"deleteEntry\">Delete Entry</button></div>"
   html += "</form>"
@@ -279,7 +282,8 @@ function createDataDBMenuEdit(){
   html += "<select id=\"monthDropdown\" value=\"" + dataDBMenuInfo.month + "\"</select>"
   html += "<label for=\"day\">Day</label>"
   html += "<select id=\"dayDropdown\" value=\"" + dataDBMenuInfo.day + "\"</select>"
-  html += "</form>"
+  html += "<p>"
+  html += "</p></form>"
   var editDiv = document.createElement('div')
   editDiv.innerHTML = html
   document.body.appendChild(editDiv)
