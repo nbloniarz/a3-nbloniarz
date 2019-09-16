@@ -197,6 +197,7 @@ function showDataDBMenu(){
   }).then(function(res){
     return res.json()
   }).then(function(fin){
+    console.log(fin)
     toggleDataDBMenu(fin)
   })
 }
@@ -204,15 +205,10 @@ function showDataDBMenu(){
 function toggleDataDBMenu(dataArray){
   let dataDBMenu = document.getElementById("dataDBMenu")
   if(dataDBMenu !== null){
-    if(dataDBMenu.style.display === 'none'){
-      while(dataDBMenu.firstChild){
-        dataDBMenu.removeChild(dataDBMenu.firstChild)
-      }
-      createDataDBMenu(dataArray)
-      dataDBMenu.style.display = 'block'
-    }
-    else{
-      dataDBMenu.style.display = 'none'
+    console.log("EXISTS")
+    if(dataDBMenu.style.display !== 'none'){
+      console.log("STILL EXISTS")
+      dataDBMenu.parentNode.remove()
     }
   }
   else{
