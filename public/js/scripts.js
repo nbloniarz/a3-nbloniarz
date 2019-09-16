@@ -205,11 +205,7 @@ function showDataDBMenu(){
 function toggleDataDBMenu(dataArray){
   let dataDBMenu = document.getElementById("dataDBMenu")
   if(dataDBMenu !== null){
-    console.log("EXISTS")
-    if(dataDBMenu.style.display !== 'none'){
-      console.log("STILL EXISTS")
-      dataDBMenu.parentNode.remove()
-    }
+    dataDBMenu.parentNode.remove()
   }
   else{
     createDataDBMenu(dataArray)
@@ -268,6 +264,7 @@ function createDataDBMenuEdit(){
   html += "<input id=\"lName\" type=\"text\" value=\"" + dataDBMenuInfo.lName + "\"></input>"
   html += "<label for=\"month\">Month</label>"
   html += monthToHTML(dataDBMenuInfo.month)
+  console.log(dataDBMenuInfo.day)
   html += daysToHTML(dataDBMenuInfo.month, dataDBMenuInfo.day)
   html += "<button type=\"button\" onclick=\"sendModify()\">Submit</button>"
   html += "<p id=\"originalData\"style=\"display: none\">"
@@ -277,6 +274,7 @@ function createDataDBMenuEdit(){
   var editDiv = document.createElement('div')
   editDiv.innerHTML = html
   document.body.appendChild(editDiv)
+  dataDBMenuInfo.
 }
 
 function sendModify(){
@@ -338,6 +336,7 @@ function daysToHTML(month, day){
   for(let i = 1; i <= totalDays; i++){
     html += "<option "
     if(i === day){
+      console.log("SELECTED")
       html += "selected=\"selected\" "
     }
     html += "value=\"" + i + "\">"+ i + "</option>"
