@@ -289,16 +289,17 @@ function sendModify(){
     user: original.user
   }
   let body = JSON.stringify({original: original, new: newData})
-  console.log(body)//JSON.stringify({data: "TEST"})//JSON.stringify({original: original, new: newData})
-  fetch('/modifyData', {
-    method: 'PUT',
+  fetch('/modifydata', {
+    method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body
   })
   .then(function(res){
     console.log(res)
-    res.json()
-    .then(console.log)
+    return res.json()
+  })
+  .then(function(fin){
+    console.log(fin)
   })
 }
 
