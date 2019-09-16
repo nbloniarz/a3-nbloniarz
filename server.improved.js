@@ -179,16 +179,15 @@ app.post('/modifydata', function(req, res){
     })
     //res.json(data)
     let original = findEqual(data, req.body.original)
-    res.json(original)
-    //res.json(req.body)
-    /*db.ref('data/' +  keys[original.index]).set({
-      fName: original.new.fName,
-      lName: original.new.lName,
-      month: original.new.month,
-      day:  original.new.day,
-      sign: starSign(original.new),
-      user: req.cookie.TestCookie
-    })*/
+    db.ref('data/' +  keys[original.index]).set({
+      fName: req.body.new.fName,
+      lName: req.body.new.lName,
+      month: req.body.new.month,
+      day:  req.body.new.day,
+      sign: starSign(req.body.new),
+      user: req.cookies.TestCookie
+    })
+    res.json(req.body.new)
   })
 })
 
@@ -302,24 +301,23 @@ function starSign(personalInfo){
 }
 
 function findEqual(dataArray, original){
+  var returnVal = {original: null, index: -1}
   dataArray.forEach(function(item, i){
     if(item.fName === original.fName){
-          console.log(item.lName === original.lName)
-
+      if(item.lName === original.lName){
+        if(item.month === original.month){
+          if(item.day === original.day){
+            if(item.sign === original.sign){
+              if(item.user === original.user){
+                returnVal = {original: original, index: i}
+              }
+            }
+          }
+        }
+      }
     }
-    console.log(item.month === original.month)
-    console.log(item.day === original.day)
-    console.log(item.sign === original.sign)
-    console.log(item.user === original.user)
-
-
-    /*if(item.fName === original.fName && item.lName === original.lName
-       && item.month === original.month && item.day === original.day
-      && item.sign === original.sign && item.user === original.user){
-      return {original: dataArray[i], index: i}
-    }*/
   })
-  return {original: null, index: -1}
+  return returnVal
 }
 
 /*
