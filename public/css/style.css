@@ -35,6 +35,12 @@ h1{
   cell-padding: 0px;
 }
 
+#buttonDiv{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around; 
+}
+
 
 
 

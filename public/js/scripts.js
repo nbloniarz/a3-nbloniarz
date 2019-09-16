@@ -220,7 +220,7 @@ function toggleDataDBMenu(dataArray){
 
 function createDataDBMenu(dataArray){
   var html = "<form id=\"dataDBMenu\">"
-  html += "<select onchange=\"toggleDataDBMenuEdit()\"id=\"dataDBMenuDropdown\">"
+  html += "<select id=\"dataDBMenuDropdown\">"
   dataArray.forEach(function (single, index){
     html += "<option value=\"\""
     html += single.fName + " "
@@ -235,7 +235,10 @@ function createDataDBMenu(dataArray){
     html += single.day + " "
     html += "</option>"
   })
-  html += "</select></form>"
+  html += "</select>"
+  html += "<div id=\"buttonDiv\"><button onclick=\"toggleModifyData()\"type=\"button\"id=\"modifyEntry\">Modify Entry</button>"
+  html += "<button onclick=\"deleteEntry()\"type=\"button\"id=\"deleteEntry\">Delete Entry</button></div>"
+  html += "</form>"
   var formDiv = document.createElement('div')
   formDiv.innerHTML = html
   document.body.appendChild(formDiv)
@@ -243,6 +246,22 @@ function createDataDBMenu(dataArray){
 
 function toggleDataDBMenuEdit(){
   
+}
+
+function createDataDBMenuEdit(){
+  let dataDBMenu = document.getElementById("dataDBMenu")
+  if(dataDBMenu !== null){
+    if(dataDBMenu.style.display === 'none'){
+      dataDBMenu.style.display = 'block'
+    }
+    else{
+      dataDBMenu.style.display = 'none'
+    }
+  }
+  else{
+    createDataDBMenu(dataArray)
+  }
+  hideAllBut("dataDBMenu")
 }
 
 
