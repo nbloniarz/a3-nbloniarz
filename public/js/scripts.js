@@ -88,12 +88,13 @@ function toggleViewAll(dataArray){
     }
   }
   else{
-    createAll(dataArray)
+    createViewAll(dataArray)
   }
+  hideAllBut("viewAll")
 }
 
 //Creates entire database table
-function createAll(dataArray){
+function createViewAll(dataArray){
   var html = "<table id=\"viewAll\">"
   html += "<tr><th>First Name</th><th>Last Name</th><th>Month</th><th>Day</th><th>Sign</th><th>User</th></tr>"
   dataArray.forEach(function (single){
@@ -112,21 +113,21 @@ function createAll(dataArray){
   document.body.appendChild(tableDiv)
 }
 
-//Handles geting all user data from database
+//Handles geting given user data from database
 function getDataForUser(){
-  fetch('/allData', {
+  fetch('/allDataForUser', {
     method: 'GET',
     headers: {'Content-Type': 'application/json'},
   }).then(function(res){
     return res.json()
   }).then(function(fin){
-    toggleViewAll(fin)
+    toggleViewUser(fin)
   })
 }
 
-//Toggles hide/show of entire database table
-function toggleViewAll(dataArray){
-  let viewAll = document.getElementById("viewAll")
+//Toggles hide/show of given user data database table
+function toggleViewUser(dataArray){
+  let viewAll = document.getElementById("viewUser")
   if(viewAll !== null){
     if(viewAll.style.display === 'none'){
       viewAll.style.display = 'table'
@@ -136,13 +137,14 @@ function toggleViewAll(dataArray){
     }
   }
   else{
-    createAll(dataArray)
+    createViewUser(dataArray)
   }
+  hideAllBut("viewUser")
 }
 
-//Creates entire database table
-function createAll(dataArray){
-  var html = "<table id=\"viewAll\">"
+//Creates given user database table
+function createViewUser(dataArray){
+  var html = "<table id=\"viewUser\">"
   html += "<tr><th>First Name</th><th>Last Name</th><th>Month</th><th>Day</th><th>Sign</th><th>User</th></tr>"
   dataArray.forEach(function (single){
     html += "<tr>"
@@ -160,6 +162,17 @@ function createAll(dataArray){
   document.body.appendChild(tableDiv)
 }
 
+//Hides but given ID
+function hideAllBut(id){
+  let allItems = document.body.childNodes;
+  console.log(allItems)
+  allItems.forEach(function(child){
+    console.log(child)
+    /*if(child.id !== id){
+      child.style.display = 'none'
+    }*/
+  })
+}
 /*
 <li><button onclick="logOut()">Log Out</button></li>
         <li><button onclick="showAllUsers()">Edit Users</button></li>
@@ -168,26 +181,6 @@ function createAll(dataArray){
         <li><button onclick="getAllData()">View All</button></li>
 
 */
-function getDataForUser(){
-  fetch('/allDataForUser', {
-    method: 'GET',
-    headers: {'Content-Type': 'application/json'},
-    credentials: 'include'
-  }).then(function(res){
-    return res.json()
-  }).then(function(fin){
-    console.log(fin)
-  })
-}
-
-function showVerifiedUserData(){
-  //Create all of the space to do the function
-}
-
-function modifyInformation(){
-  
-}
-
 
 
 

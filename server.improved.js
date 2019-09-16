@@ -102,7 +102,6 @@ passport.deserializeUser((username, done) => {
   
 })
 
-
 ///////////////////////////////////////////////////////////////
 ////////     GET/POST     /////////////////////////////////////
 ////////////////////////////////////////////////////////////////
@@ -128,9 +127,6 @@ app.get('/allDataForUser', function(req, res){
     })
     res.json(data)
   })
-  /*console.log("IN DATA FOR USER")
-  console.log(req.cookies.TestCookie)
-  res.json({TEST: "TEST"})*/
 })
 
 app.get('/admin', function(req, res){
