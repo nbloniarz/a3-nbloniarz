@@ -288,15 +288,16 @@ function sendModify(){
     day: document.getElementById("dayDropdown").value,
     user: original.user
   }
-  let body = JSON.stringify({original: original, new: newData})
+  let body = JSON.stringify({data//JSON.stringify({original: original, new: newData})
   fetch('/modifyData', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body
   })
-  .then(function(response){
-    //hideAllBut("")
-    //window.alert("INFORMATION MODIFIED")
+  .then(function(res){
+    return res.json()
+  }).then(function(fin){
+    console.log(fin)
   })
 }
 

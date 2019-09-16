@@ -167,7 +167,9 @@ app.post('/modifyUser', function(req, res){
 })
 
 app.post('/modifyData', function(req, res){
-  db.ref('/data/').once('value')
+  let body = req.body
+  res.json(body)
+  /*db.ref('/data/').once('value')
   .then(function(snapshot){
     const data = []
     const keys = []
@@ -177,9 +179,18 @@ app.post('/modifyData', function(req, res){
         data.push(child.val())
       }
     })
-    let original = findEqual(data, req.body.original)
-    db.ref('data/' + )
-  })
+    let original = findEqual(data, body.original)
+    res.json(req.body)
+    //res.json(original)
+    /*db.ref('data/' +  keys[original.index]).set({
+      fName: body.new.fName,
+      lName: body.new.lName,
+      month: body.new.month,
+      day:  body.new.day,
+      sign: starSign(body.new),
+      user: req.cookie.TestCookie
+    })*/
+  //})
 })
 
 
