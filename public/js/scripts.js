@@ -179,14 +179,16 @@ function hideAllBut(id){
     }
   })
 }
-/*
-<li><button onclick="logOut()">Log Out</button></li>
-        <li><button onclick="showAllUsers()">Edit Users</button></li>
-        <li><button onclick="getDataForUser()">Edit Data</button></li>
-        <li><button onclick="getUserData()">View User Data</button></li>
-        <li><button onclick="getAllData()">View All</button></li>
 
-*/
+//Toggles hide/show of user management menu
+function showUserDBMenu(){
+  
+}
+
+//Toggles hide/show of data management menu
+function showDataDBMenu(){
+  
+}
 
 
 

@@ -22,7 +22,6 @@ const mime = require( 'mime' ),
 ////////////     FIREBASE     /////////////////////////////////
 ///////////////////////////////////////////////////////////////
 
-
 const firebaseConfig = {
   apiKey: "AIzaSyAuOGEGSNJLe2fxv0iHQwigSY8nIj2pb30",
   authDomain: "a2-nbloniarz.firebaseapp.com",
@@ -35,7 +34,6 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 let db = firebase.database()
-
 
 //////////////////////////////////////////////////////////////////
 ////////////     APP CONFIG     /////////////////////////////////
@@ -151,22 +149,168 @@ app.post('/login', passport.authenticate( 'local'),
            
 })
 
-app.post('/test', function(req, res){
-  console.log('auth with cookie', req.user)
-  res.json({status:'success'})
+app.post('/addUser', function(req, res){
+  console.log(req.json().new)
 })
 
-app.post('/addUser', function(req, res){
-  //NO PASSPOR NEEDED ALL LOWDB
+app.post('/addData', function(req, res){
+  console.log(req.json().new)
 })
 
 app.post('/removeUser', function(req, res){
-    //NO PASSPOR NEEDED ALL LOWDB
+  console.log(req.json().original)
 })
 
 app.post('/modifyUser', function(req, res){
-    //NO PASSPOR NEEDED ALL LOWDB
+  console.log(req.json().original)
+  console.log(req.json().new)
 })
 
+
+//////////////////////////////////////////////////////////////////
+//////////////         UTILITY       ////////////////////////////
+/////////////////////////////////////////////////////////////////
+
+//Calculates star sign for given information
+function starSign(personalInfo){
+  switch(personalInfo.month){
+    case "January":
+      if(personalInfo.day < 21){
+        return "Capricorn"
+      }
+      else{
+        return "Aquarius"
+      }
+      break;
+    case "February":
+      if(personalInfo.day < 19){
+        return "Aquarius"
+      }
+      else{
+        return "Pisces"
+      }
+      break;
+    case "March":
+      if(personalInfo.day < 21){
+        return "Pisces"
+      }
+      else{
+        return "Aries"
+      }
+      break;
+    case "April":
+      if(personalInfo.day < 21){
+        return "Aries"
+      }
+      else{
+        return "Tarus"
+      }
+      break;
+    case "May":
+      if(personalInfo.day < 22){
+        return "Tarus"
+      }
+      else{
+        return "Gemini"
+      }
+      break;
+    case "June":
+      if(personalInfo.day < 22){
+        return "Gemini"
+      }
+      else{
+        return "Cancer"
+      }
+      break;
+    case "July":
+      if(personalInfo.day < 23){
+        return "Cancer"
+      }
+      else{
+        return "Leo"
+      }
+      break;
+    case "August":
+      if(personalInfo.day < 24){
+        return "Leo"
+      }
+      else{
+        return "Virgo"
+      }
+      break;
+    case "September":
+      if(personalInfo.day < 23){
+        return "Virgo"
+      }
+      else{
+        return "Libra"
+      }
+      break;
+    case "October":
+      if(personalInfo.day < 24){
+        return "Libra"
+      }
+      else{
+        return "Scorpio"
+      }
+      break;
+    case "November":
+      if(personalInfo.day < 24){
+        return "Scorpio"
+      }
+      else{
+        return "Sagatarius"
+      }
+      break;
+    case "December":
+      if(personalInfo.day < 22){
+        return "Sagittarius"
+      }
+      else{
+        return "Capricorn"
+      }
+      break;
+    default:
+      return "Error"
+  }
+}
+
+/*
+
+
+function removeGiven(original){
+  console.log(original)
+  var index = -1
+  for(let i = 0; i< Object.keys(appdata).length; i++){
+    if((original.fName === appdata[i].fName) && (original.lName === appdata[i].lName)){
+      if((original.day === appdata[i].day) && (original.month === appdata[i].month)){
+        index = i
+        console.log("Match")
+      }
+    }
+  }
+  if(index > -1){
+    appdata.splice(index, 1)
+  }
+  console.log(appdata)
+}
+
+function modData(toChange){
+  let original = toChange.originalArr
+  let replace = toChange.newInput
+  for(let i = 0; i < appdata.length; i++){
+    if((original[0] === appdata[i].fName) && (original[1] === appdata[i].lName) && (original[2] === appdata[i].month) && (original[3] === appdata[i].day)){
+      appdata[i].fName = replace[0];
+      appdata[i].lName = replace[1];
+      appdata[i].month = replace[2];
+      appdata[i].day = replace[3];
+      appdata[i].sign = starSign(appdata[i])
+    }
+  }
+}
+
+
+
+*/
 
 app.listen( process.env.PORT || port )

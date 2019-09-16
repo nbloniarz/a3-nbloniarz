@@ -76,6 +76,7 @@ Express middleware packages used:
 
 ## Technical Achievements
 - **Google Firebase Integration**: All data is stored remotely on google firebase allowing for persistance and multiple read/writes at once
+- **Madlibs Horoscope Generator**: Generates a random horoscope based on madlibs using data stored in database, 
 
 
 
