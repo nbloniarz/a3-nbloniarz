@@ -232,7 +232,7 @@ function createDataDBMenu(dataArray){
     html += "</p>"
   })
   html += "<div id=\"buttonDiv\"><button onclick=\"toggleDataDBMenuEdit()\"type=\"button\"id=\"modifyEntry\">Modify Entry</button>"
-  html += "<button onclick=\"deleteEntry()\"type=\"button\"id=\"deleteEntry\">Delete Entry</button></div>"
+  html += "<button onclick=\"sendDelete()\"type=\"button\"id=\"deleteEntry\">Delete Entry</button></div>"
   html += "</form>"
   var formDiv = document.createElement('div')
   formDiv.innerHTML = html
@@ -270,6 +270,25 @@ function createDataDBMenuEdit(){
   editDiv.innerHTML = html
   document.body.appendChild(editDiv)
   document.getElementById("dataDBMenu").parentNode.remove()
+}
+
+function sendDelete(){
+  let original = JSON.parse(document.getElementById(document.getElementById("dataDBMenuDropdown").value).innerHTML)
+  let body = JSON.stringify(original)
+  fetch('/deletedata', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body
+  }).then(function(res){
+    console.log(res)
+    return res.json()
+  })
+  .then(function(fin){
+    console.log(fin)
+    document.getElementById("editData").parentNode.remove()
+    hideAllBut("")
+    getDataForUser()
+  })
 }
 
 function sendModify(){
@@ -331,8 +350,7 @@ function daysToHTML(month, day){
   html += "<select name=\"days\" id=\"dayDropdown\">"
   for(let i = 1; i <= totalDays; i++){
     html += "<option "
-    console.log(i + " : " + (i=== day))
-    if(i === day){
+    if(i == day){
       console.log("SELECTED")
       html += "selected=\"selected\" "
     }

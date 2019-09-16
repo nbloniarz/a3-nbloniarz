@@ -193,6 +193,26 @@ app.post('/modifydata', function(req, res){
   })
 })
 
+app.post('/deletedata', function(req, res){
+  db.ref('/data/').once('value')
+  .then(function(snapshot){
+    const data = []
+    const keys = []
+    snapshot.forEach(function(child){
+      if(child.val().user === req.cookies.TestCookie){
+        keys.push(child.key)
+        data.push(child.val())
+      }
+    })
+    //res.json(data)
+    let original = findEqual(data, req.body)
+    if(original.index >= 0){
+      db.ref('data/' +  keys[original.index]).delete()
+    }
+    res.json(req.body)
+  })
+})
+
 
 //////////////////////////////////////////////////////////////////
 //////////////         UTILITY       ////////////////////////////
