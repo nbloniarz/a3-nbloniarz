@@ -166,9 +166,8 @@ app.post('/modifyUser', function(req, res){
 })
 
 
-app.post('/modifyData', function(req, res){
-  res.json("AHHHHHH")
-  /*db.ref('/data/').once('value')
+app.put('/modifyData', function(req, res){
+  db.ref('/data/').once('value')
   .then(function(snapshot){
     const data = []
     const keys = []
@@ -188,7 +187,7 @@ app.post('/modifyData', function(req, res){
       day:  body.new.day,
       sign: starSign(body.new),
       user: req.cookie.TestCookie
-    })*/
+    })
   //})
 })
 
