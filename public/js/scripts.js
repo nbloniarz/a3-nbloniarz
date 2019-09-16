@@ -288,7 +288,7 @@ function sendModify(){
     day: document.getElementById("dayDropdown").value,
     user: original.user
   }
-  let body = ""
+  let body = JSON.stringify({test: "aTest"})
   console.log(body)//JSON.stringify({data: "TEST"})//JSON.stringify({original: original, new: newData})
   fetch('/modifyData', {
     method: 'POST',
@@ -296,7 +296,8 @@ function sendModify(){
     body
   })
   .then(function(res){
-    console.log(res)
+    res.json()
+    .then(console.log)
   })
 }
 

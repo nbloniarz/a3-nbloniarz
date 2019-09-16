@@ -165,8 +165,9 @@ app.post('/modifyUser', function(req, res){
   console.log(req.json().new)
 })
 
+
 app.post('/modifyData', function(req, res){
-  res.json({status: 200})
+  res.json("AHHHHHH")
   /*db.ref('/data/').once('value')
   .then(function(snapshot){
     const data = []
