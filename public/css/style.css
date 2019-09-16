@@ -27,7 +27,13 @@ h1{
   text-align: center;
 }
 
-
+#viewAll table{
+  width: 100%;
+  border: 0px;
+  table-layout: fixed;
+  cell-spacing: 0px;
+  cell-padding: 0px;
+}
 
 
 

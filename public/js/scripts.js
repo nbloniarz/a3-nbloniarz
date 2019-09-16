@@ -1,3 +1,4 @@
+//Toggles hide/show of log in form
 function toggleLogin(){
   var loginForm = document.getElementById('loginForm')
   if(loginForm !== null){
@@ -13,6 +14,7 @@ function toggleLogin(){
   }
 }
 
+//Creates login form
 function createLoginForm(){
   var html =  "<form action=\"\" class=\"loginForm\" id=\"loginForm\" style=\"display : inline\">"
       html += "<legend>Login</legend>"
@@ -25,6 +27,7 @@ function createLoginForm(){
   document.getElementById("Container").innerHTML = html
 }
 
+//Logs user out
 function logOut(){
   fetch('/logout', {
     method:'GET',
@@ -35,6 +38,7 @@ function logOut(){
   })
 }
 
+//Runs login function
 function doLogin(){
   let uName = document.getElementById("uName").value
   let pass = document.getElementById("pass").value
@@ -60,6 +64,7 @@ function doLogin(){
   })
 }
 
+//Handles geting all user data from database
 function getAllData(){
   fetch('/allData', {
     method: 'GET',
@@ -71,6 +76,98 @@ function getAllData(){
   })
 }
 
+//Toggles hide/show of entire database table
+function toggleViewAll(dataArray){
+  let viewAll = document.getElementById("viewAll")
+  if(viewAll !== null){
+    if(viewAll.style.display === 'none'){
+      viewAll.style.display = 'table'
+    }
+    else{
+      viewAll.style.display = 'none'
+    }
+  }
+  else{
+    createAll(dataArray)
+  }
+}
+
+//Creates entire database table
+function createAll(dataArray){
+  var html = "<table id=\"viewAll\">"
+  html += "<tr><th>First Name</th><th>Last Name</th><th>Month</th><th>Day</th><th>Sign</th><th>User</th></tr>"
+  dataArray.forEach(function (single){
+    html += "<tr>"
+    html += "<td>" + single.fName + "</td>"
+    html += "<td>" + single.lName + "</td>"
+    html += "<td>" + single.month + "</td>"
+    html += "<td>" + single.day + "</td>"
+    html += "<td>" + single.sign + "</td>"
+    html += "<td>" + single.user + "</td>"
+    html += "</tr>"
+  })
+  html += "</table>"
+  var tableDiv = document.createElement('div')
+  tableDiv.innerHTML = html
+  document.body.appendChild(tableDiv)
+}
+
+//Handles geting all user data from database
+function getDataForUser(){
+  fetch('/allData', {
+    method: 'GET',
+    headers: {'Content-Type': 'application/json'},
+  }).then(function(res){
+    return res.json()
+  }).then(function(fin){
+    toggleViewAll(fin)
+  })
+}
+
+//Toggles hide/show of entire database table
+function toggleViewAll(dataArray){
+  let viewAll = document.getElementById("viewAll")
+  if(viewAll !== null){
+    if(viewAll.style.display === 'none'){
+      viewAll.style.display = 'table'
+    }
+    else{
+      viewAll.style.display = 'none'
+    }
+  }
+  else{
+    createAll(dataArray)
+  }
+}
+
+//Creates entire database table
+function createAll(dataArray){
+  var html = "<table id=\"viewAll\">"
+  html += "<tr><th>First Name</th><th>Last Name</th><th>Month</th><th>Day</th><th>Sign</th><th>User</th></tr>"
+  dataArray.forEach(function (single){
+    html += "<tr>"
+    html += "<td>" + single.fName + "</td>"
+    html += "<td>" + single.lName + "</td>"
+    html += "<td>" + single.month + "</td>"
+    html += "<td>" + single.day + "</td>"
+    html += "<td>" + single.sign + "</td>"
+    html += "<td>" + single.user + "</td>"
+    html += "</tr>"
+  })
+  html += "</table>"
+  var tableDiv = document.createElement('div')
+  tableDiv.innerHTML = html
+  document.body.appendChild(tableDiv)
+}
+
+/*
+<li><button onclick="logOut()">Log Out</button></li>
+        <li><button onclick="showAllUsers()">Edit Users</button></li>
+        <li><button onclick="getDataForUser()">Edit Data</button></li>
+        <li><button onclick="getUserData()">View User Data</button></li>
+        <li><button onclick="getAllData()">View All</button></li>
+
+*/
 function getDataForUser(){
   fetch('/allDataForUser', {
     method: 'GET',
@@ -91,39 +188,6 @@ function modifyInformation(){
   
 }
 
-function toggleViewAll(dataArray){
-  let viewAll = document.getElementById("viewAll")
-  if(viewAll !== null){
-    if(viewAll.style.display === 'none'){
-      viewAll.style.display = 'inline'
-    }
-    else{
-      viewAll.style.display = 'none'
-    }
-  }
-  else{
-    createAll(dataArray)
-  }
-}
-
-function createAll(dataArray){
-  var html = "<table id=\"viewAll\" style=\"width: 100%\">"
-  html += "<tr><th>First Name</th><th>Last Name</th><th>Month</th><th>Day</th><th>Sign</th><th>User</th></tr>"
-  dataArray.forEach(function (single){
-    html += "<tr>"
-    html += "<td>" + single.fName + "</td>"
-    html += "<td>" + single.lName + "</td>"
-    html += "<td>" + single.month + "</td>"
-    html += "<td>" + single.day + "</td>"
-    html += "<td>" + single.sign + "</td>"
-    html += "<td>" + single.user + "</td>"
-    html += "</tr>"
-  })
-  html += "</table>"
-  var tableDiv = document.createElement('div')
-  tableDiv.innerHTML = html
-  document.body.appendChild(tableDiv)
-}
 
 
 
