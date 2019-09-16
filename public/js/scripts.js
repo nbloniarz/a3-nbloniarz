@@ -205,6 +205,23 @@ function toggleDataDBMenu(dataArray){
   let dataDBMenu = document.getElementById("dataDBMenu")
   if(dataDBMenu !== null){
     if(dataDBMenu.style.display === 'none'){
+      removeAllOptions(dataDBMenu)
+      var html = ""
+      dataArray.forEach(function (single, index){   
+    html += "<option value=\"" + index + "\">"
+    html += index + " "
+    html += single.fName + " "
+    html += single.lName + " "
+    html += single.month + " "
+    html += single.day + " "
+    html += "</option>"
+  })
+  dataArray.forEach(function (single, index){   
+    html += "</select>"
+    html += "<p style=\"display: none\" id=\"" + index + "\">"
+    html += JSON.stringify(single)
+    html += "</p>"
+  })
       dataDBMenu.style.display = 'block'
     }
     else{
@@ -300,6 +317,8 @@ function sendModify(){
   })
   .then(function(fin){
     console.log(fin)
+    hideAllBut("")
+    getDataForUser()
   })
 }
 
@@ -328,7 +347,6 @@ function appendDataToSelect(sel, data) {
       sel.appendChild(opt)
   }
 }
-
 
 function daysToHTML(month, day){
   let totalDays = hasDays(monthToNum(month));

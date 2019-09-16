@@ -179,14 +179,16 @@ app.post('/modifydata', function(req, res){
     })
     //res.json(data)
     let original = findEqual(data, req.body.original)
-    db.ref('data/' +  keys[original.index]).set({
-      fName: req.body.new.fName,
-      lName: req.body.new.lName,
-      month: req.body.new.month,
-      day:  req.body.new.day,
-      sign: starSign(req.body.new),
-      user: req.cookies.TestCookie
-    })
+    if(original.index >= 0){
+      db.ref('data/' +  keys[original.index]).set({
+        fName: req.body.new.fName,
+        lName: req.body.new.lName,
+        month: req.body.new.month,
+        day:  req.body.new.day,
+        sign: starSign(req.body.new),
+        user: req.cookies.TestCookie
+      })
+    }
     res.json(req.body.new)
   })
 })
