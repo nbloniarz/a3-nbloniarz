@@ -173,13 +173,13 @@ app.post('/modifydata', function(req, res){
     const keys = []
     snapshot.forEach(function(child){
       if(child.val().user === req.cookies.TestCookie){
-        data.push(child.key())
+        keys.push(child.key)
         data.push(child.val())
       }
     })
-    res.json(data)
-    //let original = findEqual(data, req.body.original)
-    //res.json(original)
+    //res.json(data)
+    let original = findEqual(data, req.body.original)
+    res.json(original)
     //res.json(req.body)
     /*db.ref('data/' +  keys[original.index]).set({
       fName: original.new.fName,
@@ -303,12 +303,23 @@ function starSign(personalInfo){
 
 function findEqual(dataArray, original){
   dataArray.forEach(function(item, i){
-    if(item.fName === original.fName && item.lName === original.lName
+    if(item.fName === original.fName){
+          console.log(item.lName === original.lName)
+
+    }
+    console.log(item.month === original.month)
+    console.log(item.day === original.day)
+    console.log(item.sign === original.sign)
+    console.log(item.user === original.user)
+
+
+    /*if(item.fName === original.fName && item.lName === original.lName
        && item.month === original.month && item.day === original.day
       && item.sign === original.sign && item.user === original.user){
       return {original: dataArray[i], index: i}
-    }
+    }*/
   })
+  return {original: null, index: -1}
 }
 
 /*
