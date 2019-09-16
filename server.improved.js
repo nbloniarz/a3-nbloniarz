@@ -24,12 +24,13 @@ const mime = require( 'mime' ),
 
 
 const firebaseConfig = {
-   authDomain: "a2-nbloniarz.firebaseapp.com",
-   databaseURL: "https://a2-nbloniarz.firebaseio.com",
-   projectId: "a2-nbloniarz",
-   storageBucket: "a2-nbloniarz.appspot.com",
-   messagingSenderId: "337634055490",
-   appId: "1:337634055490:web:821a136e7f93eff009e4db"
+  apiKey: "AIzaSyAuOGEGSNJLe2fxv0iHQwigSY8nIj2pb30",
+  authDomain: "a2-nbloniarz.firebaseapp.com",
+  databaseURL: "https://a2-nbloniarz.firebaseio.com",
+  projectId: "a2-nbloniarz",
+  storageBucket: "a2-nbloniarz.appspot.com",
+  messagingSenderId: "337634055490",
+  appId: "1:337634055490:web:821a136e7f93eff009e4db"
 }
 
 firebase.initializeApp(firebaseConfig);
