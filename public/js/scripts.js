@@ -93,11 +93,36 @@ function modifyInformation(){
 
 function toggleViewAll(dataArray){
   let viewAll = document.getElementById("viewAll")
-  if(viewAll !== undefined){
+  if(viewAll !== null){
     if(viewAll.style.display === 'none'){
       viewAll.style.display = 'inline'
     }
+    else{
+      viewAll.style.display = 'none'
+    }
   }
+  else{
+    createAll(dataArray)
+  }
+}
+
+function createAll(dataArray){
+  var html = "<table id=\"viewAll\" style=\"width: 100%\">"
+  html += "<tr><th>First Name</th><th>Last Name</th><th>Month</th><th>Day</th><th>Sign</th><th>User</th></tr>"
+  dataArray.forEach(function (single){
+    html += "<tr>"
+    html += "<td>" + single.fName + "</td>"
+    html += "<td>" + single.lName + "</td>"
+    html += "<td>" + single.month + "</td>"
+    html += "<td>" + single.day + "</td>"
+    html += "<td>" + single.sign + "</td>"
+    html += "<td>" + single.user + "</td>"
+    html += "</tr>"
+  })
+  html += "</table>"
+  var tableDiv = document.createElement('div')
+  tableDiv.innerHTML = html
+  document.body.appendChild(tableDiv)
 }
 
 
