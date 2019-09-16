@@ -243,12 +243,7 @@ function toggleDataDBMenuEdit(){
   hideAllBut("dataDBMenuEdit")
   let dataDBMenuEdit = document.getElementById("dataDBMenuEdit")
   if(dataDBMenuEdit !== null){
-    if(dataDBMenuEdit.style.display === 'none'){
-      dataDBMenuEdit.style.display = 'block'
-    }
-    else{
-      dataDBMenuEdit.style.display = 'none'
-    }
+    dataDBMenuEdit.parentNode.remove()
   }
   else{
     createDataDBMenuEdit()
@@ -274,7 +269,7 @@ function createDataDBMenuEdit(){
   var editDiv = document.createElement('div')
   editDiv.innerHTML = html
   document.body.appendChild(editDiv)
-  dataDBMenuInfo.
+  document.getElementById("dataDBMenu").parentNode.remove()
 }
 
 function sendModify(){
@@ -298,6 +293,7 @@ function sendModify(){
   })
   .then(function(fin){
     console.log(fin)
+    document.getElementById("editData").parentNode.remove()
     hideAllBut("")
     getDataForUser()
   })
@@ -335,6 +331,7 @@ function daysToHTML(month, day){
   html += "<select name=\"days\" id=\"dayDropdown\">"
   for(let i = 1; i <= totalDays; i++){
     html += "<option "
+    console.log(i + " : " + (i=== day))
     if(i === day){
       console.log("SELECTED")
       html += "selected=\"selected\" "
