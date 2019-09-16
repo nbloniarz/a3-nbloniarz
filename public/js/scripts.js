@@ -185,9 +185,56 @@ function showUserDBMenu(){
   
 }
 
+//Creates user database menu
+function createUserDBMenu(){
+  
+}
+
 //Toggles hide/show of data management menu
 function showDataDBMenu(){
-  
+  fetch('/allDataForUser', {
+    method: 'GET',
+    headers: {'Content-Type': 'application/json'},
+  }).then(function(res){
+    return res.json()
+  }).then(function(fin){
+    toggleDataDBMenu(fin)
+  })
+}
+
+function toggleDataDBMenu(dataArray){
+  let viewAll = document.getElementById("dataDBMenu")
+  if(viewAll !== null){
+    if(viewAll.style.display === 'none'){
+      viewAll.style.display = 'table'
+    }
+    else{
+      viewAll.style.display = 'none'
+    }
+  }
+  else{
+    createViewUser(dataArray)
+  }
+  hideAllBut("dataDBMenu")
+}
+
+function createDataDBMenu(dataArray){
+  var html = "<form id=\"dataDBMenu\">"
+  html += "<select id=>"
+  dataArray.forEach(function (single){
+    html += "<tr>"
+    html += "<td>" + single.fName + "</td>"
+    html += "<td>" + single.lName + "</td>"
+    html += "<td>" + single.month + "</td>"
+    html += "<td>" + single.day + "</td>"
+    html += "<td>" + single.sign + "</td>"
+    html += "<td>" + single.user + "</td>"
+    html += "</tr>"
+  })
+  html += "</select></form>"
+  var formDiv = document.createElement('div')
+  formDiv.innerHTML = html
+  document.body.appendChild(formDiv)
 }
 
 
