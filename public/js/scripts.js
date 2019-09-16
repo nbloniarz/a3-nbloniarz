@@ -222,13 +222,14 @@ function createDataDBMenu(dataArray){
   var html = "<form id=\"dataDBMenu\">"
   html += "<select id=\"dataDBMenuDropdown\">"
   dataArray.forEach(function (single, index){
-    html += "<option value=\"\""
-    html += single.fName + " "
-    html += single.lName + " "
-    html += single.month + " "
-    html += single.day + " "
-    html += single.sign + " "
-    html += ">"
+    html += "<option value=\"{"
+    html += "fName:" + single.fName + ", "
+    html += "lName:" + single.lName + ", "
+    html += "month:" + single.month + ", "
+    html += "day:" + single.day + ", "
+    html += "sign:" + single.sign + ", "
+    html += "user:" + single.user + "}"
+    html += "\">"
     html += single.fName + " "
     html += single.lName + " "
     html += single.month + " "
@@ -236,7 +237,7 @@ function createDataDBMenu(dataArray){
     html += "</option>"
   })
   html += "</select>"
-  html += "<div id=\"buttonDiv\"><button onclick=\"toggleModifyData()\"type=\"button\"id=\"modifyEntry\">Modify Entry</button>"
+  html += "<div id=\"buttonDiv\"><button onclick=\"toggleDataDBMenuEdit()\"type=\"button\"id=\"modifyEntry\">Modify Entry</button>"
   html += "<button onclick=\"deleteEntry()\"type=\"button\"id=\"deleteEntry\">Delete Entry</button></div>"
   html += "</form>"
   var formDiv = document.createElement('div')
@@ -245,23 +246,37 @@ function createDataDBMenu(dataArray){
 }
 
 function toggleDataDBMenuEdit(){
-  
-}
-
-function createDataDBMenuEdit(){
-  let dataDBMenu = document.getElementById("dataDBMenu")
-  if(dataDBMenu !== null){
-    if(dataDBMenu.style.display === 'none'){
-      dataDBMenu.style.display = 'block'
+let dataDBMenuEdit = document.getElementById("dataDBMenuEdit")
+  if(dataDBMenuEdit !== null){
+    if(dataDBMenuEdit.style.display === 'none'){
+      dataDBMenuEdit.style.display = 'block'
     }
     else{
-      dataDBMenu.style.display = 'none'
+      dataDBMenuEdit.style.display = 'none'
     }
   }
   else{
-    createDataDBMenu(dataArray)
+    createDataDBMenuEdit()
   }
-  hideAllBut("dataDBMenu")
+}
+
+function createDataDBMenuEdit(){
+  let dataDBMenuInfo = document.getElementById("dataDBMenuDropdown").value
+  var html = "<form id=\"editData\">"
+  html += "<label></label>"
+  html += "<input></input>"
+  html += "<td>" + single.fName + "</td>"
+  html += "<td>" + single.lName + "</td>"
+  html += "<td>" + single.month + "</td>"
+  html += "<td>" + single.day + "</td>"
+  html += "<td>" + single.sign + "</td>"
+  html += "<td>" + single.user + "</td>"
+  html += "</tr>"
+  
+  html += "</form>"
+  var editDiv = document.createElement('div')
+  editDiv.innerHTML = html
+  document.body.appendChild(editDiv)
 }
 
 
