@@ -165,12 +165,18 @@ function createViewUser(dataArray){
 //Hides but given ID
 function hideAllBut(id){
   let allItems = document.body.childNodes;
-  console.log(allItems)
   allItems.forEach(function(child){
-    console.log(child)
-    /*if(child.id !== id){
-      child.style.display = 'none'
-    }*/
+    if(child.tagName === 'DIV'){
+      let childForms = child.getElementByTagName('table')
+      console.log(childForms)
+      if(childForms !== undefined){
+        childForms.forEach(function(form){
+          if(form.id !== id){
+            form.style.display = 'none'
+          }
+        })
+      }
+    }
   })
 }
 /*
