@@ -222,24 +222,20 @@ function createDataDBMenu(dataArray){
   var html = "<form id=\"dataDBMenu\">"
   html += "<select id=\"dataDBMenuDropdown\">"
   dataArray.forEach(function (single, index){   
-    html += "<option value=\"{"
-    html += "fName: " + single.fName + ", "
-    html += "lName:" + single.lName + ", "
-    html += "month:" + single.month + ", "
-    html += "day:" + single.day + ", "
-    html += "sign:" + single.sign + ", "
-    html += "user:" + single.user + "}"
-    html += "\">"
+    html += "<option value=\"" + index + "\">"
+    html += index + " "
     html += single.fName + " "
     html += single.lName + " "
     html += single.month + " "
     html += single.day + " "
     html += "</option>"
-    html += "<p id=\"\">"
+  })
+  dataArray.forEach(function (single, index){   
+    html += "</select>"
+    html += "<p style=\"display: none\" id=\"" + index + "\">"
+    html += JSON.stringify(single)
     html += "</p>"
   })
-  html += "</select>"
-  
   html += "<div id=\"buttonDiv\"><button onclick=\"toggleDataDBMenuEdit()\"type=\"button\"id=\"modifyEntry\">Modify Entry</button>"
   html += "<button onclick=\"deleteEntry()\"type=\"button\"id=\"deleteEntry\">Delete Entry</button></div>"
   html += "</form>"
@@ -266,6 +262,8 @@ let dataDBMenuEdit = document.getElementById("dataDBMenuEdit")
 function createDataDBMenuEdit(){
   let dataDBMenuInfo = document.getElementById("dataDBMenuDropdown").value
   console.log(dataDBMenuInfo)
+  let retrievedData = document.getElementById(dataDBMenuInfo)
+  console.log(retrievedData)
   var html = "<form id=\"editData\">"
   /*
      <label for=\"username\">username</label>"
