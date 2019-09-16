@@ -167,7 +167,6 @@ function hideAllBut(id){
   let allItems = document.body.childNodes;
   allItems.forEach(function(child){
     if(child.tagName === 'DIV'){
-      console.log(child)
       let childForms = child.childNodes
       if(childForms !== undefined){
         childForms.forEach(function(form){
@@ -245,7 +244,8 @@ function createDataDBMenu(dataArray){
 }
 
 function toggleDataDBMenuEdit(){
-let dataDBMenuEdit = document.getElementById("dataDBMenuEdit")
+  hideAllBut("dataDBMenuEdit")
+  let dataDBMenuEdit = document.getElementById("dataDBMenuEdit")
   if(dataDBMenuEdit !== null){
     if(dataDBMenuEdit.style.display === 'none'){
       dataDBMenuEdit.style.display = 'block'
@@ -269,10 +269,21 @@ function createDataDBMenuEdit(){
   html += "<label for=\"month\">Month</label>"
   html += monthToHTML(dataDBMenuInfo.month)
   html += daysToHTML(dataDBMenuInfo.month, dataDBMenuInfo.day)
+  html += "<button type=\"button\" onclick=\"sendModify()\">Submit</button>"
+  html += "<p id=\"originalData\"style=\"display: none\">"
+  html += JSON.stringify(dataDBMenuInfo)
+  html += "</p>"
   html += "</form>"
   var editDiv = document.createElement('div')
   editDiv.innerHTML = html
   document.body.appendChild(editDiv)
+}
+
+function sendModify(){
+  let original = JSON.parse(document.getElementById("originalData").innerHTML)
+  let newData = {
+    
+  }
 }
 
 //Removes all options from given select element
@@ -305,7 +316,7 @@ function appendDataToSelect(sel, data) {
 function daysToHTML(month, day){
   let totalDays = hasDays(monthToNum(month));
   let html = "<label for=\"days\">Day of Birth</label>"
-  html += "<select name=\"days\" class=\"dayDropdown\">"
+  html += "<select name=\"days\" id=\"dayDropdown\">"
   for(let i = 1; i <= totalDays; i++){
     html += "<option "
     if(i === day){
