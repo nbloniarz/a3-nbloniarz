@@ -23,7 +23,6 @@ const mime = require( 'mime' ),
 ///////////////////////////////////////////////////////////////
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAuOGEGSNJLe2fxv0iHQwigSY8nIj2pb30",
   authDomain: "a2-nbloniarz.firebaseapp.com",
   databaseURL: "https://a2-nbloniarz.firebaseio.com",
   projectId: "a2-nbloniarz",
@@ -207,7 +206,7 @@ app.post('/deletedata', function(req, res){
     //res.json(data)
     let original = findEqual(data, req.body)
     if(original.index >= 0){
-      db.ref('data/' +  keys[original.index]).delete()
+      db.ref('data/' +  keys[original.index]).remove()
     }
     res.json(req.body)
   })
