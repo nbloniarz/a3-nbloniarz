@@ -260,10 +260,7 @@ let dataDBMenuEdit = document.getElementById("dataDBMenuEdit")
 }
 
 function createDataDBMenuEdit(){
-  let dataDBMenuInfo = document.getElementById("dataDBMenuDropdown").value
-  console.log(dataDBMenuInfo)
-  let retrievedData = document.getElementById(dataDBMenuInfo)
-  console.log(retrievedData)
+  let dataDBMenuInfo = JSON.parse(document.getElementById(document.getElementById("dataDBMenuDropdown").value).innerHTML)
   var html = "<form id=\"editData\">"
   /*
      <label for=\"username\">username</label>"
@@ -274,18 +271,17 @@ function createDataDBMenuEdit(){
   html += "<input type=\"text\" value=\"" + dataDBMenuInfo.fName + "\"></input>"
   html += "<label for=\"lName\">Last Name</label>"
   html += "<input type=\"text\" value=\"" + dataDBMenuInfo.lName + "\"></input>"
-  html += "<label for=\"fName\">First Name</label>"
-  html += "<input type=\"text\" value=\"" + dataDBMenuInfo.fName + "\"></input>"
   html += "<label for=\"month\">Month</label>"
-  html += "<select id=\"monthDropdown\" value=\"" + dataDBMenuInfo.month + "\"</select>"
+  html += "<select onchange=\"updateDays()\"id=\"monthDropdown\" value=\"" + dataDBMenuInfo.month + "\"</select>"
   html += "<label for=\"day\">Day</label>"
-  html += "<select id=\"dayDropdown\" value=\"" + dataDBMenuInfo.day + "\"</select>"
-  html += "<p>"
-  html += "</p></form>"
+  html += "<select id=\"dayDropdown\" value=\"" + dataDBMenuInfo.day + "\"</select></form>"
   var editDiv = document.createElement('div')
   editDiv.innerHTML = html
   document.body.appendChild(editDiv)
   let selection = document.getElementById("monthDropdown")
+  removeAllOptions(selection, true)
+  appendDataToSelect(selection, MonthDataForDropdown)
+  selection = document.getElementById("dayDropdown")
   removeAllOptions(selection, true)
   appendDataToSelect(selection, MonthDataForDropdown)
 }
@@ -330,6 +326,24 @@ function daysToHTML(month, day){
   }
   html += "</select><br>"
   return html;
+}
+
+function updateDays(){
+  let currentMonth = document.getElementById('monthDropdown').value
+  let monthNum = monthToNum(currentMonth)
+  let numDays = hasDays(monthNum)
+  let selection = document.getElementById("dayDropdown")
+  removeAllOptions(selection, true)
+  appendDaysToSelect(selection, numDays)
+}
+
+function appendDaysToSelect(selection, numDays){
+  for(let i = 1; i<= numDays; i++){
+    var opt = document.createElement("option")
+    opt.innerHTML = i
+    opt.value = i
+    selection.appendChild(opt)
+  }
 }
 
 function monthToNum(month){
