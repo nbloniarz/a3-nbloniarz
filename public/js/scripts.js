@@ -18,10 +18,10 @@ function toggleLogin(){
 function createLoginForm(){
   var html =  "<form action=\"\" class=\"loginForm\" id=\"loginForm\" style=\"display : inline\">"
       html += "<legend>Login</legend>"
-      html += " <label for=\"username\">username</label>"
-      html += "<input type=\"text\" id=\"uName\" value=\"username\"><br>"
+      html += "<label for=\"username\">username</label>"
+      html += "<input name=\"username\"type=\"text\" id=\"uName\" value=\"username\"><br>"
       html += "<label for=\"pass\">password</label>"
-      html += "<input type=\"password\" id=\"pass\" value=\"password\"><br>"
+      html += "<input name=\"pass\" type=\"password\" id=\"pass\" value=\"password\"><br>"
       html += "<button type=\"button\" onclick=\"doLogin()\"id=\"loginUser\">Log In</button></form>"
   document.getElementById("Container").innerHTML = ""
   document.getElementById("Container").innerHTML = html
@@ -221,7 +221,7 @@ function toggleDataDBMenu(dataArray){
 function createDataDBMenu(dataArray){
   var html = "<form id=\"dataDBMenu\">"
   html += "<select id=\"dataDBMenuDropdown\">"
-  dataArray.forEach(function (single, index){
+  dataArray.forEach(function (single, index){   
     html += "<option value=\"{"
     html += "fName:" + single.fName + ", "
     html += "lName:" + single.lName + ", "
@@ -263,15 +263,28 @@ let dataDBMenuEdit = document.getElementById("dataDBMenuEdit")
 function createDataDBMenuEdit(){
   let dataDBMenuInfo = document.getElementById("dataDBMenuDropdown").value
   var html = "<form id=\"editData\">"
-  html += "<label></label>"
-  html += "<input></input>"
-  html += "<td>" + single.fName + "</td>"
+  /*
+     <label for=\"username\">username</label>"
+      html += "<input type=\"text\" id=\"uName\" value=\"username\"><br>"
+      html += 
+    */
+  html += "<label for=\"fName\">First Name</label>"
+  html += "<input type=\"text\" value=\"" + dataDBMenuInfo.fName + "\"></input>"
+  html += "<label for=\"lName\">Last Name</label>"
+  html += "<input type=\"text\" value=\"" + dataDBMenuInfo.lName + "\"></input>"
+  html += "<label for=\"fName\">First Name</label>"
+  html += "<input type=\"text\" value=\"" + dataDBMenuInfo.fName + "\"></input>"
+  html += "<select id=\"monthDropdown\" value=\"" + dataDBMenuInfo.month + "\"</select>"
+  html += "<select id=\"monthDropdown\" value=\"" + dataDBMenuInfo.month + "\"</select>"
+
+  
+  /*html += "<td>" + single.fName + "</td>"
   html += "<td>" + single.lName + "</td>"
   html += "<td>" + single.month + "</td>"
   html += "<td>" + single.day + "</td>"
   html += "<td>" + single.sign + "</td>"
   html += "<td>" + single.user + "</td>"
-  html += "</tr>"
+  html += "</tr>"*/
   
   html += "</form>"
   var editDiv = document.createElement('div')
@@ -279,9 +292,123 @@ function createDataDBMenuEdit(){
   document.body.appendChild(editDiv)
 }
 
+//Removes all options from given select element
+function removeAllOptions(selection, removalGroup){
+  var len, groups, par;
+  if(removalGroup){
+    groups = selection.getElementsByTagName('option')
+    len = groups.length;
+    for(var i = len; i; i--){
+      selection.removeChild(groups[i-1])
+    }
+  }
+  len = selection.options.length
+  for(var i=len; i; i--){
+    par = selection.options[i-1].parentNode;
+    par.removeChild(selection.options[i-1])
+  }
+}
+
+//Adds given data as options to given select element
+function appendDataToSelect(sel, data) {
+  for(let i = 0; i<data.length; i++){
+      var opt = document.createElement("option")
+      opt.innerHTML = opt.value = data[i]
+      sel.appendChild(opt)
+  }
+}
 
 
+function daysToHTML(month, day){
+  let totalDays = hasDays(monthToNum(month));
+  let html = "<label for=\"days\">Day of Birth</label>"
+  html += "<select name=\"days\" class=\"daysE\">"
+  for(let i = 1; i <= totalDays; i++){
+    html += "<option "
+    if(i === day){
+      html += "selected=\"selected\" "
+    }
+    html += "value=\"" + i + "\">"+ i + "</option>"
+  }
+  html += "</select><br>"
+  return html;
+}
 
+function monthToNum(month){
+  switch(month){
+    case "January":
+      return 0;
+    case "February":
+      return 1;
+    case "March":
+      return 2;
+    case "April":
+      return 3;
+    case "May":
+      return 4;
+    case "June":
+      return 5;
+    case "July":
+      return 6;
+    case "August":
+      return 7;
+    case "September":
+      return 8;
+    case "October":
+      return 9;
+    case "November":
+      return 10;
+    case "December":
+      return 11;
+  }
+}
+
+function hasDays(month){
+  switch(month){
+    case 0:
+      return 31;
+    case 1:
+      return 29;
+    case 2:
+      return 31;
+    case 3:
+      return 30;
+    case 4:
+      return 31;
+    case 5:
+      return 30;
+    case 6:
+      return 31;
+    case 7:
+      return 31;
+    case 8:
+      return 30;
+      break;
+    case 9:
+      return 31;
+    case 10:
+      return 30;
+    case 11:
+      return 31;
+  }
+}
+
+const DateDataForDropdown = {
+  'days' : {
+    January:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31' ],
+    February:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29'],
+    March:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31' ],
+    April:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30' ],
+    May:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31' ],
+    June:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30' ],
+    July:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31' ],
+    August:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31' ]      ,
+    September:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30' ]    ,
+    October:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31' ]      ,
+    November:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'],
+    December:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31' ]      
+  }
+}
 
 
 
@@ -521,31 +648,6 @@ function generateHoroscope(){
 }
 
 //******* DYNAMIC DROPDOWNS ******//
-//Removes all options from given select element
-function removeAllOptions(selection, removalGroup){
-  var len, groups, par;
-  if(removalGroup){
-    groups = selection.getElementsByTagName('option')
-    len = groups.length;
-    for(var i = len; i; i--){
-      selection.removeChild(groups[i-1])
-    }
-  }
-  len = selection.options.length
-  for(var i=len; i; i--){
-    par = selection.options[i-1].parentNode;
-    par.removeChild(selection.options[i-1])
-  }
-}
-
-//Adds given data as options to given select element
-function appendDataToSelect(sel, data) {
-  for(let i = 0; i<data.length; i++){
-      var opt = document.createElement("option")
-      opt.innerHTML = opt.value = data[i]
-      sel.appendChild(opt)
-  }
-}
 
 //Populates initial modify dropdown will all information from database
 function populateFromDatabase(){
@@ -615,22 +717,6 @@ function populateFromDatabaseHoro(){
 }
 //******* HARD CODED DATA *******//
 //HARD CODED VAR FOR ALL OD DATE INFORMATION
-const DateDataForDropdown = {
-  'days' : {
-    January:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31' ],
-    February:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29'],
-    March:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31' ],
-    April:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30' ],
-    May:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31' ],
-    June:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30' ],
-    July:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31' ],
-    August:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31' ]      ,
-    September:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30' ]    ,
-    October:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31' ]      ,
-    November:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'],
-    December:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31' ]      
-  }
-}
 
 
 //******* UTILITY DATE FUNCTIONS *******//
@@ -808,79 +894,8 @@ function monthToHTML(month){
   }
 }
 
-function daysToHTML(month, day){
-  let totalDays = hasDays(monthToNum(month));
-  let html = "<label for=\"days\">Day of Birth</label>"
-  html += "<select name=\"days\" class=\"daysE\">"
-  for(let i = 1; i <= totalDays; i++){
-    html += "<option "
-    if(i === day){
-      html += "selected=\"selected\" "
-    }
-    html += "value=\"" + i + "\">"+ i + "</option>"
-  }
-  html += "</select><br>"
-  return html;
-}
 
-function monthToNum(month){
-  switch(month){
-    case "January":
-      return 0;
-    case "February":
-      return 1;
-    case "March":
-      return 2;
-    case "April":
-      return 3;
-    case "May":
-      return 4;
-    case "June":
-      return 5;
-    case "July":
-      return 6;
-    case "August":
-      return 7;
-    case "September":
-      return 8;
-    case "October":
-      return 9;
-    case "November":
-      return 10;
-    case "December":
-      return 11;
-  }
-}
 
-function hasDays(month){
-  switch(month){
-    case 0:
-      return 31;
-    case 1:
-      return 29;
-    case 2:
-      return 31;
-    case 3:
-      return 30;
-    case 4:
-      return 31;
-    case 5:
-      return 30;
-    case 6:
-      return 31;
-    case 7:
-      return 31;
-    case 8:
-      return 30;
-      break;
-    case 9:
-      return 31;
-    case 10:
-      return 30;
-    case 11:
-      return 31;
-  }
-}
 
 //******** UTILITY IMAGE FUNCTIONS *******//
 function signToImageURL(sign){
