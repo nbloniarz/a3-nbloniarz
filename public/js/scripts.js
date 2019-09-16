@@ -223,7 +223,7 @@ function createDataDBMenu(dataArray){
   html += "<select id=\"dataDBMenuDropdown\">"
   dataArray.forEach(function (single, index){   
     html += "<option value=\"{"
-    html += "fName:" + single.fName + ", "
+    html += "fName: " + single.fName + ", "
     html += "lName:" + single.lName + ", "
     html += "month:" + single.month + ", "
     html += "day:" + single.day + ", "
@@ -262,6 +262,7 @@ let dataDBMenuEdit = document.getElementById("dataDBMenuEdit")
 
 function createDataDBMenuEdit(){
   let dataDBMenuInfo = document.getElementById("dataDBMenuDropdown").value
+  console.log(dataDBMenuInfo)
   var html = "<form id=\"editData\">"
   /*
      <label for=\"username\">username</label>"
@@ -274,22 +275,17 @@ function createDataDBMenuEdit(){
   html += "<input type=\"text\" value=\"" + dataDBMenuInfo.lName + "\"></input>"
   html += "<label for=\"fName\">First Name</label>"
   html += "<input type=\"text\" value=\"" + dataDBMenuInfo.fName + "\"></input>"
+  html += "<label for=\"month\">Month</label>"
   html += "<select id=\"monthDropdown\" value=\"" + dataDBMenuInfo.month + "\"</select>"
-  html += "<select id=\"monthDropdown\" value=\"" + dataDBMenuInfo.month + "\"</select>"
-
-  
-  /*html += "<td>" + single.fName + "</td>"
-  html += "<td>" + single.lName + "</td>"
-  html += "<td>" + single.month + "</td>"
-  html += "<td>" + single.day + "</td>"
-  html += "<td>" + single.sign + "</td>"
-  html += "<td>" + single.user + "</td>"
-  html += "</tr>"*/
-  
+  html += "<label for=\"day\">Day</label>"
+  html += "<select id=\"dayDropdown\" value=\"" + dataDBMenuInfo.day + "\"</select>"
   html += "</form>"
   var editDiv = document.createElement('div')
   editDiv.innerHTML = html
   document.body.appendChild(editDiv)
+  let selection = document.getElementById("monthDropdown")
+  removeAllOptions(selection, true)
+  appendDataToSelect(selection, MonthDataForDropdown)
 }
 
 //Removes all options from given select element
@@ -410,7 +406,20 @@ const DateDataForDropdown = {
   }
 }
 
-
+const MonthDataForDropdown = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+]
 
 
 
