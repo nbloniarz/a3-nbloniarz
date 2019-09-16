@@ -67,7 +67,7 @@ function getAllData(){
   }).then(function(res){
     return res.json()
   }).then(function(fin){
-    console.log(fin)
+    toggleViewAll(fin)
   })
 }
 
@@ -91,6 +91,14 @@ function modifyInformation(){
   
 }
 
+function toggleViewAll(dataArray){
+  let viewAll = document.getElementById("viewAll")
+  if(viewAll !== undefined){
+    if(viewAll.style.display === 'none'){
+      viewAll.style.display = 'inline'
+    }
+  }
+}
 
 
 
