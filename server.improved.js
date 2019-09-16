@@ -51,8 +51,7 @@ app.use(session({secret: 'kittens', saveUninitialized: false, resave: false}))//
 //////////////////////////////////////////////////////////////////
 ////////////     PASSPORT     /////////////////////////////////
 ///////////////////////////////////////////////////////////////
-const myStrategy = function(username, password, done, other){
-  console.log(other)
+const myStrategy = function(username, password, done){
   db.ref('/users/').once('value')
   .then(function(snapshot){
     const users = []
@@ -167,8 +166,7 @@ app.post('/modifyUser', function(req, res){
 })
 
 app.post('/modifyData', function(req, res){
-  let body = req.body
-  res.json(body)
+  res.json({status: 200})
   /*db.ref('/data/').once('value')
   .then(function(snapshot){
     const data = []
