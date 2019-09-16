@@ -203,38 +203,46 @@ function showDataDBMenu(){
 }
 
 function toggleDataDBMenu(dataArray){
-  let viewAll = document.getElementById("dataDBMenu")
-  if(viewAll !== null){
-    if(viewAll.style.display === 'none'){
-      viewAll.style.display = 'table'
+  let dataDBMenu = document.getElementById("dataDBMenu")
+  if(dataDBMenu !== null){
+    if(dataDBMenu.style.display === 'none'){
+      dataDBMenu.style.display = 'block'
     }
     else{
-      viewAll.style.display = 'none'
+      dataDBMenu.style.display = 'none'
     }
   }
   else{
-    createViewUser(dataArray)
+    createDataDBMenu(dataArray)
   }
   hideAllBut("dataDBMenu")
 }
 
 function createDataDBMenu(dataArray){
   var html = "<form id=\"dataDBMenu\">"
-  html += "<select id=>"
-  dataArray.forEach(function (single){
-    html += "<tr>"
-    html += "<td>" + single.fName + "</td>"
-    html += "<td>" + single.lName + "</td>"
-    html += "<td>" + single.month + "</td>"
-    html += "<td>" + single.day + "</td>"
-    html += "<td>" + single.sign + "</td>"
-    html += "<td>" + single.user + "</td>"
-    html += "</tr>"
+  html += "<select onchange=\"toggleDataDBMenuEdit()\"id=\"dataDBMenuDropdown\">"
+  dataArray.forEach(function (single, index){
+    html += "<option value=\"\""
+    html += single.fName + " "
+    html += single.lName + " "
+    html += single.month + " "
+    html += single.day + " "
+    html += single.sign + " "
+    html += ">"
+    html += single.fName + " "
+    html += single.lName + " "
+    html += single.month + " "
+    html += single.day + " "
+    html += "</option>"
   })
   html += "</select></form>"
   var formDiv = document.createElement('div')
   formDiv.innerHTML = html
   document.body.appendChild(formDiv)
+}
+
+function toggleDataDBMenuEdit(){
+  
 }
 
 
