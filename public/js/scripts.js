@@ -167,8 +167,8 @@ function hideAllBut(id){
   let allItems = document.body.childNodes;
   allItems.forEach(function(child){
     if(child.tagName === 'DIV'){
-      let childForms = child.getElementByTagName('table')
-      console.log(childForms)
+      console.log(child)
+      let childForms = child.childNodes
       if(childForms !== undefined){
         childForms.forEach(function(form){
           if(form.id !== id){
