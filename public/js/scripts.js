@@ -48,6 +48,7 @@ function createGiven(elementID){
      }).then(function(res){
        return res.json()
      }).then(function(fin){
+       emptyBody()
        let dataArray = fin
        var html = "<table id=\"viewDataForUser\">"
        html += "<tr><th>First Name</th><th>Last Name</th><th>Month</th><th>Day</th><th>Sign</th><th>User</th></tr>"
@@ -68,6 +69,7 @@ function createGiven(elementID){
      })
      break
    case "viewAddData":
+     emptyBody()
      document.getElementById("dataDBMenu").parentNode.remove()
      var html = "<form id=\"viewAddData\">"
      html += "<legend>Add Data</legend>"
@@ -90,12 +92,13 @@ function createGiven(elementID){
 
 function emptyBody(){
   let body = document.body
-  let filteredChildren = body.childNodes.filter
-  /*body.childNodes.forEach(function (node){
-    if(node.tagName !== "nav"){
-        node.remove()
-      }
-  })*/
+  let children = body.childNodes
+  var filtered = [].filter.call(children, function(node){ return node.nodeType == 1})
+  filtered.forEach(function(node){
+    if(node.tagName === 'DIV' && node.id !== 'Container'){
+      node.remove()
+    }
+  })  
 }
 
 
