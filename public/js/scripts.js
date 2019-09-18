@@ -143,7 +143,7 @@ function createGiven(elementID){
          html += "</p>"
        })
        html += "<div id=\"buttonDiv\"><button onclick=\"toggleGiven(\'viewAddData\')\" type=\"button\"id=\"addEntry\">Add Entry</button>"
-       html += "<button onclick=\"toggleGiven(\'viewEditData\')\"type=\"button\"id=\"modifyEntry\">Modify Entry</button>"
+       html += "<button onclick=\"toggleGiven(\'viewModifyData\')\"type=\"button\"id=\"modifyEntry\">Modify Entry</button>"
        html += "<button onclick=\"deleteData()\"type=\"button\"id=\"deleteEntry\">Delete Entry</button></div>"
        html += "</form>"
        var formDiv = document.createElement('div')

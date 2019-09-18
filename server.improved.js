@@ -163,8 +163,29 @@ app.post('/login', passport.authenticate( 'local'),
 })
 
 app.post('/addUser', function(req, res){
-  console.log(req.json().new)
-})
+  db.ref('/users/').once('value')
+  .then(function(snapshot){
+    const data = []
+    snapshot.forEach(function(child){
+      data.push(child.val())
+    })
+    let hasDup = checkForDuplicateUser(data, req.body)
+    if(hasDup.exists){
+      res.status(409).send()
+    }
+    else{
+      db.ref('/data').push({
+        fName: req.body.fName,
+        lName: req.body.lName,
+        month: req.body.month,
+        day: req.body.day,
+        sign: starSign(req.body),
+        user: req.body.user
+      }).then(function(response){
+        res.status(200).send()
+      })
+    }
+  })})
 
 app.post('/addData', function(req, res){
   db.ref('/data/').once('value')
@@ -200,7 +221,6 @@ app.post('/modifyUser', function(req, res){
   console.log(req.json().original)
   console.log(req.json().new)
 })
-
 
 app.post('/modifydata', function(req, res){
   db.ref('/data/').once('value')
@@ -378,26 +398,24 @@ function findEqual(dataArray, original){
   return returnVal
 }
 
+//DUPLICATE DATA RETURNS BOOL AND INDEX
 function checkForDuplicateData(data, original){
-  let final = {exixts: false, index: -1}
+  let final = {exists: false, index: -1}
   data.forEach(function(comp, index){
     if(comp.fName === original.fName && comp.lName === original.lName &&
       comp.month === original.month && comp.day === original.day &&
       comp.user === original.user){
-      //console.log("SAME")
       final = {exists: true, index: index}
     }
   })
   return final
 }
 
-function checkForDuplicateData(data, original){
-  let final = {exixts: false, index: -1}
+//DUPLICATE USER RETURNS BOOL AND INDEX
+function checkForDuplicateUser(data, original){
+  let final = {exists: false, index: -1}
   data.forEach(function(comp, index){
-    if(comp.fName === original.fName && comp.lName === original.lName &&
-      comp.month === original.month && comp.day === original.day &&
-      comp.user === original.user){
-      //console.log("SAME")
+    if(comp.username === original.username){
       final = {exists: true, index: index}
     }
   })
