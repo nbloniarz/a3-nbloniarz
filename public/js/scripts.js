@@ -153,8 +153,26 @@ function createGiven(elementID){
      })
      break
    case "viewModifyData":
-     let originalData = document.getElementById(document.getElementById('viewDataMenuDropdown').selectedIndex)
+     var originalData = JSON.parse(document.getElementById(document.getElementById('viewDataMenuDropdown').selectedIndex).innerHTML)
      emptyBody()
+     var html = "<form id=\"viewModifyData\">"
+     html += "<label for=\"fName\">First Name</label>"
+     html += "<input id=\"fName\" type=\"text\" value=\"" + originalData.fName + "\"></input>"
+     html += "<label for=\"lName\">Last Name</label>"
+     html += "<input id=\"lName\" type=\"text\" value=\"" + originalData.lName + "\"></input>"
+     html += "<label for=\"month\">Month</label>"
+     html += monthToHTML(originalData.month)
+     console.log(originalData.day)
+     html += daysToHTML(originalData.month, originalData.day)
+     html += "<button type=\"button\" onclick=\"modifyData()\">Submit</button>"
+     html += "<button type=\"button\" onclick=\"cancel()\"id=\"cancel\">Cancel</button></form>"
+     html += "<p id=\"originalData\"style=\"display: none\">"
+     html += JSON.stringify(originalData)
+     html += "</p>"
+     html += "</form>"
+     var editDiv = document.createElement('div')
+     editDiv.innerHTML = html
+     document.body.appendChild(editDiv)
      break
    case "viewUserMenu":
      fetch('/allUsers', {
@@ -204,8 +222,27 @@ function createGiven(elementID){
      document.body.appendChild(formDiv)
      break
    case "viewModifyUser":
-     let originalData = document.getElementById(document.getElementById('viewUserMenuDropdown').selectedIndex)
+     var originalData = JSON.parse(document.getElementById(document.getElementById('viewUserMenuDropdown').selectedIndex).innerHTML)
      emptyBody()
+     let currUser = getCookie('TestCookie')
+     if(originalData.username === currUser){
+       window.alert("CANNOT MODIFY CURRENT USER")
+       emptyBody()
+     }
+     else{
+       var html = "<form id=\"viewModifyUser\">"
+       html += "<legend>Add User</legend>"
+       html += "<label for=\"uName\">Username</label>"
+       html += "<input name=\"uName\"type=\"text\" id=\"uName\" value=\""+ originalData.username + "\"><br>"
+       html += "<label for=\"pass\">Password</label>"
+       html += "<input name=\"pass\"type=\"text\" id=\"pass\" value=\"" + originalData.password + "\"><br>"
+     html += "<button type=\"button\" onclick=\"doModifyUser()\">Submit</button></form>"
+     html += "<button type=\"button\" onclick=\"cancel()\"id=\"cancel\">Cancel</button></form>"
+     html += "</form>"
+     var formDiv = document.createElement('div')
+     formDiv.innerHTML = html
+     document.body.appendChild(formDiv)
+     }
      break
  } 
 }
@@ -237,8 +274,14 @@ function getCookie(name){
 
 ///////////// Data DB functions /////////////////////////////
 //ADD
+function doAddData(){
+  
+}
 
 //MODIFIY
+function doModifyData(){
+  
+}
 
 //DELETE
 function deleteData(){
@@ -248,8 +291,14 @@ function deleteData(){
 
 //////////// User DB functions ////////////////////////////
 //ADD
+function doAddUser(){
+  
+}
 
 //MODIFY
+function doModifyUser(){
+  
+}
 
 //DELETE
 function deleteUser(){
