@@ -10,6 +10,7 @@ function toggleGiven(elementID){
   }
 }
 
+//Creates the element based on the given ID
 function createGiven(elementID){
  switch(elementID){
    //Case for viewing all for user
@@ -132,7 +133,7 @@ function createGiven(elementID){
        let dataArray = fin
        var html = "<form id=\"viewUserMenu\">"
        html += "<select id=\"viewUserMenu\">"
-       dataArray.forEach(function (single, index){   
+       dataArray.forEach(function (single, index){
          html += "<option value=\"" + index + "\">"
          html += index + " "
          html += single.username + " "
@@ -155,6 +156,7 @@ function createGiven(elementID){
      break } 
 }
 
+//Empties body of page of all uneeded data
 function emptyBody(){
   let body = document.body
   let children = body.childNodes
