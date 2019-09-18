@@ -108,6 +108,7 @@ app.get('/allData', function(req, res){
     const data = []
     snapshot.forEach(function(child){
       data.push(child.val())
+      console.log(child.val())
     })
     res.json(data)
   })

@@ -8,7 +8,6 @@ function toggleGiven(elementID){
   else{
     createGiven(elementID)
   }
-  hideAllBut(elementID)
 }
 
 function createGiven(elementID){
@@ -41,7 +40,7 @@ function createGiven(elementID){
        document.body.appendChild(tableDiv)
      })
      break
-   case "viewUser":
+   case "viewDataForUser":
      fetch('/allDataForUser', {
        method: 'GET',
        headers: {'Content-Type': 'application/json'},
@@ -49,7 +48,7 @@ function createGiven(elementID){
        return res.json()
      }).then(function(fin){
        let dataArray = fin
-       var html = "<table id=\"viewUser\">"
+       var html = "<table id=\"viewDataForUser\">"
        html += "<tr><th>First Name</th><th>Last Name</th><th>Month</th><th>Day</th><th>Sign</th><th>User</th></tr>"
        dataArray.forEach(function (single){
          html += "<tr>"
