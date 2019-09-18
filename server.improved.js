@@ -23,6 +23,7 @@ const mime = require( 'mime' ),
 ///////////////////////////////////////////////////////////////
 
 const firebaseConfig = {
+  apiKey: "AIzaSyAuOGEGSNJLe2fxv0iHQwigSY8nIj2pb30",
   authDomain: "a2-nbloniarz.firebaseapp.com",
   databaseURL: "https://a2-nbloniarz.firebaseio.com",
   projectId: "a2-nbloniarz",
@@ -43,7 +44,7 @@ app.use(cookieParser())//needed to read cookies for auth
 app.use(bodyparser.json())//can use json to parse req
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(connect())
-//app.use(downcase())//forces http requests to downcase
+//app.use(downcase())//forces http requests to downcase CAUSES REQUESTS TO FAIL
 app.use(compression()) //Minimizes headers
 app.use(favicon("public/favicon.png"))
 app.use(session({secret: 'kittens', saveUninitialized: false, resave: false}))//sets session secret
@@ -74,7 +75,9 @@ const myStrategy = function(username, password, done){
 }
 
 passport.use(new LocalStrategy(myStrategy))
+
 app.use(passport.initialize())//required for passport
+
 app.use(passport.session())//persistant login session
 
 passport.serializeUser( (user, done) => done(null, user.username))
@@ -170,7 +173,7 @@ app.post('/addData', function(req, res){
     snapshot.forEach(function(child){
       data.push(child.val())
     })
-    let hasDup = checkForDuplicate(data, req.body)
+    let hasDup = checkForDuplicateData(data, req.body)
     if(hasDup.exists){
       res.status(409).send()
     }
@@ -375,7 +378,20 @@ function findEqual(dataArray, original){
   return returnVal
 }
 
-function checkForDuplicate(data, original){
+function checkForDuplicateData(data, original){
+  let final = {exixts: false, index: -1}
+  data.forEach(function(comp, index){
+    if(comp.fName === original.fName && comp.lName === original.lName &&
+      comp.month === original.month && comp.day === original.day &&
+      comp.user === original.user){
+      //console.log("SAME")
+      final = {exists: true, index: index}
+    }
+  })
+  return final
+}
+
+function checkForDuplicateData(data, original){
   let final = {exixts: false, index: -1}
   data.forEach(function(comp, index){
     if(comp.fName === original.fName && comp.lName === original.lName &&
