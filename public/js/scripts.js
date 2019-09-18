@@ -1,4 +1,34 @@
 ////////////// Toggle Visibility ///////////////////
+//Toggles hide/show of log in form
+function toggleLogin(){
+  var loginForm = document.getElementById('loginForm')
+  if(loginForm !== null){
+    if(loginForm.style.display === 'none'){
+      loginForm.style.display = 'inline'
+    }
+    else{
+      loginForm.style.display = 'none'
+    }
+  }
+  else{
+    createLoginForm()
+  }
+}
+
+//Creates login form
+function createLoginForm(){
+  var html =  "<form action=\"\" class=\"loginForm\" id=\"loginForm\" style=\"display : inline\">"
+      html += "<legend>Login</legend>"
+      html += "<label for=\"username\">username</label>"
+      html += "<input name=\"username\"type=\"text\" id=\"uName\" value=\"username\"><br>"
+      html += "<label for=\"pass\">password</label>"
+      html += "<input name=\"pass\" type=\"password\" id=\"pass\" value=\"password\"><br>"
+      html += "<button type=\"button\" onclick=\"doLogin()\"id=\"loginUser\">Log In</button></form>"
+  document.getElementById("Container").innerHTML = ""
+  document.getElementById("Container").innerHTML = html
+}
+
+
 //Toggles hide/show of given element ID and associated data needed
 function toggleGiven(elementID){
   let givenElt = document.getElementById(elementID)
@@ -131,17 +161,13 @@ function createGiven(elementID){
      }).then(function(fin){
        emptyBody()
        let dataArray = fin
-       let currUser = getCookie("TestCookie")
-
        var html = "<form id=\"viewUserMenu\">"
        html += "<select id=\"viewUserMenu\">"
        dataArray.forEach(function (single, index){
-         if(currUser !== single.username){
-           html += "<option value=\"" + index + "\">"
-           html += index + " "
-           html += single.username + " "
-           html += "</option>"
-         }
+         html += "<option value=\"" + index + "\">"
+         html += index + " "
+         html += single.username + " "
+         html += "</option>"
        })
        dataArray.forEach(function (single, index){  
          if(currUser !== single.username){
@@ -227,34 +253,6 @@ function deleteUser(){
 
 
 
-//Toggles hide/show of log in form
-function toggleLogin(){
-  var loginForm = document.getElementById('loginForm')
-  if(loginForm !== null){
-    if(loginForm.style.display === 'none'){
-      loginForm.style.display = 'inline'
-    }
-    else{
-      loginForm.style.display = 'none'
-    }
-  }
-  else{
-    createLoginForm()
-  }
-}
-
-//Creates login form
-function createLoginForm(){
-  var html =  "<form action=\"\" class=\"loginForm\" id=\"loginForm\" style=\"display : inline\">"
-      html += "<legend>Login</legend>"
-      html += "<label for=\"username\">username</label>"
-      html += "<input name=\"username\"type=\"text\" id=\"uName\" value=\"username\"><br>"
-      html += "<label for=\"pass\">password</label>"
-      html += "<input name=\"pass\" type=\"password\" id=\"pass\" value=\"password\"><br>"
-      html += "<button type=\"button\" onclick=\"doLogin()\"id=\"loginUser\">Log In</button></form>"
-  document.getElementById("Container").innerHTML = ""
-  document.getElementById("Container").innerHTML = html
-}
 
 //Logs user out
 function logOut(){
