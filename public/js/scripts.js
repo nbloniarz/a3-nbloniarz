@@ -58,15 +58,27 @@ function createGiven(elementID){
          html += "<td>" + single.day + "</td>"
          html += "<td>" + single.sign + "</td>"
          html += "<td>" + single.user + "</td>"
-       html += "</tr>"
-  })
-  html += "</table>"
-  var tableDiv = document.createElement('div')
-  tableDiv.innerHTML = html
-  document.body.appendChild(tableDiv)
+         html += "</tr>"
        })
-     
-
+       html += "</table>"
+       var tableDiv = document.createElement('div')
+       tableDiv.innerHTML = html
+       document.body.appendChild(tableDiv)
+     })
+     break
+   case "viewAddData":
+     var html = "<form id=\"viewAddData\">"
+      html += "<legend>Add Data</legend>"
+      html += "<label for=\"username\">username</label>"
+      html += "<input name=\"username\"type=\"text\" id=\"uName\" value=\"username\"><br>"
+      html += "<label for=\"pass\">password</label>"
+      html += "<input name=\"pass\" type=\"password\" id=\"pass\" value=\"password\"><br>"
+      html += "<button type=\"button\" onclick=\"doLogin()\"id=\"loginUser\">Log In</button></form>"
+  document.getElementById("Container").innerHTML = ""
+       html += "</form>"
+       var formDiv = document.createElement('div')
+       formDiv.innerHTML = html
+       document.body.appendChild(formDiv)
      break
  } 
 }
@@ -304,7 +316,7 @@ function createDataDBMenu(dataArray){
     html += JSON.stringify(single)
     html += "</p>"
   })
-  html += "<div id=\"buttonDiv\"><button onclick=\"toggleGiven()\" type=\"button\"id=\"addEntry\">Add Entry</button>"
+  html += "<div id=\"buttonDiv\"><button onclick=\"toggleGiven(\'viewAddData\')\" type=\"button\"id=\"addEntry\">Add Entry</button>"
   html += "<button onclick=\"toggleDataDBMenuEdit()\"type=\"button\"id=\"modifyEntry\">Modify Entry</button>"
   html += "<button onclick=\"sendDelete()\"type=\"button\"id=\"deleteEntry\">Delete Entry</button></div>"
   html += "</form>"
