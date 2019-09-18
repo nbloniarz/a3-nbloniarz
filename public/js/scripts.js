@@ -1,4 +1,4 @@
-////////     UTILITY FUNCTIONS     ///////////////////
+////////////// Toggle Visibility ///////////////////
 //Toggles hide/show of given element ID and associated data needed
 function toggleGiven(elementID){
   let givenElt = document.getElementById(elementID)
@@ -159,7 +159,23 @@ function createGiven(elementID){
        formDiv.innerHTML = html
        document.body.appendChild(formDiv)
      })
-     break } 
+     break
+   case "viewAddUser":
+     emptyBody()
+     var html = "<form id=\"viewAddUser\">"
+     html += "<legend>Add User</legend>"
+     html += "<label for=\"uName\">Username</label>"
+     html += "<input name=\"uName\"type=\"text\" id=\"uName\" value=\"username\"><br>"
+     html += "<label for=\"pass\">Last Name</label>"
+     html += "<input name=\"pass\"type=\"password\" id=\"pass\" value=\"password\"><br>"
+     html += "<button type=\"button\" onclick=\"doAddUser()\"id=\"submitAddUser\">Submit</button></form>"
+     html += "<button type=\"button\" onclick=\"cancel()\"id=\"cancel\">Cancel</button></form>"
+     html += "</form>"
+     var formDiv = document.createElement('div')
+     formDiv.innerHTML = html
+     document.body.appendChild(formDiv)
+     break
+ } 
 }
 
 //Empties body of page of all uneeded data
@@ -174,18 +190,38 @@ function emptyBody(){
   })  
 }
 
-function deleteUser(){
-  
+//Serves as general cancel button for admin page
+function cancel(){
+  emptyBody()
 }
 
-function deleteData(){
-  
-}
-
+///////////// UTILITY //////////////////////////////////////
+//Gets name of user from cookie
 function getCookie(name){
   var re = new RegExp(name + "=([^;]+)")
   var val = re.exec(document.cookie)
   return (val != null) ? unescape(val[1]) : null 
+}
+
+///////////// Data DB functions /////////////////////////////
+//ADD
+
+//MODIFIY
+
+//DELETE
+function deleteData(){
+  
+}
+
+
+//////////// User DB functions ////////////////////////////
+//ADD
+
+//MODIFY
+
+//DELETE
+function deleteUser(){
+  
 }
 
 
