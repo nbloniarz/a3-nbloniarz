@@ -13,8 +13,9 @@ function toggleGiven(elementID){
 
 function createGiven(elementID){
  switch(elementID){
+   //Case for viewing all for user
    case "viewAll":
-     fetch('/allDataForUser', {
+     fetch('/allData', {
        method: 'GET',
        headers: {'Content-Type': 'application/json'},
      })
@@ -67,18 +68,22 @@ function createGiven(elementID){
      })
      break
    case "viewAddData":
+     document.getElementById("dataDBMenu").parentNode.remove()
      var html = "<form id=\"viewAddData\">"
-      html += "<legend>Add Data</legend>"
-      html += "<label for=\"username\">username</label>"
-      html += "<input name=\"username\"type=\"text\" id=\"uName\" value=\"username\"><br>"
-      html += "<label for=\"pass\">password</label>"
-      html += "<input name=\"pass\" type=\"password\" id=\"pass\" value=\"password\"><br>"
-      html += "<button type=\"button\" onclick=\"doLogin()\"id=\"loginUser\">Log In</button></form>"
-  document.getElementById("Container").innerHTML = ""
-       html += "</form>"
-       var formDiv = document.createElement('div')
-       formDiv.innerHTML = html
-       document.body.appendChild(formDiv)
+     html += "<legend>Add Data</legend>"
+     html += "<label for=\"fName\">First Name</label>"
+     html += "<input name=\"fName\"type=\"text\" id=\"fName\" value=\"First Name\"><br>"
+     html += "<label for=\"lName\">Last Name</label>"
+     html += "<input name=\"lName\"type=\"text\" id=\"lName\" value=\"Last Name\"><br>"
+     html += "<label for=\"month\">Month</label>"
+     html += monthToHTML("January")
+     html += daysToHTML("January", 1)
+     html += "<button type=\"button\" onclick=\"doAddData()\"id=\"submitAddData\">Submit</button></form>"
+     html += "<button type=\"button\" onclick=\"cancel()\"id=\"cancel\">Cancel</button></form>"
+     html += "</form>"
+     var formDiv = document.createElement('div')
+     formDiv.innerHTML = html
+     document.body.appendChild(formDiv)
      break
  } 
 }
