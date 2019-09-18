@@ -214,7 +214,7 @@ function createGiven(elementID){
      html += "<input name=\"uName\"type=\"text\" id=\"uName\" value=\"username\"><br>"
      html += "<label for=\"pass\">Last Name</label>"
      html += "<input name=\"pass\"type=\"password\" id=\"pass\" value=\"password\"><br>"
-     html += "<button type=\"button\" onclick=\"doAddUser()\"id=\"submitAddUser\">Submit</button></form>"
+     html += "<button type=\"button\" onclick=\"addUser()\"id=\"submitAddUser\">Submit</button></form>"
      html += "<button type=\"button\" onclick=\"cancel()\"id=\"cancel\">Cancel</button></form>"
      html += "</form>"
      var formDiv = document.createElement('div')
@@ -236,12 +236,12 @@ function createGiven(elementID){
        html += "<input name=\"uName\"type=\"text\" id=\"uName\" value=\""+ originalData.username + "\"><br>"
        html += "<label for=\"pass\">Password</label>"
        html += "<input name=\"pass\"type=\"text\" id=\"pass\" value=\"" + originalData.password + "\"><br>"
-     html += "<button type=\"button\" onclick=\"doModifyUser()\">Submit</button></form>"
-     html += "<button type=\"button\" onclick=\"cancel()\"id=\"cancel\">Cancel</button></form>"
-     html += "</form>"
-     var formDiv = document.createElement('div')
-     formDiv.innerHTML = html
-     document.body.appendChild(formDiv)
+       html += "<button type=\"button\" onclick=\"modifyUser()\">Submit</button></form>"
+       html += "<button type=\"button\" onclick=\"cancel()\"id=\"cancel\">Cancel</button>"
+       html += "</form>"
+       var formDiv = document.createElement('div')
+       formDiv.innerHTML = html
+       document.body.appendChild(formDiv)
      }
      break
  } 
@@ -274,35 +274,51 @@ function getCookie(name){
 
 ///////////// Data DB functions /////////////////////////////
 //ADD
-function doAddData(){
-  
+function addData(){
+  //get data from form,
+  //post to database
+  //give confirmation
+  //give denial if already exists
 }
 
 //MODIFIY
-function doModifyData(){
-  
+function modifyData(){
+  //Get original from page
+  //get new from form
+  //give confirmation
 }
 
 //DELETE
 function deleteData(){
-  
+  //Get original from page
+  //give confirmation
 }
 
 
 //////////// User DB functions ////////////////////////////
 //ADD
-function doAddUser(){
-  
+function addUser(){
+  //get data from form,
+  //post to database
+  //give confirmation
+  //give denial if already exists
 }
 
 //MODIFY
-function doModifyUser(){
-  
+function modifyUser(){
+  //get data from original
+  //get new from form
+  //post to database
+  //give confirmation
 }
 
 //DELETE
 function deleteUser(){
-  
+  //get data from original
+  //deny if current user
+  //post to database
+  //give denial if already exists
+
 }
 
 
