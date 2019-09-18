@@ -28,7 +28,6 @@ function createLoginForm(){
   document.getElementById("Container").innerHTML = html
 }
 
-
 //Toggles hide/show of given element ID and associated data needed
 function toggleGiven(elementID){
   let givenElt = document.getElementById(elementID)
@@ -275,8 +274,27 @@ function getCookie(name){
 ///////////// Data DB functions /////////////////////////////
 //ADD
 function addData(){
-  //get data from form,
-  //post to database
+  let body = {
+    fName: document.getElementById('fName').innerHTML,
+    lName: document.getElementById('lName').innerHTML,
+    month: document.getElementById('monthDropdown').value,
+    day: document.getElementById('dayDropdown').value
+  }
+  let json = JSON.stringify(body)
+  fetch('/addData', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: json
+  })
+  .then(function(res){
+    if(res.status === 200){
+      window.alert("Successfully added to database")
+      emptyBody()
+    }
+    else{
+      window.alert("Data already es!\nTry again!")
+    }
+  })
   //give confirmation
   //give denial if already exists
 }
@@ -322,7 +340,7 @@ function deleteUser(){
 }
 
 
-
+//////// Log in/out ////////////////
 
 
 //Logs user out
