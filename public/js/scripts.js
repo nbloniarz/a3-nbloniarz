@@ -109,7 +109,7 @@ function createGiven(elementID){
      html += "<label for=\"month\">Month</label>"
      html += monthToHTML("January")
      html += daysToHTML("January", 1)
-     html += "<button type=\"button\" onclick=\"doAddData()\"id=\"submitAddData\">Submit</button></form>"
+     html += "<button type=\"button\" onclick=\"addData()\"id=\"submitAddData\">Submit</button></form>"
      html += "<button type=\"button\" onclick=\"cancel()\"id=\"cancel\">Cancel</button></form>"
      html += "</form>"
      var formDiv = document.createElement('div')
@@ -278,7 +278,8 @@ function addData(){
     fName: document.getElementById('fName').innerHTML,
     lName: document.getElementById('lName').innerHTML,
     month: document.getElementById('monthDropdown').value,
-    day: document.getElementById('dayDropdown').value
+    day: document.getElementById('dayDropdown').value,
+    user: getCookie('TestCookie')
   }
   let json = JSON.stringify(body)
   fetch('/addData', {
@@ -287,16 +288,15 @@ function addData(){
     body: json
   })
   .then(function(res){
+    console.log(res)
     if(res.status === 200){
       window.alert("Successfully added to database")
       emptyBody()
     }
     else{
-      window.alert("Data already es!\nTry again!")
+      window.alert("Data already exists!\nNot added to database!")
     }
   })
-  //give confirmation
-  //give denial if already exists
 }
 
 //MODIFIY

@@ -44,7 +44,7 @@ app.use(cookieParser())//needed to read cookies for auth
 app.use(bodyparser.json())//can use json to parse req
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(connect())
-app.use(downcase())//forces http requests to downcase
+//app.use(downcase())//forces http requests to downcase
 app.use(compression()) //Minimizes headers
 app.use(favicon("public/favicon.png"))
 app.use(session({secret: 'kittens', saveUninitialized: false, resave: false}))//sets session secret
@@ -157,8 +157,7 @@ app.get('/logout', function(req, res){
 app.post('/login', passport.authenticate( 'local'),
          function(req, res){
           res.cookie("TestCookie", req.body.username)
-          res.redirect('/admin.html')
-           
+          res.redirect('/admin.html')       
 })
 
 app.post('/addUser', function(req, res){
@@ -166,7 +165,17 @@ app.post('/addUser', function(req, res){
 })
 
 app.post('/addData', function(req, res){
-  console.log(req.json().new)
+  db.ref('/data').push({
+    fName: req.body.fName,
+    lName: req.body.lName,
+    month: req.body.month,
+    day: req.body.day,
+    sign: starSign(req.body),
+    user: req.body.user
+  }).then(function(response){
+    console.log("added")
+    res.json({})
+  })
 })
 
 app.post('/removeUser', function(req, res){
@@ -354,43 +363,5 @@ function findEqual(dataArray, original){
   })
   return returnVal
 }
-
-/*
-
-
-function removeGiven(original){
-  console.log(original)
-  var index = -1
-  for(let i = 0; i< Object.keys(appdata).length; i++){
-    if((original.fName === appdata[i].fName) && (original.lName === appdata[i].lName)){
-      if((original.day === appdata[i].day) && (original.month === appdata[i].month)){
-        index = i
-        console.log("Match")
-      }
-    }
-  }
-  if(index > -1){
-    appdata.splice(index, 1)
-  }
-  console.log(appdata)
-}
-
-function modData(toChange){
-  let original = toChange.originalArr
-  let replace = toChange.newInput
-  for(let i = 0; i < appdata.length; i++){
-    if((original[0] === appdata[i].fName) && (original[1] === appdata[i].lName) && (original[2] === appdata[i].month) && (original[3] === appdata[i].day)){
-      appdata[i].fName = replace[0];
-      appdata[i].lName = replace[1];
-      appdata[i].month = replace[2];
-      appdata[i].day = replace[3];
-      appdata[i].sign = starSign(appdata[i])
-    }
-  }
-}
-
-
-
-*/
 
 app.listen( process.env.PORT || port )
