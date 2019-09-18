@@ -114,6 +114,18 @@ app.get('/allData', function(req, res){
   })
 })
 
+app.get('/allUsers', function(req, res){
+  db.ref('/users/').once('value')
+  .then(function(snapshot){
+    const data = []
+    snapshot.forEach(function(child){
+      data.push(child.val())
+      console.log(child.val())
+    })
+    res.json(data)
+  })
+})
+
 app.get('/allDataForUser', function(req, res){
   db.ref('/data/').once('value')
   .then(function(snapshot){

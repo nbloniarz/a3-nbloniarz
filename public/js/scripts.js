@@ -87,7 +87,73 @@ function createGiven(elementID){
      formDiv.innerHTML = html
      document.body.appendChild(formDiv)
      break
- } 
+   case "dataDBMenu":
+     fetch('/allDataForUser', {
+       method: 'GET',
+       headers: {'Content-Type': 'application/json'},
+     }).then(function(res){
+       return res.json()
+     }).then(function(fin){
+       emptyBody()
+       let dataArray = fin
+       var html = "<form id=\"dataDBMenu\">"
+       html += "<select id=\"dataDBMenuDropdown\">"
+       dataArray.forEach(function (single, index){   
+         html += "<option value=\"" + index + "\">"
+         html += index + " "
+         html += single.fName + " "
+         html += single.lName + " "
+         html += single.month + " "
+         html += single.day + " "
+         html += "</option>"
+       })
+       dataArray.forEach(function (single, index){   
+         html += "</select>"
+         html += "<p style=\"display: none\" id=\"" + index + "\">"
+         html += JSON.stringify(single)
+         html += "</p>"
+       })
+       html += "<div id=\"buttonDiv\"><button onclick=\"toggleGiven(\'viewAddData\')\" type=\"button\"id=\"addEntry\">Add Entry</button>"
+       html += "<button onclick=\"toggleGiven(\'viewEditData\')\"type=\"button\"id=\"modifyEntry\">Modify Entry</button>"
+       html += "<button onclick=\"sendDelete()\"type=\"button\"id=\"deleteEntry\">Delete Entry</button></div>"
+       html += "</form>"
+       var formDiv = document.createElement('div')
+       formDiv.innerHTML = html
+       document.body.appendChild(formDiv)
+     })
+     break
+   case "userDBMenu":
+     fetch('/allUsers', {
+       method: 'GET',
+       headers: {'Content-Type': 'application/json'},
+     }).then(function(res){
+       return res.json()
+     }).then(function(fin){
+       emptyBody()
+       let dataArray = fin
+       var html = "<form id=\"userDBMenu\">"
+       html += "<select id=\"userDBMenuDropdown\">"
+       dataArray.forEach(function (single, index){   
+         html += "<option value=\"" + index + "\">"
+         html += index + " "
+         html += single.username + " "
+         html += "</option>"
+       })
+       dataArray.forEach(function (single, index){   
+         html += "</select>"
+         html += "<p style=\"display: none\" id=\"" + index + "\">"
+         html += JSON.stringify(single)
+         html += "</p>"
+       })
+       html += "<div id=\"buttonDiv\"><button onclick=\"toggleGiven(\'viewAddUser\')\" type=\"button\"id=\"addUser\">Add User</button>"
+       html += "<button onclick=\"toggleDataDBMenuEdit()\"type=\"button\"id=\"modifyUser\">Modify User</button>"
+       html += "<button onclick=\"sendDelete()\"type=\"button\"id=\"deleteUser\">Delete User</button></div>"
+       html += "</form>"
+       var formDiv = document.createElement('div')
+       formDiv.innerHTML = html
+       document.body.appendChild(formDiv)
+     })
+     break } 
 }
 
 function emptyBody(){
