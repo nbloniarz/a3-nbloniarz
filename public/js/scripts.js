@@ -131,19 +131,25 @@ function createGiven(elementID){
      }).then(function(fin){
        emptyBody()
        let dataArray = fin
+       let currUser = getCookie("TestCookie")
+
        var html = "<form id=\"viewUserMenu\">"
        html += "<select id=\"viewUserMenu\">"
        dataArray.forEach(function (single, index){
-         html += "<option value=\"" + index + "\">"
-         html += index + " "
-         html += single.username + " "
-         html += "</option>"
+         if(currUser !== single.username){
+           html += "<option value=\"" + index + "\">"
+           html += index + " "
+           html += single.username + " "
+           html += "</option>"
+         }
        })
-       dataArray.forEach(function (single, index){   
-         html += "</select>"
-         html += "<p style=\"display: none\" id=\"" + index + "\">"
-         html += JSON.stringify(single)
-         html += "</p>"
+       dataArray.forEach(function (single, index){  
+         if(currUser !== single.username){
+           html += "</select>"
+           html += "<p style=\"display: none\" id=\"" + index + "\">"
+           html += JSON.stringify(single)
+           html += "</p>"
+         }
        })
        html += "<div id=\"buttonDiv\"><button onclick=\"toggleGiven(\'viewAddUser\')\" type=\"button\"id=\"addUser\">Add User</button>"
        html += "<button onclick=\"toggleGiven(\'viewModifyUser\')\"type=\"button\"id=\"modifyUser\">Modify User</button>"
@@ -174,6 +180,12 @@ function deleteUser(){
 
 function deleteData(){
   
+}
+
+function getCookie(name){
+  var re = new RegExp(name + "=([^;]+)")
+  var val = re.exec(document.cookie)
+  return (val != null) ? unescape(val[1]) : null 
 }
 
 
