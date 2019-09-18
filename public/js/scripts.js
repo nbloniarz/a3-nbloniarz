@@ -70,7 +70,6 @@ function createGiven(elementID){
      break
    case "viewAddData":
      emptyBody()
-     document.getElementById("dataDBMenu").parentNode.remove()
      var html = "<form id=\"viewAddData\">"
      html += "<legend>Add Data</legend>"
      html += "<label for=\"fName\">First Name</label>"
@@ -87,7 +86,7 @@ function createGiven(elementID){
      formDiv.innerHTML = html
      document.body.appendChild(formDiv)
      break
-   case "dataDBMenu":
+   case "viewDataMenu":
      fetch('/allDataForUser', {
        method: 'GET',
        headers: {'Content-Type': 'application/json'},
@@ -96,8 +95,8 @@ function createGiven(elementID){
      }).then(function(fin){
        emptyBody()
        let dataArray = fin
-       var html = "<form id=\"dataDBMenu\">"
-       html += "<select id=\"dataDBMenuDropdown\">"
+       var html = "<form id=\"viewDataMenu\">"
+       html += "<select id=\"viewDataMenuDropdown\">"
        dataArray.forEach(function (single, index){   
          html += "<option value=\"" + index + "\">"
          html += index + " "
@@ -115,14 +114,14 @@ function createGiven(elementID){
        })
        html += "<div id=\"buttonDiv\"><button onclick=\"toggleGiven(\'viewAddData\')\" type=\"button\"id=\"addEntry\">Add Entry</button>"
        html += "<button onclick=\"toggleGiven(\'viewEditData\')\"type=\"button\"id=\"modifyEntry\">Modify Entry</button>"
-       html += "<button onclick=\"sendDelete()\"type=\"button\"id=\"deleteEntry\">Delete Entry</button></div>"
+       html += "<button onclick=\"deleteData()\"type=\"button\"id=\"deleteEntry\">Delete Entry</button></div>"
        html += "</form>"
        var formDiv = document.createElement('div')
        formDiv.innerHTML = html
        document.body.appendChild(formDiv)
      })
      break
-   case "userDBMenu":
+   case "viewUserMenu":
      fetch('/allUsers', {
        method: 'GET',
        headers: {'Content-Type': 'application/json'},
@@ -131,8 +130,8 @@ function createGiven(elementID){
      }).then(function(fin){
        emptyBody()
        let dataArray = fin
-       var html = "<form id=\"userDBMenu\">"
-       html += "<select id=\"userDBMenuDropdown\">"
+       var html = "<form id=\"viewUserMenu\">"
+       html += "<select id=\"viewUserMenu\">"
        dataArray.forEach(function (single, index){   
          html += "<option value=\"" + index + "\">"
          html += index + " "
@@ -146,8 +145,8 @@ function createGiven(elementID){
          html += "</p>"
        })
        html += "<div id=\"buttonDiv\"><button onclick=\"toggleGiven(\'viewAddUser\')\" type=\"button\"id=\"addUser\">Add User</button>"
-       html += "<button onclick=\"toggleDataDBMenuEdit()\"type=\"button\"id=\"modifyUser\">Modify User</button>"
-       html += "<button onclick=\"sendDelete()\"type=\"button\"id=\"deleteUser\">Delete User</button></div>"
+       html += "<button onclick=\"toggleGiven(\'viewModifyUser\')\"type=\"button\"id=\"modifyUser\">Modify User</button>"
+       html += "<button onclick=\"deleteUser()\"type=\"button\"id=\"deleteUser\">Delete User</button></div>"
        html += "</form>"
        var formDiv = document.createElement('div')
        formDiv.innerHTML = html
@@ -166,6 +165,16 @@ function emptyBody(){
     }
   })  
 }
+
+function deleteUser(){
+  
+}
+
+function deleteData(){
+  
+}
+
+
 
 
 //Toggles hide/show of log in form
