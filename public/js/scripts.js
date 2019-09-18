@@ -21,6 +21,7 @@ function createGiven(elementID){
        .then(function(res){
        return res.json()
      }).then(function(fin){
+       emptyBody()
        let dataArray = fin
        var html = "<table id=\"viewAll\">"
        html += "<tr><th>First Name</th><th>Last Name</th><th>Month</th><th>Day</th><th>Sign</th><th>User</th></tr>"
@@ -87,7 +88,15 @@ function createGiven(elementID){
  } 
 }
 
-
+function emptyBody(){
+  let body = document.body
+  let filteredChildren = body.childNodes.filter
+  /*body.childNodes.forEach(function (node){
+    if(node.tagName !== "nav"){
+        node.remove()
+      }
+  })*/
+}
 
 
 //Toggles hide/show of log in form
