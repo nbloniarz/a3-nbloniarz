@@ -68,11 +68,12 @@ the five Express middleware packages you used and a short (one sentence) summary
  
 Express middleware packages used:
  - Passport: Required for the project
- - Static: Serves static pages
+ - Serve-Static: Serves static pages
  - Favicon: Serves a favicon image to the client
  - Session: Stores session data for cookies
+ - Cookie Parser
  - Compression: Minimizes headers
- - BodyParsers: Parses request bodies into JSON objects
+ - Body-Parser: Parses request bodies into JSON objects
 
 ## Technical Achievements
 - **Google Firebase Integration**: All data is stored remotely on google firebase allowing for persistance and multiple read/writes at once

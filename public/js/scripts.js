@@ -29,13 +29,16 @@ function createLoginForm(){
 
 //Logs user out
 function logOut(){
-  fetch('/logout', {
-    method:'GET',
-    headers: {'Content-Type': 'application/json'},
-  })
-  .then(function(res){
-    window.location = res.url
-  })
+  let result = window.confirm("Are you sure you wish to log out?")
+  if(result){
+    fetch('/logout', {
+      method:'GET',
+      headers: {'Content-Type': 'application/json'},
+    })
+      .then(function(res){
+      window.location = res.url
+    })
+  }
 }
 
 //Runs login function
@@ -58,8 +61,7 @@ function doLogin(){
       window.location = res.url
     }
     else{
-      console.log("FAILURE")
-      console.log(res)
+      window.alert("Incorrect Username or Password!\nTry again!")
     }
   })
 }
