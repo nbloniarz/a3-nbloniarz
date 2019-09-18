@@ -23,7 +23,6 @@ const mime = require( 'mime' ),
 ///////////////////////////////////////////////////////////////
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAuOGEGSNJLe2fxv0iHQwigSY8nIj2pb30",
   authDomain: "a2-nbloniarz.firebaseapp.com",
   databaseURL: "https://a2-nbloniarz.firebaseio.com",
   projectId: "a2-nbloniarz",
@@ -170,11 +169,10 @@ app.post('/addData', function(req, res){
     const data = []
     snapshot.forEach(function(child){
       data.push(child.val())
-      console.log(child.val())
     })
     let hasDup = checkForDuplicate(data, req.body)
-    if(hasDup[0] === -1){
-      res.json({status: 418})
+    if(hasDup.exists){
+      res.status(409).send()
     }
     else{
       db.ref('/data').push({
@@ -185,8 +183,7 @@ app.post('/addData', function(req, res){
         sign: starSign(req.body),
         user: req.body.user
       }).then(function(response){
-        console.log("added")
-        res.json({status: 200})
+        res.status(200).send()
       })
     }
   })
@@ -384,7 +381,7 @@ function checkForDuplicate(data, original){
     if(comp.fName === original.fName && comp.lName === original.lName &&
       comp.month === original.month && comp.day === original.day &&
       comp.user === original.user){
-      console.log("SAME")
+      //console.log("SAME")
       final = {exists: true, index: index}
     }
   })
