@@ -275,8 +275,8 @@ function getCookie(name){
 //ADD
 function addData(){
   let body = {
-    fName: document.getElementById('fName').innerHTML,
-    lName: document.getElementById('lName').innerHTML,
+    fName: document.getElementById('fName').value,
+    lName: document.getElementById('lName').value,
     month: document.getElementById('monthDropdown').value,
     day: document.getElementById('dayDropdown').value,
     user: getCookie('TestCookie')

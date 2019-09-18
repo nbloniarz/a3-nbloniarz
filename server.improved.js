@@ -165,16 +165,30 @@ app.post('/addUser', function(req, res){
 })
 
 app.post('/addData', function(req, res){
-  db.ref('/data').push({
-    fName: req.body.fName,
-    lName: req.body.lName,
-    month: req.body.month,
-    day: req.body.day,
-    sign: starSign(req.body),
-    user: req.body.user
-  }).then(function(response){
-    console.log("added")
-    res.json({})
+  db.ref('/data/').once('value')
+  .then(function(snapshot){
+    const data = []
+    snapshot.forEach(function(child){
+      data.push(child.val())
+      console.log(child.val())
+    })
+    let hasDup = checkForDuplicate(data, req.body)
+    if(hasDup[0] === -1){
+      res.json({status: 418})
+    }
+    else{
+      db.ref('/data').push({
+        fName: req.body.fName,
+        lName: req.body.lName,
+        month: req.body.month,
+        day: req.body.day,
+        sign: starSign(req.body),
+        user: req.body.user
+      }).then(function(response){
+        console.log("added")
+        res.json({status: 200})
+      })
+    }
   })
 })
 
@@ -362,6 +376,19 @@ function findEqual(dataArray, original){
     }
   })
   return returnVal
+}
+
+function checkForDuplicate(data, original){
+  let final = {exixts: false, index: -1}
+  data.forEach(function(comp, index){
+    if(comp.fName === original.fName && comp.lName === original.lName &&
+      comp.month === original.month && comp.day === original.day &&
+      comp.user === original.user){
+      console.log("SAME")
+      final = {exists: true, index: index}
+    }
+  })
+  return final
 }
 
 app.listen( process.env.PORT || port )
