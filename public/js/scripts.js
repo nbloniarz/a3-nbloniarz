@@ -152,6 +152,10 @@ function createGiven(elementID){
        document.body.appendChild(formDiv)
      })
      break
+   case "viewModifyData":
+     let originalData = document.getElementById(document.getElementById('viewDataMenuDropdown').selectedIndex)
+     emptyBody()
+     break
    case "viewUserMenu":
      fetch('/allUsers', {
        method: 'GET',
@@ -162,7 +166,7 @@ function createGiven(elementID){
        emptyBody()
        let dataArray = fin
        var html = "<form id=\"viewUserMenu\">"
-       html += "<select id=\"viewUserMenu\">"
+       html += "<select id=\"viewUserMenuDropdown\">"
        dataArray.forEach(function (single, index){
          html += "<option value=\"" + index + "\">"
          html += index + " "
@@ -170,12 +174,10 @@ function createGiven(elementID){
          html += "</option>"
        })
        dataArray.forEach(function (single, index){  
-         if(currUser !== single.username){
-           html += "</select>"
-           html += "<p style=\"display: none\" id=\"" + index + "\">"
-           html += JSON.stringify(single)
-           html += "</p>"
-         }
+         html += "</select>"
+         html += "<p style=\"display: none\" id=\"" + index + "\">"
+         html += JSON.stringify(single)
+         html += "</p>"
        })
        html += "<div id=\"buttonDiv\"><button onclick=\"toggleGiven(\'viewAddUser\')\" type=\"button\"id=\"addUser\">Add User</button>"
        html += "<button onclick=\"toggleGiven(\'viewModifyUser\')\"type=\"button\"id=\"modifyUser\">Modify User</button>"
@@ -200,6 +202,10 @@ function createGiven(elementID){
      var formDiv = document.createElement('div')
      formDiv.innerHTML = html
      document.body.appendChild(formDiv)
+     break
+   case "viewModifyUser":
+     let originalData = document.getElementById(document.getElementById('viewUserMenuDropdown').selectedIndex)
+     emptyBody()
      break
  } 
 }
@@ -281,10 +287,6 @@ function doLogin(){
   })
   .then(function(res){
     if(res.status === 200){
-      //console.log(res.json().userName)
-      console.log("HERE")
-      console.log(res)
-      //console.log(res.json().url)
       window.location = res.url
     }
     else{
