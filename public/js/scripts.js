@@ -1,3 +1,61 @@
+////////     UTILITY FUNCTIONS     ///////////////////
+//Toggles hide/show of given element ID and associated data needed
+function toggleGiven(dataArray, elementID){
+  let givenElt = document.getElementById(elementID)
+  if(givenElt !== null){
+    givenElt.parentNode.remove()
+  }
+  else{
+    createGiven(dataArray, elementID)
+  }
+  hideAllBut(elementID)
+}
+
+function createGiven(dataArray, elementID){
+ switch(elementID){
+   case "viewAll":
+     var html = "<table id=\"viewAll\">"
+     html += "<tr><th>First Name</th><th>Last Name</th><th>Month</th><th>Day</th><th>Sign</th><th>User</th></tr>"
+     dataArray.forEach(function (single){
+       html += "<tr>"
+       html += "<td>" + single.fName + "</td>"
+       html += "<td>" + single.lName + "</td>"
+       html += "<td>" + single.month + "</td>"
+       html += "<td>" + single.day + "</td>"
+       html += "<td>" + single.sign + "</td>"
+       html += "<td>" + single.user + "</td>"
+       html += "</tr>"
+     })
+     html += "</table>"
+     var tableDiv = document.createElement('div')
+     tableDiv.innerHTML = html
+     document.body.appendChild(tableDiv)
+     break
+   case "viewUser":
+     var html = "<table id=\"viewUser\">"
+     html += "<tr><th>First Name</th><th>Last Name</th><th>Month</th><th>Day</th><th>Sign</th><th>User</th></tr>"
+     dataArray.forEach(function (single){
+       html += "<tr>"
+       html += "<td>" + single.fName + "</td>"
+       html += "<td>" + single.lName + "</td>"
+       html += "<td>" + single.month + "</td>"
+       html += "<td>" + single.day + "</td>"
+       html += "<td>" + single.sign + "</td>"
+       html += "<td>" + single.user + "</td>"
+       html += "</tr>"
+  })
+  html += "</table>"
+  var tableDiv = document.createElement('div')
+  tableDiv.innerHTML = html
+  document.body.appendChild(tableDiv)
+
+     break
+ } 
+}
+
+
+
+
 //Toggles hide/show of log in form
 function toggleLogin(){
   var loginForm = document.getElementById('loginForm')
@@ -131,12 +189,7 @@ function getDataForUser(){
 function toggleViewUser(dataArray){
   let viewAll = document.getElementById("viewUser")
   if(viewAll !== null){
-    if(viewAll.style.display === 'none'){
-      viewAll.style.display = 'table'
-    }
-    else{
-      viewAll.style.display = 'none'
-    }
+    viewAll.parentNode.remove()
   }
   else{
     createViewUser(dataArray)
