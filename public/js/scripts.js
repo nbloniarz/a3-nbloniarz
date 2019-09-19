@@ -109,8 +109,9 @@ function createGiven(elementID){
      html += "<label for=\"month\">Month</label>"
      html += monthToHTML("January")
      html += daysToHTML("January", 1)
-     html += "<button type=\"button\" onclick=\"addData()\"id=\"submitAddData\">Submit</button></form>"
-     html += "<button type=\"button\" onclick=\"cancel()\"id=\"cancel\">Cancel</button></form>"
+     html += "<div id=\"buttonDiv\">"
+     html += "<button type=\"button\" onclick=\"addData()\"id=\"submitAddData\">Submit</button>"
+     html += "<button type=\"button\" onclick=\"cancelChange()\"id=\"cancel\">Cancel</button></div>"
      html += "</form>"
      var formDiv = document.createElement('div')
      formDiv.innerHTML = html
@@ -126,22 +127,24 @@ function createGiven(elementID){
        emptyBody()
        let dataArray = fin
        var html = "<form id=\"viewDataMenu\">"
-       html += "<select id=\"viewDataMenuDropdown\">"
-       dataArray.forEach(function (single, index){   
-         html += "<option value=\"" + index + "\">"
-         html += index + " "
-         html += single.fName + " "
-         html += single.lName + " "
-         html += single.month + " "
-         html += single.day + " "
-         html += "</option>"
-       })
-       dataArray.forEach(function (single, index){   
-         html += "</select>"
-         html += "<p style=\"display: none\" id=\"" + index + "\">"
-         html += JSON.stringify(single)
-         html += "</p>"
-       })
+       if(dataArray.length > 0){
+         html += "<select id=\"viewDataMenuDropdown\">"
+         dataArray.forEach(function (single, index){   
+           html += "<option value=\"" + index + "\">"
+           html += index + " "
+           html += single.fName + " "
+           html += single.lName + " "
+           html += single.month + " "
+           html += single.day + " "
+           html += "</option>"
+         })
+         dataArray.forEach(function (single, index){   
+           html += "</select>"
+           html += "<p style=\"display: none\" id=\"" + index + "\">"
+           html += JSON.stringify(single)
+           html += "</p>"
+         })
+       }
        html += "<div id=\"buttonDiv\"><button onclick=\"toggleGiven(\'viewAddData\')\" type=\"button\"id=\"addEntry\">Add Entry</button>"
        html += "<button onclick=\"toggleGiven(\'viewModifyData\')\"type=\"button\"id=\"modifyEntry\">Modify Entry</button>"
        html += "<button onclick=\"removeData()\"type=\"button\"id=\"deleteEntry\">Delete Entry</button></div>"
@@ -163,8 +166,9 @@ function createGiven(elementID){
      html += monthToHTML(originalData.month)
      console.log(originalData.day)
      html += daysToHTML(originalData.month, originalData.day)
+     html += "<div id=\"buttonDiv\">"
      html += "<button type=\"button\" onclick=\"modifyData()\">Submit</button>"
-     html += "<button type=\"button\" onclick=\"cancel()\"id=\"cancel\">Cancel</button></form>"
+     html += "<button type=\"button\" onclick=\"cancelChange()\"id=\"cancel\">Cancel</button></div>"
      html += "<p id=\"originalData\"style=\"display: none\">"
      html += JSON.stringify(originalData)
      html += "</p>"
@@ -183,6 +187,9 @@ function createGiven(elementID){
        emptyBody()
        let dataArray = fin
        var html = "<form id=\"viewUserMenu\">"
+       if(dataArray.length > 0){
+         
+       }
        html += "<select id=\"viewUserMenuDropdown\">"
        dataArray.forEach(function (single, index){
          html += "<option value=\"" + index + "\">"
@@ -213,8 +220,9 @@ function createGiven(elementID){
      html += "<input name=\"uName\"type=\"text\" id=\"uName\" value=\"username\"><br>"
      html += "<label for=\"pass\">Last Name</label>"
      html += "<input name=\"pass\"type=\"password\" id=\"pass\" value=\"password\"><br>"
-     html += "<button type=\"button\" onclick=\"addUser()\"id=\"submitAddUser\">Submit</button></form>"
-     html += "<button type=\"button\" onclick=\"cancel()\"id=\"cancel\">Cancel</button></form>"
+     html += "<div id=\"buttonDiv\">"
+     html += "<button type=\"button\" onclick=\"addUser()\"id=\"submitAddUser\">Submit</button>"
+     html += "<button type=\"button\" onclick=\"cancelChange()\"id=\"cancel\">Cancel</button></div>"
      html += "</form>"
      var formDiv = document.createElement('div')
      formDiv.innerHTML = html
@@ -229,8 +237,9 @@ function createGiven(elementID){
      html += "<input name=\"uName\"type=\"text\" id=\"uName\" value=\""+ originalData.username + "\"><br>"
      html += "<label for=\"pass\">Password</label>"
      html += "<input name=\"pass\"type=\"text\" id=\"pass\" value=\"" + originalData.password + "\"><br>"
-     html += "<button type=\"button\" onclick=\"modifyUser()\">Submit</button></form>"
-     html += "<button type=\"button\" onclick=\"cancel()\"id=\"cancel\">Cancel</button>"
+     html += "<div id=\"buttonDiv\">"
+     html += "<button type=\"button\" onclick=\"modifyUser()\">Submit</button>"
+     html += "<button type=\"button\" onclick=\"cancelChange()\"id=\"cancel\">Cancel</button></div>"
      html += "<p style=\"display: none\" id=\"originalUser\">"
      html += JSON.stringify(originalData)
      html += "</p>"
@@ -255,7 +264,7 @@ function emptyBody(){
 }
 
 //Serves as general cancel button for admin page
-function cancel(){
+function cancelChange(){
   emptyBody()
 }
 
