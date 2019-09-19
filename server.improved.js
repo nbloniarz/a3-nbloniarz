@@ -108,7 +108,6 @@ app.get('/allData', function(req, res){
     const data = []
     snapshot.forEach(function(child){
       data.push(child.val())
-      console.log(child.val())
     })
     res.json(data)
   })
@@ -120,7 +119,6 @@ app.get('/allUsers', function(req, res){
     const data = []
     snapshot.forEach(function(child){
       data.push(child.val())
-      console.log(child.val())
     })
     res.json(data)
   })
@@ -273,16 +271,16 @@ app.post('/modifyData', function(req, res){
 })
 
 app.post('/removeUser', function(req, res){
-  db.ref('/users/').once('value')
+  db.ref('users/').once('value')
     .then(function(snapshot){
     const data = []
     const keys = []
     snapshot.forEach(function(child){
-      if(child.val().user === req.cookies.TestCookie){
-        keys.push(child.key)
-        data.push(child.val())
-      }
+      keys.push(child.key)
+      data.push(child.val())
+      console.log("KAJslkjlkjlsd")
     })
+    console.log("ALKSJDLAKJDLKAJSLDKj")
     let original = checkForDuplicateUser(data, req.body)
     console.log(original)
     if(original.index >= 0){

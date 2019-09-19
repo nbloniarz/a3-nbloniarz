@@ -370,6 +370,7 @@ function modifyUser(){
     username: document.getElementById('uName').value,
     password: document.getElementById('pass').value
   }
+  console.log(newData)
   let oldData = JSON.parse(document.getElementById('originalUser').value)
   let body = {original: oldData, changed: newData}
   let json = JSON.stringify(body)
@@ -389,22 +390,22 @@ function modifyUser(){
 
 //DELETE
 function removeUser(){
-  console.log("HHHHHHH")
   var currIndex = document.getElementById("viewUserMenuDropdown").selectedIndex
-  var userData = document.getElementById(currIndex).innerHTML
+  var userData = JSON.parse(document.getElementById(currIndex).innerHTML)
   let currUser = getCookie('TestCookie')
   if(currUser === userData.username){
      window.alert("CANNOT DELETE CURRENT USER")
   }
   else{
     let json = JSON.stringify(userData)
-    fetch('/removeData', {
+    fetch('/removeUser', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: json
     })
       .then(function(response){
-      
+        window.alert("User Deleted")
+        emptyBody()
     })
   }
 }
