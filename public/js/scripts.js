@@ -231,6 +231,9 @@ function createGiven(elementID){
      html += "<input name=\"pass\"type=\"text\" id=\"pass\" value=\"" + originalData.password + "\"><br>"
      html += "<button type=\"button\" onclick=\"modifyUser()\">Submit</button></form>"
      html += "<button type=\"button\" onclick=\"cancel()\"id=\"cancel\">Cancel</button>"
+     html += "<p style=\"display: none\" id=\"originalData\">"
+     html += JSON.stringify(originalData)
+     html += "</p>"
      html += "</form>"
      var formDiv = document.createElement('div')
      formDiv.innerHTML = html
@@ -294,15 +297,46 @@ function addData(){
 
 //MODIFIY
 function modifyData(){
-  //Get original from page
-  //get new from form
-  //give confirmation
+  let newData = {
+    fName: document.getElementById('fName').value,
+    lName: document.getElementById('lName').value,
+    month: document.getElementById('monthDropdown').value,
+    day: document.getElementById('dayDropdown').value,
+    user: getCookie('TestCookie')
+  }
+  let oldData = JSON.parse(document.getElementById('originalData').value)
+  let body = {original: oldData, changed: newData}
+  let json = JSON.stringify(body)
+  fetch('/modifyData', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: json
+  })
+  .then(function(res){
+    console.log(res)
+    if(res.status === 200){
+      window.alert("Successfully modified")
+      emptyBody()
+    }
+  })
 }
 
 //DELETE
 function deleteData(){
-  //Get original from page
-  //give confirmation
+  let body = JSON.parse(document.getElementById('originalData').value)
+  let json = JSON.stringify(body)
+  fetch('/removeData', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: json
+  })
+  .then(function(res){
+    console.log(res)
+    if(res.status === 200){
+      window.alert("Successfully removed!")
+      emptyBody()
+    }
+  })
 }
 
 

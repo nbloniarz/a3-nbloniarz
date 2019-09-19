@@ -4,7 +4,6 @@ const mime = require( 'mime' ),
       express = require('express'),  
       connect = require('connect'),
       favicon = require('serve-favicon'),
-      downcase = require('express-uncapitalize'),
       cookieParser = require('cookie-parser'),
       session = require('express-session'),
       compression = require('compression'),
@@ -44,7 +43,6 @@ app.use(cookieParser())//needed to read cookies for auth
 app.use(bodyparser.json())//can use json to parse req
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(connect())
-//app.use(downcase())//forces http requests to downcase CAUSES REQUESTS TO FAIL
 app.use(compression()) //Minimizes headers
 app.use(favicon("public/favicon.png"))
 app.use(session({secret: 'kittens', saveUninitialized: false, resave: false}))//sets session secret
@@ -185,7 +183,8 @@ app.post('/addUser', function(req, res){
         res.status(200).send()
       })
     }
-  })})
+  })
+})
 
 app.post('/addData', function(req, res){
   db.ref('/data/').once('value')
@@ -214,16 +213,28 @@ app.post('/addData', function(req, res){
 })
 
 app.post('/removeUser', function(req, res){
-  console.log(req.json().original)
+  db.ref('/users/').once('value')
+    .then(function(snapshot){
+    const data = []
+    const keys = []
+    snapshot.forEach(function(child){
+      if(child.val().user === req.cookies.TestCookie){
+        keys.push(child.key)
+        data.push(child.val())
+      }
+    })
+    //res.json(data)
+    let original = checkForDuplicateUser(data, req.body)
+    if(original.index >= 0){
+      db.ref('data/' +  keys[original.index]).remove()
+      .then
+    }
+        
+  })
 })
 
 app.post('/modifyUser', function(req, res){
-  console.log(req.json().original)
-  console.log(req.json().new)
-})
-
-app.post('/modifyData', function(req, res){
-  db.ref('/data/').once('value')
+  db.ref('/users/').once('value')
   .then(function(snapshot){
     const data = []
     const keys = []
@@ -245,7 +256,34 @@ app.post('/modifyData', function(req, res){
         user: req.cookies.TestCookie
       })
     }
-    res.json(req.body.new)
+    res.status(200).send()
+  })
+})
+
+app.post('/modifyData', function(req, res){
+  db.ref('/data/').once('value')
+  .then(function(snapshot){
+    const data = []
+    const keys = []
+    snapshot.forEach(function(child){
+      if(child.val().user === req.cookies.TestCookie){
+        keys.push(child.key)
+        data.push(child.val())
+      }
+    })
+    //res.json(data)
+    let original = checkForDuplicateData(data, req.body.original)
+    if(original.index >= 0){
+      db.ref('data/' +  keys[original.index]).set({
+        fName: req.body.changed.fName,
+        lName: req.body.changed.lName,
+        month: req.body.changed.month,
+        day:  req.body.changed.day,
+        sign: starSign(req.body.changed),
+        user: req.cookies.TestCookie
+      })
+    }
+    res.status(200).send()
   })
 })
 
@@ -261,11 +299,11 @@ app.post('/removeData', function(req, res){
       }
     })
     //res.json(data)
-    let original = findEqual(data, req.body)
+    let original = checkForDuplicateData(data, req.body)
     if(original.index >= 0){
       db.ref('data/' +  keys[original.index]).remove()
     }
-    res.json(req.body)
+    res.status(200).send()
   })
 })
 
