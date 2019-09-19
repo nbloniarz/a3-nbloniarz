@@ -4,7 +4,7 @@ Assignment 3 - Persistence: Two-tier Web Application with Flat File Database, Ex
 
 http://a3-nbloniarz.glitch.me
 
-The goal of the application os to calculate the zodiac signs of people entered into the database and generate a random horoscope.
+The goal of the application is to calculate the zodiac signs of people entered into the database and generate a random horoscope.
 
 Challenges:
  - Passport: Could not figure out how to integrate OAuth, so chose to use local strategy

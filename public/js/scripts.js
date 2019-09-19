@@ -438,7 +438,22 @@ function generateHoroscope(){
     return response.json()
   })
   .then(function(final){
-    
+    console.log(final)
+    a = final.gerund[vals[0]]
+    b = final.adjective[vals[1]]
+    c = final.noun[vals[2]]
+    d = final.pluralNoun[vals[3]]
+    e = final.adjective[vals[4]]
+    f = final.verb[vals[5]]
+    var html =  "Friends are more sold on a " + a + 
+          " prospect than you are, which is great because you could sure use the re-assurance. Don't be discouraged by a loved one's " + b + 
+          " response.  Persevere because what you have to say needs to be heard.You could sure use someone in your " + c + 
+          " however it's not a yes-man you need, but someone who will challenge your most cherished notions. Don't let " + d + 
+          " talk you out of what you feel is " + e + 
+          ".  You know they mean well, but their advice is based on what's best for them and not for you. It took a while to " + f + 
+          " that you made a mistake, but now that you see it for what it is you'll move heaven and earth to do the right thing.";
+    document.getElementById("Container").innerHTML = ""
+    document.getElementById("Container").innerHTML = html
   })
 }
 
