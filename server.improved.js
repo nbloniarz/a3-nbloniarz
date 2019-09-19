@@ -212,21 +212,16 @@ app.post('/modifyUser', function(req, res){
     const data = []
     const keys = []
     snapshot.forEach(function(child){
-      if(child.val().user === req.cookies.TestCookie){
-        keys.push(child.key)
-        data.push(child.val())
-      }
+      keys.push(child.key)
+      data.push(child.val())
+      
     })
     //res.json(data)
-    let original = findEqual(data, req.body.original)
+    let original = checkForDuplicateUser(data, req.body.original)
     if(original.index >= 0){
       db.ref('/users/' +  keys[original.index]).set({
-        fName: req.body.new.fName,
-        lName: req.body.new.lName,
-        month: req.body.new.month,
-        day:  req.body.new.day,
-        sign: starSign(req.body.new),
-        user: req.cookies.TestCookie
+        username: req.body.changed.username,
+        password: req.body.changed.password,
       })
       .then(function(response){
         res.status(200).send()
@@ -249,7 +244,6 @@ app.post('/modifyData', function(req, res){
         data.push(child.val())
       }
     })
-    //res.json(data)
     let original = checkForDuplicateData(data, req.body.original)
     if(original.index >= 0){
       db.ref('data/' +  keys[original.index]).set({
@@ -278,9 +272,7 @@ app.post('/removeUser', function(req, res){
     snapshot.forEach(function(child){
       keys.push(child.key)
       data.push(child.val())
-      console.log("KAJslkjlkjlsd")
     })
-    console.log("ALKSJDLAKJDLKAJSLDKj")
     let original = checkForDuplicateUser(data, req.body)
     console.log(original)
     if(original.index >= 0){
@@ -428,26 +420,6 @@ function starSign(personalInfo){
     default:
       return "Error"
   }
-}
-
-function findEqual(dataArray, original){
-  var returnVal = {original: null, index: -1}
-  dataArray.forEach(function(item, i){
-    if(item.fName === original.fName){
-      if(item.lName === original.lName){
-        if(item.month === original.month){
-          if(item.day === original.day){
-            if(item.sign === original.sign){
-              if(item.user === original.user){
-                returnVal = {original: original, index: i}
-              }
-            }
-          }
-        }
-      }
-    }
-  })
-  return returnVal
 }
 
 //DUPLICATE DATA RETURNS BOOL AND INDEX

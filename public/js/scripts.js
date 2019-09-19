@@ -370,8 +370,7 @@ function modifyUser(){
     username: document.getElementById('uName').value,
     password: document.getElementById('pass').value
   }
-  console.log(newData)
-  let oldData = JSON.parse(document.getElementById('originalUser').value)
+  let oldData = JSON.parse(document.getElementById('originalUser').innerHTML)
   let body = {original: oldData, changed: newData}
   let json = JSON.stringify(body)
   fetch('/modifyUser', {
