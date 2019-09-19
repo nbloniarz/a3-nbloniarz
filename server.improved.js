@@ -22,6 +22,7 @@ const mime = require( 'mime' ),
 ///////////////////////////////////////////////////////////////
 
 const firebaseConfig = {
+  apiKey: "AIzaSyAuOGEGSNJLe2fxv0iHQwigSY8nIj2pb30",
   authDomain: "a2-nbloniarz.firebaseapp.com",
   databaseURL: "https://a2-nbloniarz.firebaseio.com",
   projectId: "a2-nbloniarz",
