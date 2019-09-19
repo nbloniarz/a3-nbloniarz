@@ -223,25 +223,18 @@ function createGiven(elementID){
    case "viewModifyUser":
      var originalData = JSON.parse(document.getElementById(document.getElementById('viewUserMenuDropdown').selectedIndex).innerHTML)
      emptyBody()
-     let currUser = getCookie('TestCookie')
-     if(originalData.username === currUser){
-       window.alert("CANNOT MODIFY CURRENT USER")
-       emptyBody()
-     }
-     else{
-       var html = "<form id=\"viewModifyUser\">"
-       html += "<legend>Add User</legend>"
-       html += "<label for=\"uName\">Username</label>"
-       html += "<input name=\"uName\"type=\"text\" id=\"uName\" value=\""+ originalData.username + "\"><br>"
-       html += "<label for=\"pass\">Password</label>"
-       html += "<input name=\"pass\"type=\"text\" id=\"pass\" value=\"" + originalData.password + "\"><br>"
-       html += "<button type=\"button\" onclick=\"modifyUser()\">Submit</button></form>"
-       html += "<button type=\"button\" onclick=\"cancel()\"id=\"cancel\">Cancel</button>"
-       html += "</form>"
-       var formDiv = document.createElement('div')
-       formDiv.innerHTML = html
-       document.body.appendChild(formDiv)
-     }
+     var html = "<form id=\"viewModifyUser\">"
+     html += "<legend>Add User</legend>"
+     html += "<label for=\"uName\">Username</label>"
+     html += "<input name=\"uName\"type=\"text\" id=\"uName\" value=\""+ originalData.username + "\"><br>"
+     html += "<label for=\"pass\">Password</label>"
+     html += "<input name=\"pass\"type=\"text\" id=\"pass\" value=\"" + originalData.password + "\"><br>"
+     html += "<button type=\"button\" onclick=\"modifyUser()\">Submit</button></form>"
+     html += "<button type=\"button\" onclick=\"cancel()\"id=\"cancel\">Cancel</button>"
+     html += "</form>"
+     var formDiv = document.createElement('div')
+     formDiv.innerHTML = html
+     document.body.appendChild(formDiv)
      break
  } 
 }
@@ -332,17 +325,18 @@ function modifyUser(){
 
 //DELETE
 function deleteUser(){
-  //get data from original
-  //deny if current user
-  //post to database
-  //give denial if already exists
-
+  var currIndex = document.getElementById("viewUserMenuDropdown").selectedIndex
+  var userData = document.getElementById(currIndex).value
+  let currUser = getCookie('TestCookie')
+  if(currUser === userData.username){
+     window.alert("CANNOT DELETE CURRENT USER")
+  }
+  else{
+    
+  }
 }
 
-
 //////// Log in/out ////////////////
-
-
 //Logs user out
 function logOut(){
   let result = window.confirm("Are you sure you wish to log out?")
@@ -378,257 +372,7 @@ function doLogin(){
   })
 }
 
-//Handles geting all user data from database
-function getAllData(){
-  fetch('/allData', {
-    method: 'GET',
-    headers: {'Content-Type': 'application/json'},
-  }).then(function(res){
-    return res.json()
-  }).then(function(fin){
-    toggleViewAll(fin)
-  })
-}
-
-//Toggles hide/show of entire database table
-function toggleViewAll(dataArray){
-  let viewAll = document.getElementById("viewAll")
-  if(viewAll !== null){
-    if(viewAll.style.display === 'none'){
-      viewAll.style.display = 'table'
-    }
-    else{
-      viewAll.style.display = 'none'
-    }
-  }
-  else{
-    createViewAll(dataArray)
-  }
-  hideAllBut("viewAll")
-}
-
-//Creates entire database table
-function createViewAll(dataArray){
-  var html = "<table id=\"viewAll\">"
-  html += "<tr><th>First Name</th><th>Last Name</th><th>Month</th><th>Day</th><th>Sign</th><th>User</th></tr>"
-  dataArray.forEach(function (single){
-    html += "<tr>"
-    html += "<td>" + single.fName + "</td>"
-    html += "<td>" + single.lName + "</td>"
-    html += "<td>" + single.month + "</td>"
-    html += "<td>" + single.day + "</td>"
-    html += "<td>" + single.sign + "</td>"
-    html += "<td>" + single.user + "</td>"
-    html += "</tr>"
-  })
-  html += "</table>"
-  var tableDiv = document.createElement('div')
-  tableDiv.innerHTML = html
-  document.body.appendChild(tableDiv)
-}
-
-//Handles geting given user data from database
-function getDataForUser(){
-  fetch('/allDataForUser', {
-    method: 'GET',
-    headers: {'Content-Type': 'application/json'},
-  }).then(function(res){
-    return res.json()
-  }).then(function(fin){
-    toggleViewUser(fin)
-  })
-}
-
-//Toggles hide/show of given user data database table
-function toggleViewUser(dataArray){
-  let viewAll = document.getElementById("viewUser")
-  if(viewAll !== null){
-    viewAll.parentNode.remove()
-  }
-  else{
-    createViewUser(dataArray)
-  }
-  hideAllBut("viewUser")
-}
-
-//Creates given user database table
-function createViewUser(dataArray){
-  var html = "<table id=\"viewUser\">"
-  html += "<tr><th>First Name</th><th>Last Name</th><th>Month</th><th>Day</th><th>Sign</th><th>User</th></tr>"
-  dataArray.forEach(function (single){
-    html += "<tr>"
-    html += "<td>" + single.fName + "</td>"
-    html += "<td>" + single.lName + "</td>"
-    html += "<td>" + single.month + "</td>"
-    html += "<td>" + single.day + "</td>"
-    html += "<td>" + single.sign + "</td>"
-    html += "<td>" + single.user + "</td>"
-    html += "</tr>"
-  })
-  html += "</table>"
-  var tableDiv = document.createElement('div')
-  tableDiv.innerHTML = html
-  document.body.appendChild(tableDiv)
-}
-
-//Hides but given ID
-function hideAllBut(id){
-  let allItems = document.body.childNodes;
-  allItems.forEach(function(child){
-    if(child.tagName === 'DIV'){
-      let childForms = child.childNodes
-      if(childForms !== undefined){
-        childForms.forEach(function(form){
-          if(form.id !== id){
-            form.style.display = 'none'
-          }
-        })
-      }
-    }
-  })
-}
-
-//Toggles hide/show of user management menu
-function showUserDBMenu(){
-  
-}
-
-//Creates user database menu
-function createUserDBMenu(){
-  
-}
-
-//Toggles hide/show of data management menu
-function showDataDBMenu(){
-  fetch('/allDataForUser', {
-    method: 'GET',
-    headers: {'Content-Type': 'application/json'},
-  }).then(function(res){
-    return res.json()
-  }).then(function(fin){
-    console.log(fin)
-    toggleDataDBMenu(fin)
-  })
-}
-
-function toggleDataDBMenu(dataArray){
-  let dataDBMenu = document.getElementById("dataDBMenu")
-  if(dataDBMenu !== null){
-    dataDBMenu.parentNode.remove()
-  }
-  else{
-    createDataDBMenu(dataArray)
-  }
-  hideAllBut("dataDBMenu")
-}
-
-function createDataDBMenu(dataArray){
-  var html = "<form id=\"dataDBMenu\">"
-  html += "<select id=\"dataDBMenuDropdown\">"
-  dataArray.forEach(function (single, index){   
-    html += "<option value=\"" + index + "\">"
-    html += index + " "
-    html += single.fName + " "
-    html += single.lName + " "
-    html += single.month + " "
-    html += single.day + " "
-    html += "</option>"
-  })
-  dataArray.forEach(function (single, index){   
-    html += "</select>"
-    html += "<p style=\"display: none\" id=\"" + index + "\">"
-    html += JSON.stringify(single)
-    html += "</p>"
-  })
-  html += "<div id=\"buttonDiv\"><button onclick=\"toggleGiven(\'viewAddData\')\" type=\"button\"id=\"addEntry\">Add Entry</button>"
-  html += "<button onclick=\"toggleDataDBMenuEdit()\"type=\"button\"id=\"modifyEntry\">Modify Entry</button>"
-  html += "<button onclick=\"sendDelete()\"type=\"button\"id=\"deleteEntry\">Delete Entry</button></div>"
-  html += "</form>"
-  var formDiv = document.createElement('div')
-  formDiv.innerHTML = html
-  document.body.appendChild(formDiv)
-}
-
-function toggleDataDBMenuEdit(){
-  hideAllBut("dataDBMenuEdit")
-  let dataDBMenuEdit = document.getElementById("dataDBMenuEdit")
-  if(dataDBMenuEdit !== null){
-    dataDBMenuEdit.parentNode.remove()
-  }
-  else{
-    createDataDBMenuEdit()
-  }
-}
-
-function createDataDBMenuEdit(){
-  let dataDBMenuInfo = JSON.parse(document.getElementById(document.getElementById("dataDBMenuDropdown").value).innerHTML)
-  var html = "<form id=\"editData\">"
-  html += "<label for=\"fName\">First Name</label>"
-  html += "<input id=\"fName\" type=\"text\" value=\"" + dataDBMenuInfo.fName + "\"></input>"
-  html += "<label for=\"lName\">Last Name</label>"
-  html += "<input id=\"lName\" type=\"text\" value=\"" + dataDBMenuInfo.lName + "\"></input>"
-  html += "<label for=\"month\">Month</label>"
-  html += monthToHTML(dataDBMenuInfo.month)
-  console.log(dataDBMenuInfo.day)
-  html += daysToHTML(dataDBMenuInfo.month, dataDBMenuInfo.day)
-  html += "<button type=\"button\" onclick=\"sendModify()\">Submit</button>"
-  html += "<p id=\"originalData\"style=\"display: none\">"
-  html += JSON.stringify(dataDBMenuInfo)
-  html += "</p>"
-  html += "</form>"
-  var editDiv = document.createElement('div')
-  editDiv.innerHTML = html
-  document.body.appendChild(editDiv)
-  document.getElementById("dataDBMenu").parentNode.remove()
-}
-
-function sendDelete(){
-  let original = JSON.parse(document.getElementById(document.getElementById("dataDBMenuDropdown").value).innerHTML)
-  let body = JSON.stringify(original)
-  fetch('/deletedata', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body
-  }).then(function(res){
-    console.log(res)
-    return res.json()
-  })
-  .then(function(fin){
-    console.log(fin)
-    document.getElementById("dataDBMenu").parentNode.remove()
-    hideAllBut("")
-    getDataForUser()
-  })
-}
-
-function sendModify(){
-  let original = JSON.parse(document.getElementById("originalData").innerHTML)
-  let newData = {
-    fName: document.getElementById("fName").value,
-    lName: document.getElementById("lName").value, 
-    month: document.getElementById("monthDropdown").value,
-    day: document.getElementById("dayDropdown").value,
-    user: original.user
-  }
-  let body = JSON.stringify({original: original, new: newData})
-  fetch('/modifydata', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body
-  })
-  .then(function(res){
-    console.log(res)
-    return res.json()
-  })
-  .then(function(fin){
-    console.log(fin)
-    document.getElementById("editData").parentNode.remove()
-    hideAllBut("")
-    getDataForUser()
-  })
-}
-
-//Removes all options from given select element
+///////////////// HADNLES DYNAMIC DATE INFO
 function removeAllOptions(selection, removalGroup){
   var len, groups, par;
   if(removalGroup){
@@ -643,31 +387,6 @@ function removeAllOptions(selection, removalGroup){
     par = selection.options[i-1].parentNode;
     par.removeChild(selection.options[i-1])
   }
-}
-
-//Adds given data as options to given select element
-function appendDataToSelect(sel, data) {
-  for(let i = 0; i<data.length; i++){
-      var opt = document.createElement("option")
-      opt.innerHTML = opt.value = data[i]
-      sel.appendChild(opt)
-  }
-}
-
-function daysToHTML(month, day){
-  let totalDays = hasDays(monthToNum(month));
-  let html = "<label for=\"days\">Day of Birth</label>"
-  html += "<select name=\"days\" id=\"dayDropdown\">"
-  for(let i = 1; i <= totalDays; i++){
-    html += "<option "
-    if(i == day){
-      console.log("SELECTED")
-      html += "selected=\"selected\" "
-    }
-    html += "value=\"" + i + "\">"+ i + "</option>"
-  }
-  html += "</select><br>"
-  return html;
 }
 
 function updateDays(){
@@ -686,6 +405,22 @@ function appendDaysToSelect(selection, numDays){
     opt.value = i
     selection.appendChild(opt)
   }
+}
+
+function daysToHTML(month, day){
+  let totalDays = hasDays(monthToNum(month));
+  let html = "<label for=\"days\">Day of Birth</label>"
+  html += "<select name=\"days\" id=\"dayDropdown\">"
+  for(let i = 1; i <= totalDays; i++){
+    html += "<option "
+    if(i == day){
+      console.log("SELECTED")
+      html += "selected=\"selected\" "
+    }
+    html += "value=\"" + i + "\">"+ i + "</option>"
+  }
+  html += "</select><br>"
+  return html;
 }
 
 function monthToNum(month){
@@ -950,347 +685,5 @@ function monthToHTML(month){
       html += "<option value=\"November\">November</option>"
       html += "<option selected=\"selected\" value=\"December\">December</option></select><br>"
       return html;
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//******** HIDE-SHOW *******//
-//Controls ADD NEW FORM
-function displayNewForm(){
-  var newForm = document.getElementById("newForm");
-  var modForm = document.getElementById("modForm");
-  var editForm = document.getElementById("editForm");
-  var horo = document.getElementById("horo");
-  if(horo !== null){
-      horo.style.display = 'none'
-  }
-  modForm.style.display = 'none'
-  if(editForm !== null){
-      editForm.style.display = 'none'
-  }
-  if(document.getElementById("resultsTable") !== null){
-    document.getElementById("Container").innerHTML = ''
-  }
-  if(newForm.style.display === 'none'){
-    newForm.style.display = 'inline';
-    var form = document.forms['NEW'];
-
-    // reference to controlling select box
-    var sel = form.elements['month'];
-    sel.selectedIndex = 0;
-    // name of associated select box
-    var relName = 'days';
-    // reference to associated select box
-    var rel = form.elements[ relName ];
-    // get data for associated select box passing its name
-    // and value of selected in controlling select box
-    var data = DateDataForDropdown[ relName ][ sel.value ];
-    // add options to associated select box
-    appendDataToSelect(rel, data);
-    
-    //Add onchange function to live update to new month
-    sel.onchange = function(e){
-      var subName = 'days'
-      var dates = document.forms['NEW'].elements[subName]
-      var newData = DateDataForDropdown[subName][this.value]
-      removeAllOptions(dates)
-      appendDataToSelect(dates, newData)
-    }
-  }
-  else{
-    newForm.style.display = 'none';
-  }
-}
- 
-//Controls MOD DATA FORM
-function displayModForm(){
-  var newForm = document.getElementById("newForm");
-  var editForm = document.getElementById("editForm");
-  var horo = document.getElementById("horo");
-  if(horo !== null){
-      horo.style.display = 'none'
-  }
-  newForm.style.display = 'none'
-  if(editForm !== null){
-      editForm.style.display = 'none'
-  }
-  if(document.getElementById("resultsTable") !== null){
-    document.getElementById("Container").innerHTML = ''
-  }
-    
-  var modForm = document.getElementById("modForm");
-  if(modForm.style.display === 'none'){
-    modForm.style.display = 'inline';
-    //Add onchange function to live update to new month
-    modForm.onchange = function(e){
-      showEditDataForm()
-    }
-  }
-  else{
-    modForm.style.display = 'none';
-  }
-  populateFromDatabase()
-}
-
-//Controls EDIT DATA FORM
-function showEditDataForm(){
-  var parentInfo = document.getElementById("modForm");
-  var editFormExists = document.forms['EDIT']
-  if(editFormExists){
-    editFormExists = null;
-    showEditDataForm()
-  }
-  else{
-    var html = "<form action=\"\" id=\"editForm\" class=\"editForm\"><legend>EDIT</legend>"
-    html += "<label for=\"fName\">First Name:</label>"
-    html += "<input type=\"text\" class=\"fNameE\" value=\""
-    var selectInfo = document.getElementsByName('modList')[0]
-    var selectedIndex = selectInfo.selectedIndex
-    //selected index -1
-    fetch('getData', {
-      method: 'GET',
-    })
-    .then(function(response){
-      response.text()
-      .then(function(message){
-        let allData = JSON.parse(message)
-        if(selectedIndex > 0){
-          selectedIndex--;
-          html += allData[selectedIndex].fName + "\"><br>"
-          html += "<p id=\"modHolder\" style=\"display:none\">" + JSON.stringify(allData[selectedIndex]) + "</p>"
-          html += "<label for=\"lName\">Last Name:</label>"
-          html += "<input type=\"text\" class=\"lNameE\" value=\""
-          html += allData[selectedIndex].lName + "\"><br>"
-          var month = allData[selectedIndex].month
-          html += monthToHTML(month)
-          var day = allData[selectedIndex].day
-          html += daysToHTML(month, day)
-          html += "<button id=\"submitChanges\">SubmitChanges</button>"
-          html +="<button id=\"remove\">Delete Original</button>"
-          html += "</form>"
-          document.getElementById("Container").innerHTML = ""
-          document.getElementById("Container").innerHTML = html
-          var form = document.forms['editForm'];
-          var sel = form.elements['month'];
-          sel.onchange = function(e){
-            var subName = 'days'
-            var dates = document.forms['editForm'].elements[subName]
-            var newData = DateDataForDropdown[subName][this.value]
-            removeAllOptions(dates)
-            appendDataToSelect(dates, newData)
-          }
-          document.getElementById("submitChanges").onclick = submitChanges;
-          document.getElementById("remove").onclick = remove;
-        }
-      })
-    })
-    
-  }
-
-}
-
-function displayData(){
-  var newForm = document.getElementById("newForm");
-  var modForm = document.getElementById("modForm");
-  var editForm = document.getElementById("editForm");
-  newForm.style.display = 'none'
-  modForm.style.display = 'none'
-  if(editForm !== null){
-      editForm.style.display = 'none'
-  }
-  if(document.getElementById("resultsTable") !== null){
-    document.getElementById("Container").innerHTML = ''
-  }
-  else{
-    fetch('/getData', {
-        method: 'GET',
-    })
-    .then(function(response){
-      response.text()
-      .then(function(message){
-        let allData = JSON.parse(message)
-        console.log(message)
-        var html = "<table id=\"resultsTable\" class=\"resultsTable\"><tr><th colspan=\"6\">Existing Data</th></tr>"
-        html += "<tr><td>Index</td><td>First Name</td><td>Last Name</td><td>Day of Birth</td><td>Month of Birth</td><td>Sign</td><td>Created By</td></tr>"
-        for(let i = 0; i< Object.keys(allData).length; i++){
-          html += "<tr>" 
-          html += "<td>" + i + "</td>"
-          html += "<td>" + allData[i].fName + "</td>"
-          html += "<td>" + allData[i].lName + "</td>"
-          html += "<td>" + allData[i].day + "</td>"
-          html += "<td>" + allData[i].month + "</td>"
-          html += "<td>" + allData[i].sign + "</td>"
-          html += "<td>" + allData[i].user + "</td>"
-          html +="</tr>"
-        }
-        html += "</table>"
-        document.getElementById("Container").innerHTML = html
-      })
-    })
-  }
-}
-
-function generateHoroscope(){
-  var newForm = document.getElementById("newForm");
-  var modForm = document.getElementById("modForm");
-  var editForm = document.getElementById("editForm");
-  newForm.style.display = 'none'
-  modForm.style.display = 'none'
-  if(editForm !== null){
-      editForm.style.display = 'none'
-  }
-  var horo = document.getElementById("horo");
-  console.log(horo.style.display)
-  if(horo.style.display === 'none'){
-      horo.style.display = 'inline'
-  }
-  else{
-    horo.style.display = 'none'
-  }
-  
-  if(document.getElementById("resultsTable") !== null){
-    document.getElementById("Container").innerHTML = ''
-  }
-  populateFromDatabaseHoro()
-    
-}
-
-//******* DYNAMIC DROPDOWNS ******//
-
-//Populates initial modify dropdown will all information from database
-function populateFromDatabase(){
-  let nameSelector = document.querySelector(".modList");
-  if(nameSelector !== null){
-    console.log("IN REMOVE CHILDREN")
-    var i;
-    for(i = nameSelector.options.length - 1; i >= 0; i--){
-      nameSelector.remove(i)
-    }    
-  }
-  fetch( '/getData', {
-    method:'GET',
-    headers: {'Content-Type': 'application/json'},
-
-  })
-  .then( function( response ) {
-    console.log(response)
-    response.text()
-    .then(function(message){
-      let allData = JSON.parse(message)
-      console.log(allData)
-      var opt = document.createElement('option');
-      opt.innerHTML = opt.value = ""
-      nameSelector.appendChild(opt)
-      for(let i = 0; i<Object.keys(allData).length; i++){
-        var opt = document.createElement('option');
-        opt.innerHTML = opt.value = allData[i].fName + " " + allData[i].lName + ", " + allData[i].month + " " + allData[i].day
-        nameSelector.appendChild(opt)
-      }
-      console.log(nameSelector)
-    })
-  })
-  return false
-}
-
-function populateFromDatabaseHoro(){
-  let nameSelector = document.querySelector(".horoList");
-  if(nameSelector !== null){
-    console.log("IN REMOVE CHILDREN")
-    var i;
-    for(i = nameSelector.options.length - 1; i >= 0; i--){
-      nameSelector.remove(i)
-    }    
-  }
-  fetch( '/getData', {
-    method:'GET',
-  })
-  .then( function( response ) {
-    console.log(response)
-    response.text()
-    .then(function(message){
-      let allData = JSON.parse(message)
-      console.log(allData)
-      var opt = document.createElement('option');
-      opt.innerHTML = opt.value = ""
-      nameSelector.appendChild(opt)
-      for(let i = 0; i<Object.keys(allData).length; i++){
-        var opt = document.createElement('option');
-        opt.innerHTML = opt.value = allData[i].fName + " " + allData[i].lName + ", " + allData[i].month + " " + allData[i].day
-        nameSelector.appendChild(opt)
-      }
-      console.log(nameSelector)
-    })
-  })
-  return false
-}
-//******* HARD CODED DATA *******//
-//HARD CODED VAR FOR ALL OD DATE INFORMATION
-
-
-//******* UTILITY DATE FUNCTIONS *******//
-
-
-
-
-//******** UTILITY IMAGE FUNCTIONS *******//
-function signToImageURL(sign){
-  switch(sign){
-    case "Aries":
-      return "https://cdn.glitch.com/de12d0f3-3352-44ef-b62c-3acd45afc445%2FAries.svg?v=1567965712892"
-    case "Taurus":
-      return "https://cdn.glitch.com/de12d0f3-3352-44ef-b62c-3acd45afc445%2FTaurus.svg?v=1567965713442"
-    case "Gemini":
-      return
-    case "Cancer":
-      return
-    case "Leo":
-      return
-    case "Virgo":
-      return
-    case "Libra":
-      return
-    case "Scorpio":
-      return
-    case "Sagittarius":
-      return
-    case "Capricorn":
-      return
-    case "Aquarius":
-      return
-    case "Pisces":
-      return
-    
   }
 }
