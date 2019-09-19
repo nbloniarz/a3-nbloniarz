@@ -198,7 +198,7 @@ function createGiven(elementID){
        })
        html += "<div id=\"buttonDiv\"><button onclick=\"toggleGiven(\'viewAddUser\')\" type=\"button\"id=\"addUser\">Add User</button>"
        html += "<button onclick=\"toggleGiven(\'viewModifyUser\')\"type=\"button\"id=\"modifyUser\">Modify User</button>"
-       html += "<button onclick=\"deleteUser()\"type=\"button\"id=\"deleteUser\">Delete User</button></div>"
+       html += "<button onclick=\"deleteUser()\" type=\"button\"id=\"deleteUser\">Delete User</button></div>"
        html += "</form>"
        var formDiv = document.createElement('div')
        formDiv.innerHTML = html
@@ -339,7 +339,6 @@ function deleteData(){
   })
 }
 
-
 //////////// User DB functions ////////////////////////////
 //ADD
 function addUser(){
@@ -390,7 +389,8 @@ function modifyUser(){
 
 //DELETE
 function deleteUser(){
-  var currIndex = document.getElementById("viewUserMenuDropdown").selectedIndex
+  console.log("HHHHHHH")
+  /*var currIndex = document.getElementById("viewUserMenuDropdown").selectedIndex
   var userData = document.getElementById(currIndex).value
   let currUser = getCookie('TestCookie')
   if(currUser === userData.username){
@@ -406,7 +406,7 @@ function deleteUser(){
       .then(function(response){
       
     })
-  }
+  }*/
 }
 
 //////// Log in/out ////////////////

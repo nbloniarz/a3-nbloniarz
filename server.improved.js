@@ -167,19 +167,14 @@ app.post('/addUser', function(req, res){
     snapshot.forEach(function(child){
       data.push(child.val())
     })
-    console.log(req.body)
     let hasDup = checkForDuplicateUser(data, req.body)
     if(hasDup.exists){
       res.status(409).send()
     }
     else{
-      db.ref('/data').push({
-        fName: req.body.fName,
-        lName: req.body.lName,
-        month: req.body.month,
-        day: req.body.day,
-        sign: starSign(req.body),
-        user: req.body.user
+      db.ref('/users/').push({
+        username: req.body.username,
+        password: req.body.password,
       }).then(function(response){
         res.status(200).send()
       })
@@ -213,32 +208,6 @@ app.post('/addData', function(req, res){
   })
 })
 
-app.post('/removeUser', function(req, res){
-  db.ref('/users/').once('value')
-    .then(function(snapshot){
-    const data = []
-    const keys = []
-    snapshot.forEach(function(child){
-      if(child.val().user === req.cookies.TestCookie){
-        keys.push(child.key)
-        data.push(child.val())
-      }
-    })
-    //res.json(data)
-    let original = checkForDuplicateUser(data, req.body)
-    if(original.index >= 0){
-      db.ref('data/' +  keys[original.index]).remove()
-      .then(function(response){
-        res.status(200).send()
-      })
-    }
-    else{
-      res.status(409).send()
-    }
-        
-  })
-})
-
 app.post('/modifyUser', function(req, res){
   db.ref('/users/').once('value')
   .then(function(snapshot){
@@ -253,7 +222,7 @@ app.post('/modifyUser', function(req, res){
     //res.json(data)
     let original = findEqual(data, req.body.original)
     if(original.index >= 0){
-      db.ref('data/' +  keys[original.index]).set({
+      db.ref('/users/' +  keys[original.index]).set({
         fName: req.body.new.fName,
         lName: req.body.new.lName,
         month: req.body.new.month,
@@ -300,6 +269,32 @@ app.post('/modifyData', function(req, res){
     else{
       res.status(409).send()
     }
+  })
+})
+
+app.post('/removeUser', function(req, res){
+  db.ref('/users/').once('value')
+    .then(function(snapshot){
+    const data = []
+    const keys = []
+    snapshot.forEach(function(child){
+      if(child.val().user === req.cookies.TestCookie){
+        keys.push(child.key)
+        data.push(child.val())
+      }
+    })
+    //res.json(data)
+    let original = checkForDuplicateUser(data, req.body)
+    if(original.index >= 0){
+      db.ref('/users/' +  keys[original.index]).remove()
+      .then(function(response){
+        res.status(200).send()
+      })
+    }
+    else{
+      res.status(409).send()
+    }
+        
   })
 })
 
