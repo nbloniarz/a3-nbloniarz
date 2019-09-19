@@ -332,7 +332,15 @@ function deleteUser(){
      window.alert("CANNOT DELETE CURRENT USER")
   }
   else{
-    
+    let json = JSON.stringify(userData)
+    fetch('/removeData', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: json
+    })
+      .then(function(response){
+      
+    })
   }
 }
 

@@ -222,7 +222,7 @@ app.post('/modifyUser', function(req, res){
   console.log(req.json().new)
 })
 
-app.post('/modifydata', function(req, res){
+app.post('/modifyData', function(req, res){
   db.ref('/data/').once('value')
   .then(function(snapshot){
     const data = []
@@ -249,7 +249,7 @@ app.post('/modifydata', function(req, res){
   })
 })
 
-app.post('/deletedata', function(req, res){
+app.post('/removeData', function(req, res){
   db.ref('/data/').once('value')
   .then(function(snapshot){
     const data = []
