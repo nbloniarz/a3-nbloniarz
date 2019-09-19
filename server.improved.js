@@ -167,6 +167,7 @@ app.post('/addUser', function(req, res){
     snapshot.forEach(function(child){
       data.push(child.val())
     })
+    console.log(req.body)
     let hasDup = checkForDuplicateUser(data, req.body)
     if(hasDup.exists){
       res.status(409).send()
@@ -227,7 +228,12 @@ app.post('/removeUser', function(req, res){
     let original = checkForDuplicateUser(data, req.body)
     if(original.index >= 0){
       db.ref('data/' +  keys[original.index]).remove()
-      .then
+      .then(function(response){
+        res.status(200).send()
+      })
+    }
+    else{
+      res.status(409).send()
     }
         
   })
@@ -255,8 +261,13 @@ app.post('/modifyUser', function(req, res){
         sign: starSign(req.body.new),
         user: req.cookies.TestCookie
       })
+      .then(function(response){
+        res.status(200).send()
+      })
     }
-    res.status(200).send()
+    else{
+      res.status(409).send()
+    }
   })
 })
 
@@ -282,8 +293,13 @@ app.post('/modifyData', function(req, res){
         sign: starSign(req.body.changed),
         user: req.cookies.TestCookie
       })
+      .then(function(response){
+        res.status(200).send()
+      })
     }
-    res.status(200).send()
+    else{
+      res.status(409).send()
+    }
   })
 })
 
@@ -302,8 +318,13 @@ app.post('/removeData', function(req, res){
     let original = checkForDuplicateData(data, req.body)
     if(original.index >= 0){
       db.ref('data/' +  keys[original.index]).remove()
+      .then(function(response){
+        res.status(200).send()
+      })
     }
-    res.status(200).send()
+    else{
+      res.status(409).send()
+    }
   })
 })
 

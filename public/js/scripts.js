@@ -231,7 +231,7 @@ function createGiven(elementID){
      html += "<input name=\"pass\"type=\"text\" id=\"pass\" value=\"" + originalData.password + "\"><br>"
      html += "<button type=\"button\" onclick=\"modifyUser()\">Submit</button></form>"
      html += "<button type=\"button\" onclick=\"cancel()\"id=\"cancel\">Cancel</button>"
-     html += "<p style=\"display: none\" id=\"originalData\">"
+     html += "<p style=\"display: none\" id=\"originalUser\">"
      html += JSON.stringify(originalData)
      html += "</p>"
      html += "</form>"
@@ -343,18 +343,49 @@ function deleteData(){
 //////////// User DB functions ////////////////////////////
 //ADD
 function addUser(){
-  //get data from form,
-  //post to database
-  //give confirmation
-  //give denial if already exists
+  let body = {
+    username: document.getElementById('uName').value,
+    password: document.getElementById('pass').value
+  }
+  let json = JSON.stringify(body)
+  fetch('/addUser', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: json
+  })
+  .then(function(res){
+    console.log(res)
+    if(res.status === 200){
+      window.alert("Successfully added to database")
+      emptyBody()
+    }
+    else{
+      window.alert("Data already exists!\nNot added to database!")
+    }
+  })
 }
 
 //MODIFY
 function modifyUser(){
-  //get data from original
-  //get new from form
-  //post to database
-  //give confirmation
+  let newData = {
+    username: document.getElementById('uName').value,
+    password: document.getElementById('pass').value
+  }
+  let oldData = JSON.parse(document.getElementById('originalUser').value)
+  let body = {original: oldData, changed: newData}
+  let json = JSON.stringify(body)
+  fetch('/modifyUser', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: json
+  })
+  .then(function(res){
+    console.log(res)
+    if(res.status === 200){
+      window.alert("Successfully modified")
+      emptyBody()
+    }
+  })
 }
 
 //DELETE
