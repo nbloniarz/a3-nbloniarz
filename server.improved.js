@@ -283,8 +283,8 @@ app.post('/removeUser', function(req, res){
         data.push(child.val())
       }
     })
-    //res.json(data)
     let original = checkForDuplicateUser(data, req.body)
+    console.log(original)
     if(original.index >= 0){
       db.ref('/users/' +  keys[original.index]).remove()
       .then(function(response){

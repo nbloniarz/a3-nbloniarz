@@ -144,7 +144,7 @@ function createGiven(elementID){
        })
        html += "<div id=\"buttonDiv\"><button onclick=\"toggleGiven(\'viewAddData\')\" type=\"button\"id=\"addEntry\">Add Entry</button>"
        html += "<button onclick=\"toggleGiven(\'viewModifyData\')\"type=\"button\"id=\"modifyEntry\">Modify Entry</button>"
-       html += "<button onclick=\"deleteData()\"type=\"button\"id=\"deleteEntry\">Delete Entry</button></div>"
+       html += "<button onclick=\"removeData()\"type=\"button\"id=\"deleteEntry\">Delete Entry</button></div>"
        html += "</form>"
        var formDiv = document.createElement('div')
        formDiv.innerHTML = html
@@ -198,7 +198,7 @@ function createGiven(elementID){
        })
        html += "<div id=\"buttonDiv\"><button onclick=\"toggleGiven(\'viewAddUser\')\" type=\"button\"id=\"addUser\">Add User</button>"
        html += "<button onclick=\"toggleGiven(\'viewModifyUser\')\"type=\"button\"id=\"modifyUser\">Modify User</button>"
-       html += "<button onclick=\"deleteUser()\" type=\"button\"id=\"deleteUser\">Delete User</button></div>"
+       html += "<button onclick=\"removeUser()\" type=\"button\"id=\"deleteUser\">Delete User</button></div>"
        html += "</form>"
        var formDiv = document.createElement('div')
        formDiv.innerHTML = html
@@ -322,7 +322,7 @@ function modifyData(){
 }
 
 //DELETE
-function deleteData(){
+function removeData(){
   let body = JSON.parse(document.getElementById('originalData').value)
   let json = JSON.stringify(body)
   fetch('/removeData', {
@@ -388,10 +388,10 @@ function modifyUser(){
 }
 
 //DELETE
-function deleteUser(){
+function removeUser(){
   console.log("HHHHHHH")
-  /*var currIndex = document.getElementById("viewUserMenuDropdown").selectedIndex
-  var userData = document.getElementById(currIndex).value
+  var currIndex = document.getElementById("viewUserMenuDropdown").selectedIndex
+  var userData = document.getElementById(currIndex).innerHTML
   let currUser = getCookie('TestCookie')
   if(currUser === userData.username){
      window.alert("CANNOT DELETE CURRENT USER")
@@ -406,7 +406,7 @@ function deleteUser(){
       .then(function(response){
       
     })
-  }*/
+  }
 }
 
 //////// Log in/out ////////////////
