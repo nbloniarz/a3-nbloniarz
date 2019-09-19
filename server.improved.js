@@ -102,6 +102,17 @@ passport.deserializeUser((username, done) => {
 ///////////////////////////////////////////////////////////////
 ////////     GET/POST     /////////////////////////////////////
 ////////////////////////////////////////////////////////////////
+app.get('/horoscopeData', function(req, res){
+  db.ref('/madlibs/').once('value')
+  .then(function(snapshot){
+    const data = []
+    snapshot.forEach(function(child){
+      data.push(child.val())
+    })
+    res.json(data)
+  })
+})
+
 app.get('/allData', function(req, res){
   db.ref('/data/').once('value')
   .then(function(snapshot){

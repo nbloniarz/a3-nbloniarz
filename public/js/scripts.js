@@ -276,6 +276,14 @@ function getCookie(name){
   return (val != null) ? unescape(val[1]) : null 
 }
 
+function generateRandomArrayHoroscope(){
+  let randArray = []
+  for(let i = 0; i< 6; i++){
+    randArray.push(Math.floor(Math.random() * (4)))
+  }
+  return randArray
+}
+
 ///////////// Data DB functions /////////////////////////////
 //ADD
 function addData(){
@@ -417,6 +425,25 @@ function removeUser(){
     })
   }
 }
+
+////////// Horoscope DB function ////////////////////////
+function generateHoroscope(){
+  let vals = generateRandomArrayHoroscope()
+  let a,b,c,d,e,f = ""
+  fetch('/horoscopeData', {
+    method: 'GET',
+    headers: {'Content-Type': 'application/json'},
+  })
+  .then(function(response){
+    return response.json()
+  })
+  .then(function(final){
+    
+  })
+}
+
+
+
 
 //////// Log in/out ////////////////
 //Logs user out

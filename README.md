@@ -30,7 +30,7 @@ Express middleware packages used:
 ## Technical Achievements
 - **Google Firebase Integration**: All data is stored remotely on google firebase allowing for persistance and multiple read/writes at once
 - **Additional Middleware Packages Used**: Chose to use 7 middleware packages instead of the minimum of 5
-- **Madlibs Horoscope Generator**: Generates a random horoscope for the user based on madlibs using data stored in database, and the madlibs are also editable
+- **Madlibs Horoscope Generator**: Generates a random horoscope for the user based on madlibs using data stored in database. The template was adapted from http://creative.colorado.edu/~kamc5871/web/Lab/madlib.html
 
 ### Design/Evaluation Achievements
 - **Toggle Menus**: Every toggled menu item is completely deleted and readded each time it is toggled. This was done under the assumption it would help with screen readers
